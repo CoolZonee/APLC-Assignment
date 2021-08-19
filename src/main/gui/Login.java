@@ -1,17 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package main.gui;
-import main.java.user;
-/**
- *
- * @author jamie
- */
+import main.java.*;
+
 public class Login extends javax.swing.JFrame {
 
     private String username, password;
+    private boolean authenticationStatus;
+    authentication authenticate=new authentication();
+    user customer;
     public Login() {
         initComponents();
     }
@@ -123,12 +119,12 @@ public class Login extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         System.out.println("Button clicked");
         this.username=userTextField.getText();
-        //this.password=String.valueOf(passwordTextField.getPassword());
-        //System.out.println("password ="+this.password);
-        this.password=passwordTextField.getText();
-        if (this.username.equals("admin") && this.password.equals("admin")){
-            System.out.println("Success");
-        }
+        this.password=String.valueOf(passwordTextField.getPassword());
+        authenticationStatus=authenticate.login(username, password);
+        System.out.println(authenticationStatus);
+        System.out.println(customer.getRole());
+        
+        
         
         
     }//GEN-LAST:event_loginButtonActionPerformed
