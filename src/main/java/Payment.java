@@ -9,7 +9,8 @@ public class Payment {
         this.totalPrice = totalPrice;
         this.totalPaid = totalPaid;
     }
-
+    
+    // Setter
     public void setDate(String date) {
         this.date = date;
     }
@@ -22,6 +23,7 @@ public class Payment {
         this.totalPaid = totalPaid;
     }
 
+    // Getter
     public String getDate() {
         return date;
     }

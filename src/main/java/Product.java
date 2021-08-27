@@ -12,6 +12,14 @@ public class Product {
         this.price = price;
     }
     
+    public void addQuantity(int addQuantity) {
+        this.quantity += addQuantity;
+    }
+    
+    public void minusQuantity(int minusQuantity) {
+        this.quantity -= minusQuantity;
+    }
+    
     // Setter
     public void setCode(String code) {
         this.code = code;
