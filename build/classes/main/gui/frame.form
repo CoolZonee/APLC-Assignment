@@ -47,9 +47,15 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
         <Component class="main.gui.userLogin" name="userLogin1">
+          <Properties>
+            <Property name="requestFocusEnabled" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="userLogin1PropertyChange"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="tab1">
@@ -71,11 +77,6 @@
           </Constraints>
         </Component>
         <Component class="main.gui.customerMenu" name="customerMenu3">
-          <Properties>
-            <Property name="frame" type="main.gui.frame" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="default"/>
-            </Property>
-          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
@@ -83,6 +84,15 @@
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="tab3">
                 <Property name="tabTitle" type="java.lang.String" value="tab3"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="main.gui.ProductPage" name="productPage1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="tab4">
+                <Property name="tabTitle" type="java.lang.String" value="tab4"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
