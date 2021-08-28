@@ -82,7 +82,7 @@ public class userLogin extends javax.swing.JPanel {
     private javax.swing.JPasswordField txtPasswordLogin;
     private javax.swing.JTextField txtUsernameLogin;
     // End of variables declaration//GEN-END:variables
-    user user=new user();
+    User user=new User();
     admin admin=new admin();
     customer customer=new customer();
     frame frame;

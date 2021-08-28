@@ -12,6 +12,7 @@ public class frame extends javax.swing.JFrame {
         this.userLogin1.setFrame(this);
         this.adminMenu1.setFrame(this);
         this.customerMenu3.setFrame(this);
+//        this.productPage.setFrame(this);
     }
     
     public void changePages(int tab){
@@ -27,6 +28,8 @@ public class frame extends javax.swing.JFrame {
         userLogin1 = new main.gui.userLogin();
         adminMenu1 = new main.gui.adminMenu();
         customerMenu3 = new main.gui.customerMenu();
+        jPanel1 = new javax.swing.JPanel();
+        productPage = new main.gui.ProductPage();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
@@ -42,8 +45,11 @@ public class frame extends javax.swing.JFrame {
         });
         jTabbedPane2.addTab("tab1", userLogin1);
         jTabbedPane2.addTab("tab2", adminMenu1);
-
         jTabbedPane2.addTab("tab3", customerMenu3);
+
+        jPanel1.add(productPage);
+
+        jTabbedPane2.addTab("tab4", jPanel1);
 
         getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, 750));
 
@@ -88,7 +94,9 @@ public class frame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public main.gui.adminMenu adminMenu1;
     public main.gui.customerMenu customerMenu3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private main.gui.ProductPage productPage;
     private main.gui.userLogin userLogin1;
     // End of variables declaration//GEN-END:variables
 

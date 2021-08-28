@@ -1,5 +1,5 @@
 package main.java;
 
-public class admin extends user{
+public class admin extends User{
     
 }

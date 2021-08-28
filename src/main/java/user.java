@@ -2,16 +2,13 @@ package main.java;
 
 import java.util.List;
 
-public class user {
-    DAO DAO;
+public class User {
     String role, username, password, sex, name, age;
-   
     
     public boolean authenticate(String username, String password){
-        List<String> authenticationData=DAO.readAll("build/classes/main/resource/userDetails.txt");
-        System.out.println(authenticationData);
-        for(String line:authenticationData){
-            String[] credentials=line.split(";");
+        List<String> authenticationData = DAO.readAll("build/classes/main/resource/userDetails.txt");
+        for(String line: authenticationData){
+            String[] credentials = line.split(";");
             if (credentials[0].equals(username) && credentials[1].equals(password)){
                 this.role=credentials[2];
                 this.age=credentials[4];
@@ -25,6 +22,11 @@ public class user {
         return false;
     }
 
+//    public void removeProduct() {
+//        List<String> allProduct = DAO.readAll("build/classes/main/resource/Product.txt");
+//        
+//    }
+    
     public void setRole(String role) {
         this.role = role;
     }

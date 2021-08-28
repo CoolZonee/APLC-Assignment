@@ -5,28 +5,31 @@
  */
 package main.gui;
 
-import java.net.URL;
-import java.text.DecimalFormat;
+import java.awt.Frame;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
-import main.java.DAO;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import main.java.Product;
+import main.java.TableSortFilter;
 
-
-/**
- *
- * @author jieke
- */
 public class ProductPage extends javax.swing.JPanel {
-    List<String> allProduct;
-    DefaultTableModel dfTable;
-    DecimalFormat df = new DecimalFormat("#.##");
-
+    private List<String> allProduct;
+    private DefaultTableModel dfTable;
+    private TableRowSorter<TableModel> rowSorter;
+    private Product product = new Product();
+    private int selectedRow;
+//    private Frame frame;
+    
     public ProductPage() {
         initComponents();
+        this.dfTable = (DefaultTableModel)tblProduct.getModel();
+        this.rowSorter = new TableRowSorter<>(tblProduct.getModel());
+        this.tblProduct.setRowSorter(rowSorter);
+        TableSortFilter.addFilter(rowSorter, tblProduct, txtSearchProduct);
         this.enableUpdateDeleteBtn(false);
-        this.updateTable();
+        this.loadData();
     }
 
     /**
@@ -53,9 +56,7 @@ public class ProductPage extends javax.swing.JPanel {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
-        btnSearch = new javax.swing.JButton();
         txtSearchProduct = new javax.swing.JTextField();
-        cmbSearchOption = new javax.swing.JComboBox<>();
 
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -68,14 +69,26 @@ public class ProductPage extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProductMouseClicked(evt);
+            }
+        });
+        tblProduct.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblProductKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(tblProduct);
@@ -99,8 +112,18 @@ public class ProductPage extends javax.swing.JPanel {
         jScrollPane2.setViewportView(txtName);
 
         btnUpdate.setText("Add New Product");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Clear");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -172,10 +195,6 @@ public class ProductPage extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnSearch.setText("Search");
-
-        cmbSearchOption.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Code", "Name" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,23 +203,15 @@ public class ProductPage extends javax.swing.JPanel {
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlProductDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(txtSearchProduct)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbSearchOption, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1180, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1180, Short.MAX_VALUE)
+                    .addComponent(txtSearchProduct))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbSearchOption, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -210,23 +221,59 @@ public class ProductPage extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
-        int row = tblProduct.getSelectedRow();
-        txtCode.setText(this.dfTable.getValueAt(row, 0).toString());
-        txtName.setText(this.dfTable.getValueAt(row, 1).toString());
-        txtQuantity.setText(this.dfTable.getValueAt(row, 2).toString());
-        txtPrice.setText(this.dfTable.getValueAt(row, 3).toString());
-        this.enableUpdateDeleteBtn(true);
+        this.changeSelectedData();
     }//GEN-LAST:event_tblProductMouseClicked
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        txtCode.setText("");
-        txtName.setText("");
-        txtQuantity.setText("");
-        txtPrice.setText("");
-        tblProduct.clearSelection();
-        this.enableUpdateDeleteBtn(false);
+        this.clearAll();
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        this.product.removeProduct();
+        this.dfTable.removeRow(this.selectedRow);
+        this.clearAll();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void tblProductKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProductKeyReleased
+        this.changeSelectedData();
+    }//GEN-LAST:event_tblProductKeyReleased
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        this.product.setCode(txtCode.getText());
+        this.product.setName(txtName.getText());
+        this.product.setQuantity(Integer.parseInt(txtQuantity.getText()));
+        this.product.setPrice(Double.parseDouble(txtPrice.getText()));
+        if (this.product.getIsNew()) {
+            this.product.addProduct();
+            Vector vector = new Vector();
+            vector.add(this.product.getCode());
+            vector.add(this.product.getName());
+            vector.add(this.product.getQuantity());
+            vector.add(this.product.getPrice());
+            this.dfTable.addRow(vector);
+        } else {
+            this.product.updateProduct();
+            this.dfTable.setRowCount(0);
+            this.loadData();
+        }
+        
+        this.clearAll();
+    }//GEN-LAST:event_btnUpdateActionPerformed
    
+    private void changeSelectedData() {
+        this.selectedRow = tblProduct.getSelectedRow();
+        this.product.setIsNew(false);
+        this.product.setCode(this.dfTable.getValueAt(this.selectedRow, 0).toString());
+        this.product.setName(this.dfTable.getValueAt(this.selectedRow, 1).toString());
+        this.product.setQuantity(Integer.parseInt(this.dfTable.getValueAt(this.selectedRow, 2).toString()));
+        this.product.setPrice(Double.parseDouble(this.dfTable.getValueAt(this.selectedRow, 3).toString()));
+        txtCode.setText(this.product.getCode());
+        txtName.setText(this.product.getName());
+        txtQuantity.setText(String.valueOf(this.product.getQuantity()));
+        txtPrice.setText(String.valueOf(this.product.getPrice()));
+        this.enableUpdateDeleteBtn(true);
+    }
+    
     private void enableUpdateDeleteBtn(boolean option) {
         if (!option) {
             btnUpdate.setText("Add New Product");
@@ -237,10 +284,9 @@ public class ProductPage extends javax.swing.JPanel {
         btnDelete.setEnabled(option);
     }
     
-    private void updateTable() {
-        this.dfTable = (DefaultTableModel)tblProduct.getModel();
-        this.allProduct = DAO.readAll("build/classes/main/resource/Product.txt");
-        for (String i: allProduct) {
+    private void loadData() {
+        this.allProduct = Product.loadProduct();
+        for (String i: this.allProduct) {
             String[] allProductArr = i.split(",");
             for (String productArr: allProductArr) {
                 String[] details = productArr.split(";");
@@ -259,12 +305,24 @@ public class ProductPage extends javax.swing.JPanel {
         }
     }
     
+    public void clearAll() {
+        txtSearchProduct.setText("");
+        txtCode.setText("");
+        txtName.setText("");
+        txtQuantity.setText("");
+        txtPrice.setText("");
+        tblProduct.clearSelection();
+        this.product = new Product();
+        this.enableUpdateDeleteBtn(false);
+    }
+    
+    public void setFrame(Frame frame) {
+//        this.frame = frame;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cmbSearchOption;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCode;
