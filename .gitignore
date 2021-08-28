@@ -1,1 +1,4 @@
 private.properties
+nbproject/
+build/
+*.class
