@@ -27,6 +27,7 @@ public class frame extends javax.swing.JFrame {
         userLogin1 = new main.gui.userLogin();
         adminMenu1 = new main.gui.adminMenu();
         customerMenu3 = new main.gui.customerMenu();
+        productPage1 = new main.gui.ProductPage();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
@@ -44,6 +45,7 @@ public class frame extends javax.swing.JFrame {
         jTabbedPane2.addTab("tab1", userLogin1);
         jTabbedPane2.addTab("tab2", adminMenu1);
         jTabbedPane2.addTab("tab3", customerMenu3);
+        jTabbedPane2.addTab("tab4", productPage1);
 
         getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, 750));
 
@@ -89,6 +91,7 @@ public class frame extends javax.swing.JFrame {
     public main.gui.adminMenu adminMenu1;
     public main.gui.customerMenu customerMenu3;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private main.gui.ProductPage productPage1;
     public main.gui.userLogin userLogin1;
     // End of variables declaration//GEN-END:variables
 

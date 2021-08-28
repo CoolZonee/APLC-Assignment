@@ -1,4 +1,5 @@
 package main.gui;
+import javax.swing.JOptionPane;
 import main.java.*;
 
 public class customerMenu extends javax.swing.JPanel {
@@ -166,9 +167,14 @@ public class customerMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnLoginCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginCustomerActionPerformed
-        this.frame.userLogin1.resetCredentialField();
-        this.frame.changePages(0);
-        this.frame.userLogin1.btnLogin.requestFocus();
+        int result = JOptionPane.showConfirmDialog(frame,"Are you sure you want to logout?", "Logout Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        if(result == JOptionPane.YES_OPTION){
+            this.frame.userLogin1.resetCredentialField();
+            this.frame.changePages(0);
+            this.frame.userLogin1.btnLogin.requestFocus();
+        }else if (result == JOptionPane.NO_OPTION){
+           this.frame.changePages(2);
+        }
         
         
     }//GEN-LAST:event_btnReturnLoginCustomerActionPerformed
