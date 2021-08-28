@@ -1,19 +1,38 @@
 package main.gui;
 
 
+import java.awt.Font;
 import main.java.*;
 
 public class userLogin extends javax.swing.JPanel {
 
     public userLogin() {
         initComponents();
-        lblInvalidCredentials.setVisible(false);
+        resetCredentialField();
     }
     public void setFrame(frame frame) {
         this.frame = frame;
     }
     public void clearInvalidCredentials(){
         lblInvalidCredentials.setVisible(false);
+    }
+    public void resetCredentialField(){
+        lblInvalidCredentials.setVisible(false);
+        txtUsernameLogin.setFont(fontItalics);
+        txtPasswordLogin.setFont(fontItalics);
+        //txtPasswordLogin.setEchoChar((char)0);
+        txtUsernameLogin.setText("Enter username here");
+        txtPasswordLogin.setText("Enter password here");
+        showPasswordState();
+            
+        
+    }
+    private void showPasswordState(){
+        if (chkShowPassword.isSelected()==true || String.valueOf(txtPasswordLogin.getPassword()).equals("Enter password here") ){
+            txtPasswordLogin.setEchoChar((char)0);
+        }else{
+            txtPasswordLogin.setEchoChar('*');
+        }
     }
 
     /**
@@ -29,9 +48,32 @@ public class userLogin extends javax.swing.JPanel {
         txtPasswordLogin = new javax.swing.JPasswordField();
         lblInvalidCredentials = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
+        chkShowPassword = new javax.swing.JCheckBox();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtUsernameLogin.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        txtUsernameLogin.setText("Enter username here");
+        txtUsernameLogin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUsernameLoginFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUsernameLoginFocusLost(evt);
+            }
+        });
         add(txtUsernameLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 270, 39));
+
+        txtPasswordLogin.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        txtPasswordLogin.setText("Enter password here");
+        txtPasswordLogin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPasswordLoginFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPasswordLoginFocusLost(evt);
+            }
+        });
         add(txtPasswordLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 270, 40));
 
         lblInvalidCredentials.setForeground(new java.awt.Color(255, 51, 51));
@@ -46,6 +88,14 @@ public class userLogin extends javax.swing.JPanel {
             }
         });
         add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 460, 102, 38));
+
+        chkShowPassword.setText("Show?");
+        chkShowPassword.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkShowPasswordStateChanged(evt);
+            }
+        });
+        add(chkShowPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 420, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -69,15 +119,51 @@ public class userLogin extends javax.swing.JPanel {
                 this.frame.customerMenu3.setCustomer(this.customer);
                 this.frame.changePages(2);
             }
-            txtUsernameLogin.setText("");
-            txtPasswordLogin.setText("");
         }else{
+            resetCredentialField();
             lblInvalidCredentials.setVisible(true);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void txtUsernameLoginFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameLoginFocusGained
+        if (txtUsernameLogin.getText().equals("Enter username here")){
+            txtUsernameLogin.setText("");
+            txtUsernameLogin.setFont(fontPlain);
+        }
+    }//GEN-LAST:event_txtUsernameLoginFocusGained
+
+    private void txtPasswordLoginFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordLoginFocusGained
+        if(String.valueOf(txtPasswordLogin.getPassword()).equals("Enter password here")){
+            txtPasswordLogin.setText("");
+            txtPasswordLogin.setFont(fontPlain);
+        }
+        showPasswordState();
+    }//GEN-LAST:event_txtPasswordLoginFocusGained
+
+    private void chkShowPasswordStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkShowPasswordStateChanged
+        showPasswordState();
+    }//GEN-LAST:event_chkShowPasswordStateChanged
+
+    private void txtUsernameLoginFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameLoginFocusLost
+        if(txtUsernameLogin.getText().equals("")){
+            txtUsernameLogin.setFont(fontItalics);
+            txtUsernameLogin.setText("Enter username here");
+                           
+        }
+    }//GEN-LAST:event_txtUsernameLoginFocusLost
+
+    private void txtPasswordLoginFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordLoginFocusLost
+        if(String.valueOf(txtPasswordLogin.getPassword()).equals("")){
+            txtPasswordLogin.setFont(fontItalics);
+            txtPasswordLogin.setEchoChar((char)0);
+            txtPasswordLogin.setText("Enter password here");
+                           
+        }
+    }//GEN-LAST:event_txtPasswordLoginFocusLost
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
+    public javax.swing.JButton btnLogin;
+    private javax.swing.JCheckBox chkShowPassword;
     private javax.swing.JLabel lblInvalidCredentials;
     private javax.swing.JPasswordField txtPasswordLogin;
     private javax.swing.JTextField txtUsernameLogin;
@@ -86,6 +172,7 @@ public class userLogin extends javax.swing.JPanel {
     admin admin=new admin();
     customer customer=new customer();
     frame frame;
-    
+    Font fontPlain=new Font("Tahoma", Font.PLAIN,11);
+    Font fontItalics=new Font("Tahoma", Font.ITALIC,11);
 }
 

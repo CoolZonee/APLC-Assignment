@@ -8,8 +8,7 @@ public class user {
    
     
     public boolean authenticate(String username, String password){
-        List<String> authenticationData=DAO.readAll("build/classes/main/resource/userDetails.txt");
-        System.out.println(authenticationData);
+        List<String> authenticationData=DAO.readAll("src/main/resource/userDetails.txt");
         for(String line:authenticationData){
             String[] credentials=line.split(";");
             if (credentials[0].equals(username) && credentials[1].equals(password)){

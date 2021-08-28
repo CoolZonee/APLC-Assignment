@@ -16,7 +16,7 @@ public class frame extends javax.swing.JFrame {
     
     public void changePages(int tab){
         this.jTabbedPane2.setSelectedIndex(tab);
-        this.userLogin1.clearInvalidCredentials();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -35,6 +35,7 @@ public class frame extends javax.swing.JFrame {
 
         jTabbedPane2.setToolTipText("");
 
+        userLogin1.setRequestFocusEnabled(false);
         userLogin1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 userLogin1PropertyChange(evt);
@@ -42,7 +43,6 @@ public class frame extends javax.swing.JFrame {
         });
         jTabbedPane2.addTab("tab1", userLogin1);
         jTabbedPane2.addTab("tab2", adminMenu1);
-
         jTabbedPane2.addTab("tab3", customerMenu3);
 
         getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, 750));
@@ -77,7 +77,7 @@ public class frame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frame().setVisible(true);
-                System.out.println(this);
+
                 
                 
 
@@ -89,7 +89,7 @@ public class frame extends javax.swing.JFrame {
     public main.gui.adminMenu adminMenu1;
     public main.gui.customerMenu customerMenu3;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private main.gui.userLogin userLogin1;
+    public main.gui.userLogin userLogin1;
     // End of variables declaration//GEN-END:variables
 
 }

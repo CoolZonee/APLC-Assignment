@@ -177,7 +177,9 @@ public class adminMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnLoginAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginAdminActionPerformed
+        this.frame.userLogin1.resetCredentialField();
         this.frame.changePages(0);
+        this.frame.userLogin1.btnLogin.requestFocus();
         
         
     }//GEN-LAST:event_btnReturnLoginAdminActionPerformed

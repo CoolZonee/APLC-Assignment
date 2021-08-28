@@ -166,7 +166,10 @@ public class customerMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnLoginCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginCustomerActionPerformed
+        this.frame.userLogin1.resetCredentialField();
         this.frame.changePages(0);
+        this.frame.userLogin1.btnLogin.requestFocus();
+        
         
     }//GEN-LAST:event_btnReturnLoginCustomerActionPerformed
 
