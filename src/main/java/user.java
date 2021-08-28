@@ -4,9 +4,22 @@ import java.util.List;
 
 public class User {
     String role, username, password, sex, name, age;
+    private boolean isNew = true;    
+    public static String resource = "src/main/resource/userDetails.txt";
+
+    public User() {}
+    
+    public User(String role, String username, String password, String sex, String name, String age) {
+        this.role = role;
+        this.username = username;
+        this.password = password;
+        this.sex = sex;
+        this.name = name;
+        this.age = age;
+    }
     
     public boolean authenticate(String username, String password){
-        List<String> authenticationData = DAO.readAll("build/classes/main/resource/userDetails.txt");
+        List<String> authenticationData = DAO.readAll(resource);
         for(String line: authenticationData){
             String[] credentials = line.split(";");
             if (credentials[0].equals(username) && credentials[1].equals(password)){
@@ -21,11 +34,6 @@ public class User {
         }
         return false;
     }
-
-//    public void removeProduct() {
-//        List<String> allProduct = DAO.readAll("build/classes/main/resource/Product.txt");
-//        
-//    }
     
     public void setRole(String role) {
         this.role = role;
@@ -51,6 +59,10 @@ public class User {
         this.age = age;
     }
 
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -73,5 +85,19 @@ public class User {
       
     public String getRole(){
         return this.role;
+    }
+    
+    public boolean getIsNew() {
+        return this.isNew;
+    }
+    
+    @Override
+    public String toString() {
+        return this.username + ";" +
+                this.password + ";" +
+                this.role + ";" +
+                this.name + ";" +
+                this.age + ";" +
+                this.sex;
     }
 }

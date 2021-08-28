@@ -18,9 +18,19 @@ public class Product {
         this.price = price;
     }
 
-    public static List<String> loadProduct() {
+    public static Product[] loadProduct() {
         List<String> allProduct = DAO.readAll(resource);
-        return allProduct;
+        Product[] products = new Product[allProduct.size()];
+        for (int i = 0; i < allProduct.size(); i++) {              
+            String[] details = allProduct.get(i).split(";");
+            products[i] = new Product(
+                    details[0], 
+                    details[1], 
+                    Integer.parseInt(details[2]), 
+                    Double.parseDouble(details[3])
+            );
+        }
+        return products;
     }
     
     public void addProduct() {
@@ -50,14 +60,6 @@ public class Product {
         }
         DAO.rewrite(allProduct, resource);
 
-    }
-    
-    public void addQuantity(int addQuantity) {
-        this.quantity += addQuantity;
-    }
-    
-    public void minusQuantity(int minusQuantity) {
-        this.quantity -= minusQuantity;
     }
     
     // Setter
@@ -102,6 +104,7 @@ public class Product {
         return this.isNew;
     }
     
+    @Override
     public String toString() {
         return this.getCode() + ";"
                 + this.getName() + ";"

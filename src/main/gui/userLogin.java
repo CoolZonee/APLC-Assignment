@@ -51,7 +51,7 @@ public class userLogin extends javax.swing.JPanel {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
         if (user.authenticate(txtUsernameLogin.getText(),String.valueOf(txtPasswordLogin.getPassword()))==true){
-            if ("A".equals(user.getRole())){
+            if ("A".equals(user.getRole())){  
                 admin.setUsername(user.getUsername());
                 admin.setName(user.getName());
                 admin.setAge(user.getAge());
@@ -83,8 +83,8 @@ public class userLogin extends javax.swing.JPanel {
     private javax.swing.JTextField txtUsernameLogin;
     // End of variables declaration//GEN-END:variables
     User user=new User();
-    admin admin=new admin();
-    customer customer=new customer();
+    Admin admin=new Admin();
+    Customer customer=new Customer();
     frame frame;
     
 }
