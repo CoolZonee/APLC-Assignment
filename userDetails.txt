@@ -1,2 +1,0 @@
-JoshuaLotion;1234abcd;A;Jamie Yong;17;M;
-WeiJiee;1212abab;C;Chia Wei Jie;M;

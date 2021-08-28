@@ -16,7 +16,7 @@ public class adminMenu extends javax.swing.JPanel {
     public void setFrame(frame frame) {
         this.frame = frame;
     }
-    public void setAdmin(admin admin){
+    public void setAdmin(Admin admin){
         this.admin=admin;
         this.initAdditionalComponents();
     }
@@ -199,5 +199,5 @@ public class adminMenu extends javax.swing.JPanel {
     private javax.swing.JTextField txtUsernameAdminPage;
     // End of variables declaration//GEN-END:variables
     frame frame;
-    admin admin;
+    Admin admin;
 }

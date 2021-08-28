@@ -1,4 +1,7 @@
-private.properties
-nbproject/
+nbproject/private/
 build/
-*.class
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml

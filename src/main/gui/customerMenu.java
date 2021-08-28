@@ -19,7 +19,7 @@ public class customerMenu extends javax.swing.JPanel {
     public void setFrame(frame frame) {
         this.frame = frame;
     }
-    public void setCustomer(customer customer){
+    public void setCustomer(Customer customer){
         this.customer=customer;
         this.initAdditionalComponents();
     }
@@ -185,5 +185,5 @@ public class customerMenu extends javax.swing.JPanel {
     private javax.swing.JTextField txtUsernameCustomerPage;
     // End of variables declaration//GEN-END:variables
     frame frame;
-    customer customer;
+    Customer customer;
 }

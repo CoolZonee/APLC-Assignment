@@ -11,27 +11,27 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import main.java.Admin;
-import main.java.Product;
 import main.java.TableSortFilter;
+import main.java.User;
 
-public class ProductPage extends javax.swing.JPanel {
+public class ManageCustomerPage extends javax.swing.JPanel {
     private DefaultTableModel dfTable;
     private TableRowSorter<TableModel> rowSorter;
-    private Product product = new Product();
+    private User user = new User();
     private int selectedRow;
     private Frame frame;
     Admin admin = new Admin();
     
-    public ProductPage() {
+    public ManageCustomerPage() {
         initComponents();
-        this.dfTable = (DefaultTableModel)tblProduct.getModel();
-        this.rowSorter = new TableRowSorter<>(tblProduct.getModel());
+        this.dfTable = (DefaultTableModel)tblCustomer.getModel();
+        this.rowSorter = new TableRowSorter<>(tblCustomer.getModel());
         // Disable sorting function
-        for(int i = 0; i < tblProduct.getColumnCount(); i++) {
+        for(int i = 0; i < tblCustomer.getColumnCount(); i++) {
             this.rowSorter.setSortable(i, false);
         }
-        this.tblProduct.setRowSorter(rowSorter);
-        TableSortFilter.addFilter(rowSorter, tblProduct, txtSearchProduct);
+        this.tblCustomer.setRowSorter(rowSorter);
+        TableSortFilter.addFilter(rowSorter, tblCustomer, txtSearchProduct);
         this.enableUpdateDeleteBtn(false);
         this.loadData();
     }
@@ -46,35 +46,36 @@ public class ProductPage extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblProduct = new javax.swing.JTable();
+        tblCustomer = new javax.swing.JTable();
         pnlProductDetails = new javax.swing.JPanel();
-        lblCode = new javax.swing.JLabel();
+        lblUsername = new javax.swing.JLabel();
         lblName = new javax.swing.JLabel();
-        lblQuantity = new javax.swing.JLabel();
-        lblPrice = new javax.swing.JLabel();
-        txtCode = new javax.swing.JTextField();
-        txtQuantity = new javax.swing.JTextField();
-        txtPrice = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtName = new javax.swing.JTextArea();
+        lblSex = new javax.swing.JLabel();
+        lblAge = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        txtAge = new javax.swing.JTextField();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        txtName = new javax.swing.JTextField();
+        lblRole = new javax.swing.JLabel();
+        cmbRole = new javax.swing.JComboBox<>();
+        cmbSex = new javax.swing.JComboBox<>();
         txtSearchProduct = new javax.swing.JTextField();
 
-        tblProduct.setModel(new javax.swing.table.DefaultTableModel(
+        tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Code", "Name", "Quantity", "Price (RM)"
+                "Username", "Name", "Role", "Sex", "Age"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -85,37 +86,34 @@ public class ProductPage extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblProductMouseClicked(evt);
+                tblCustomerMouseClicked(evt);
             }
         });
-        tblProduct.addKeyListener(new java.awt.event.KeyAdapter() {
+        tblCustomer.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tblProductKeyReleased(evt);
+                tblCustomerKeyReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(tblProduct);
+        jScrollPane1.setViewportView(tblCustomer);
 
-        pnlProductDetails.setBorder(javax.swing.BorderFactory.createTitledBorder("Product Details"));
+        pnlProductDetails.setBorder(javax.swing.BorderFactory.createTitledBorder("User Details"));
         pnlProductDetails.setToolTipText("");
         pnlProductDetails.setName(""); // NOI18N
 
-        lblCode.setText("Code:");
+        lblUsername.setText("Username:");
 
         lblName.setText("Name:");
 
-        lblQuantity.setText("Quantity:");
+        lblSex.setText("Sex:");
 
-        lblPrice.setText("Price:");
+        lblAge.setText("Age:");
 
-        txtCode.setToolTipText("");
+        txtUsername.setToolTipText("");
 
-        txtName.setColumns(20);
-        txtName.setRows(5);
-        jScrollPane2.setViewportView(txtName);
-
-        btnUpdate.setText("Add New Product");
+        btnUpdate.setText("Add New Customer");
+        btnUpdate.setActionCommand("Add New User");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateActionPerformed(evt);
@@ -136,6 +134,14 @@ public class ProductPage extends javax.swing.JPanel {
             }
         });
 
+        txtName.setToolTipText("");
+
+        lblRole.setText("Role:");
+
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select Role-", "A", "C" }));
+
+        cmbSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select Sex-", "M", "F" }));
+
         javax.swing.GroupLayout pnlProductDetailsLayout = new javax.swing.GroupLayout(pnlProductDetails);
         pnlProductDetails.setLayout(pnlProductDetailsLayout);
         pnlProductDetailsLayout.setHorizontalGroup(
@@ -144,23 +150,25 @@ public class ProductPage extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblName)
-                    .addComponent(lblCode))
+                    .addComponent(lblUsername)
+                    .addComponent(lblRole))
                 .addGap(28, 28, 28)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCode)
-                    .addComponent(jScrollPane2))
-                .addGap(111, 111, 111)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                    .addComponent(cmbRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(112, 112, 112)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlProductDetailsLayout.createSequentialGroup()
-                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblPrice)
-                            .addComponent(lblQuantity))
-                        .addGap(34, 34, 34)
+                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSex)
+                            .addComponent(lblAge))
+                        .addGap(33, 33, 33)
                         .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                            .addComponent(txtPrice)))
+                            .addComponent(txtAge, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                            .addComponent(cmbSex, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -169,35 +177,40 @@ public class ProductPage extends javax.swing.JPanel {
         pnlProductDetailsLayout.setVerticalGroup(
             pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProductDetailsLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(5, 5, 5)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblCode)
-                        .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblUsername)
+                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblSex, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlProductDetailsLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblName)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlProductDetailsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblName)
+                            .addComponent(lblAge, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRole))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(pnlProductDetailsLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
+
+        btnUpdate.getAccessibleContext().setAccessibleName("Add New User");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -207,9 +220,9 @@ public class ProductPage extends javax.swing.JPanel {
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlProductDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1180, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1205, Short.MAX_VALUE)
                     .addComponent(txtSearchProduct))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,113 +237,121 @@ public class ProductPage extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
+    private void tblCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustomerMouseClicked
         this.changeSelectedData();
-    }//GEN-LAST:event_tblProductMouseClicked
+    }//GEN-LAST:event_tblCustomerMouseClicked
 
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+    private void tblCustomerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblCustomerKeyReleased
+        this.changeSelectedData();
+    }//GEN-LAST:event_tblCustomerKeyReleased
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        this.user.setUsername(txtUsername.getText());
+        this.user.setName(txtName.getText());
+        this.user.setRole(cmbRole.getSelectedItem().toString());
+        this.user.setSex(cmbSex.getSelectedItem().toString());
+        this.user.setAge(txtAge.getText());
+        if (this.user.getIsNew()) {
+            this.admin.addUser(this.user);
+            Vector vector = new Vector();
+            vector.add(this.user.getUsername());
+            vector.add(this.user.getName());
+            vector.add(this.user.getRole());
+            vector.add(this.user.getSex());
+            vector.add(this.user.getAge());
+            this.dfTable.addRow(vector);
+        } else {
+            this.admin.updateUser(this.user);
+            this.dfTable.setRowCount(0);
+            this.loadData();
+        }
+
         this.clearAll();
-    }//GEN-LAST:event_btnClearActionPerformed
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        this.admin.removeProduct(this.product);
+        this.admin.removeUser(this.user);
         this.dfTable.removeRow(this.selectedRow);
         this.clearAll();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void tblProductKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProductKeyReleased
-        this.changeSelectedData();
-    }//GEN-LAST:event_tblProductKeyReleased
-
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        this.product.setCode(txtCode.getText());
-        this.product.setName(txtName.getText());
-        this.product.setQuantity(Integer.parseInt(txtQuantity.getText()));
-        this.product.setPrice(Double.parseDouble(txtPrice.getText()));
-        if (this.product.getIsNew()) {
-            this.admin.addProduct(this.product);
-            Vector vector = new Vector();
-            vector.add(this.product.getCode());
-            vector.add(this.product.getName());
-            vector.add(this.product.getQuantity());
-            vector.add(this.product.getPrice());
-            this.dfTable.addRow(vector);
-        } else {
-            this.admin.updateProduct(this.product);
-            this.dfTable.setRowCount(0);
-            this.loadData();
-        }
-        
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         this.clearAll();
-    }//GEN-LAST:event_btnUpdateActionPerformed
-   
+    }//GEN-LAST:event_btnClearActionPerformed
+    
     private void changeSelectedData() {
-        this.selectedRow = tblProduct.getSelectedRow();
-        this.product.setIsNew(false);
-        this.product.setCode(this.dfTable.getValueAt(this.selectedRow, 0).toString());
-        this.product.setName(this.dfTable.getValueAt(this.selectedRow, 1).toString());
-        this.product.setQuantity(Integer.parseInt(this.dfTable.getValueAt(this.selectedRow, 2).toString()));
-        this.product.setPrice(Double.parseDouble(this.dfTable.getValueAt(this.selectedRow, 3).toString()));
-        txtCode.setText(this.product.getCode());
-        txtName.setText(this.product.getName());
-        txtQuantity.setText(String.valueOf(this.product.getQuantity()));
-        txtPrice.setText(String.valueOf(this.product.getPrice()));
+        this.selectedRow = tblCustomer.getSelectedRow();
+        this.user.setIsNew(false);
+        this.user.setUsername(this.dfTable.getValueAt(this.selectedRow, 0).toString());
+        this.user.setName(this.dfTable.getValueAt(this.selectedRow, 1).toString());
+        this.user.setRole(this.dfTable.getValueAt(this.selectedRow, 2).toString());
+        this.user.setSex(this.dfTable.getValueAt(this.selectedRow, 3).toString());
+        this.user.setAge(this.dfTable.getValueAt(this.selectedRow, 4).toString());
+        txtUsername.setText(this.user.getUsername());
+        txtName.setText(this.user.getName());
+        cmbRole.setSelectedItem(this.user.getRole());
+        cmbSex.setSelectedItem(this.user.getSex());
+        txtAge.setText(String.valueOf(this.user.getAge()));
         this.enableUpdateDeleteBtn(true);
     }
     
     private void enableUpdateDeleteBtn(boolean option) {
         if (!option) {
-            btnUpdate.setText("Add New Product");
+            btnUpdate.setText("Add New User");
         } else {
-            btnUpdate.setText("Update Product Details");
+            btnUpdate.setText("Update User Details");
         }
         btnDelete.setEnabled(option);
         btnDelete.setEnabled(option);
-        txtCode.setEditable(!option);
+        txtUsername.setEditable(!option);
     }
     
     private void loadData() {
-        Product[] products = this.admin.loadProduct();
-        for (Product product: products) {
+        User[] users = this.admin.loadUser();
+        for (User user: users) {
             Vector vector = new Vector();
-            vector.add(product.getCode());
-            vector.add(product.getName());
-            vector.add(product.getQuantity());
-            vector.add(product.getPrice());
+            vector.add(user.getUsername());
+            vector.add(user.getName());
+            vector.add(user.getRole());
+            vector.add(user.getSex());
+            vector.add(user.getAge());
             this.dfTable.addRow(vector);
         }
     }
     
     public void clearAll() {
         txtSearchProduct.setText("");
-        txtCode.setText("");
+        txtUsername.setText("");
         txtName.setText("");
-        txtQuantity.setText("");
-        txtPrice.setText("");
-        tblProduct.clearSelection();
-        this.product = new Product();
+        cmbRole.setSelectedIndex(0);
+        cmbSex.setSelectedIndex(0);
+        txtAge.setText("");
+        tblCustomer.clearSelection();
+        this.user = new User();
         this.enableUpdateDeleteBtn(false);
     }
     
     public void setFrame(Frame frame) {
         this.frame = frame;
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cmbRole;
+    private javax.swing.JComboBox<String> cmbSex;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblCode;
+    private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblPrice;
-    private javax.swing.JLabel lblQuantity;
+    private javax.swing.JLabel lblRole;
+    private javax.swing.JLabel lblSex;
+    private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel pnlProductDetails;
-    private javax.swing.JTable tblProduct;
-    private javax.swing.JTextField txtCode;
-    private javax.swing.JTextArea txtName;
-    private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtQuantity;
+    private javax.swing.JTable tblCustomer;
+    private javax.swing.JTextField txtAge;
+    private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtSearchProduct;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
