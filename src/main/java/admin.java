@@ -1,7 +1,6 @@
 package main.java;
 
 import java.util.List;
-import static main.java.Customer.resource;
 
 public class Admin extends User{
 
