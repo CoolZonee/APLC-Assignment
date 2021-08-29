@@ -1,6 +1,6 @@
 package main.gui;
 import javax.swing.JOptionPane;
-import main.java.*;
+
 
 public class CustomerMenu extends javax.swing.JPanel {
 
