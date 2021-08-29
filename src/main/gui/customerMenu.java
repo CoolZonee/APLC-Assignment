@@ -2,28 +2,23 @@ package main.gui;
 import javax.swing.JOptionPane;
 import main.java.*;
 
-public class customerMenu extends javax.swing.JPanel {
+public class CustomerMenu extends javax.swing.JPanel {
 
-    /**
-     * Creates new form adminMenu
-     */
-    
-    public customerMenu() {
+
+    Frame Frame;
+    public CustomerMenu() {
         initComponents();
     }
-    private void initAdditionalComponents(){
-        txtUsernameCustomerPage.setText(this.customer.getUsername());
-        txtNameCustomerPage.setText(this.customer.getName());
-        txtAgeCustomerPage.setText(this.customer.getAge());
+    public void initAdditionalComponents(){
+        txtUsernameCustomerPage.setText(this.Frame.Customer.getUsername());
+        txtNameCustomerPage.setText(this.Frame.Customer.getName());
+        txtAgeCustomerPage.setText(this.Frame.Customer.getAge());
         
     }
-    public void setFrame(frame frame) {
-        this.frame = frame;
+    public void setFrame(Frame Frame) {
+        this.Frame = Frame;
     }
-    public void setCustomer(customer customer){
-        this.customer=customer;
-        this.initAdditionalComponents();
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,13 +162,13 @@ public class customerMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnLoginCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginCustomerActionPerformed
-        int result = JOptionPane.showConfirmDialog(frame,"Are you sure you want to logout?", "Logout Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(Frame,"Are you sure you want to logout?", "Logout Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(result == JOptionPane.YES_OPTION){
-            this.frame.userLogin1.resetCredentialField();
-            this.frame.changePages(0);
-            this.frame.userLogin1.btnLogin.requestFocus();
+            this.Frame.UserLogin.resetCredentialField();
+            this.Frame.changePages(0);
+            this.Frame.UserLogin.btnLogin.requestFocus();
         }else if (result == JOptionPane.NO_OPTION){
-           this.frame.changePages(2);
+           this.Frame.changePages(2);
         }
         
         
@@ -193,6 +188,5 @@ public class customerMenu extends javax.swing.JPanel {
     private javax.swing.JTextField txtNameCustomerPage;
     private javax.swing.JTextField txtUsernameCustomerPage;
     // End of variables declaration//GEN-END:variables
-    frame frame;
-    customer customer;
+    
 }

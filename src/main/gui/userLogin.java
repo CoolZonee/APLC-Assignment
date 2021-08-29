@@ -2,17 +2,18 @@ package main.gui;
 
 
 import java.awt.Font;
-import javax.swing.JOptionPane;
 import main.java.*;
 
-public class userLogin extends javax.swing.JPanel {
-
-    public userLogin() {
+public class UserLogin extends javax.swing.JPanel {
+    Frame Frame;
+    Font fontPlain=new Font("Tahoma", Font.PLAIN,11);
+    Font fontItalics=new Font("Tahoma", Font.ITALIC,11);    
+    public UserLogin() {
         initComponents();
         resetCredentialField();
     }
-    public void setFrame(frame frame) {
-        this.frame = frame;
+    public void setFrame(Frame Frame) {
+        this.Frame = Frame;
     }
     public void clearInvalidCredentials(){
         lblInvalidCredentials.setVisible(false);
@@ -183,24 +184,16 @@ public class userLogin extends javax.swing.JPanel {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
-        if (user.authenticate(txtUsernameLogin.getText(),String.valueOf(txtPasswordLogin.getPassword()))==true){
-            if ("A".equals(user.getRole())){
-                admin.setUsername(user.getUsername());
-                admin.setName(user.getName());
-                admin.setAge(user.getAge());
-                admin.setPassword(user.getPassword());
-                admin.setSex(user.getSex());
-                this.frame.adminMenu1.setAdmin(this.admin);
-                this.frame.changePages(1);
+        if (Frame.User.authenticate(txtUsernameLogin.getText(),String.valueOf(txtPasswordLogin.getPassword()))==true){
+            if ("A".equals(Frame.User.getRole())){
+                Frame.Admin=new Admin(Frame.User.getRole(),Frame.User.getUsername(),Frame.User.getPassword(), Frame.User.getSex(), Frame.User.getName(), Frame.User.getAge());
+                this.Frame.AdminMenu.initAdditionalComponents();
+                this.Frame.changePages(1);
 
             }else{
-                customer.setUsername(user.getUsername());
-                customer.setName(user.getName());
-                customer.setAge(user.getAge());
-                customer.setPassword(user.getPassword());
-                customer.setSex(user.getSex());
-                this.frame.customerMenu3.setCustomer(this.customer);
-                this.frame.changePages(2);
+                Frame.Customer=new Customer(Frame.User.getRole(),Frame.User.getUsername(),Frame.User.getPassword(), Frame.User.getSex(), Frame.User.getName(), Frame.User.getAge());
+                this.Frame.CustomerMenu.initAdditionalComponents();
+                this.Frame.changePages(2);
             }
         }else{
             resetCredentialField();
@@ -257,11 +250,7 @@ public class userLogin extends javax.swing.JPanel {
     private javax.swing.JPasswordField txtPasswordLogin;
     private javax.swing.JTextField txtUsernameLogin;
     // End of variables declaration//GEN-END:variables
-    user user=new user();
-    admin admin=new admin();
-    customer customer=new customer();
-    frame frame;
-    Font fontPlain=new Font("Tahoma", Font.PLAIN,11);
-    Font fontItalics=new Font("Tahoma", Font.ITALIC,11);
+
+    
 }
 

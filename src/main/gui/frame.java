@@ -1,60 +1,61 @@
 package main.gui;
+import main.java.*;
+public class Frame extends javax.swing.JFrame {
 
-public class frame extends javax.swing.JFrame {
-
-
-    public frame() {  
+    User User=new User();
+    Admin Admin;
+    Customer Customer;
+    public Frame() {  
         initComponents();
-        passFrame();
+        setFrame();
 
     }
-    public void passFrame(){
-        this.userLogin1.setFrame(this);
-        this.adminMenu1.setFrame(this);
-        this.customerMenu3.setFrame(this);
+    public void setFrame(){
+        this.UserLogin.setFrame(this);
+        this.AdminMenu.setFrame(this);
+        this.CustomerMenu.setFrame(this);
     }
     
     public void changePages(int tab){
         this.jTabbedPane2.setSelectedIndex(tab);
 
     }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
-        userLogin1 = new main.gui.userLogin();
-        adminMenu1 = new main.gui.adminMenu();
-        customerMenu3 = new main.gui.customerMenu();
-        productPage1 = new main.gui.ProductPage();
+        UserLogin = new main.gui.UserLogin();
+        AdminMenu = new main.gui.AdminMenu();
+        CustomerMenu = new main.gui.CustomerMenu();
+        productPage = new main.gui.ProductPage();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTabbedPane2.setToolTipText("");
 
-        userLogin1.setRequestFocusEnabled(false);
-        userLogin1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        UserLogin.setRequestFocusEnabled(false);
+        UserLogin.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                userLogin1PropertyChange(evt);
+                UserLoginPropertyChange(evt);
             }
         });
-        jTabbedPane2.addTab("tab1", userLogin1);
-        jTabbedPane2.addTab("tab2", adminMenu1);
-        jTabbedPane2.addTab("tab3", customerMenu3);
-        jTabbedPane2.addTab("tab4", productPage1);
+        jTabbedPane2.addTab("tab1", UserLogin);
+        jTabbedPane2.addTab("tab2", AdminMenu);
+        jTabbedPane2.addTab("tab3", CustomerMenu);
+        jTabbedPane2.addTab("tab4", productPage);
 
         getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, 750));
 
         setBounds(0, 0, 1316, 799);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void userLogin1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_userLogin1PropertyChange
+    private void UserLoginPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_UserLoginPropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_userLogin1PropertyChange
+    }//GEN-LAST:event_UserLoginPropertyChange
 
     public static void main(String args[]) {
         try {
@@ -65,20 +66,21 @@ public class frame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frame().setVisible(true);
+                new Frame().setVisible(true);
 
                 
                 
@@ -88,11 +90,11 @@ public class frame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public main.gui.adminMenu adminMenu1;
-    public main.gui.customerMenu customerMenu3;
+    public main.gui.AdminMenu AdminMenu;
+    public main.gui.CustomerMenu CustomerMenu;
+    public main.gui.UserLogin UserLogin;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private main.gui.ProductPage productPage1;
-    public main.gui.userLogin userLogin1;
+    private main.gui.ProductPage productPage;
     // End of variables declaration//GEN-END:variables
 
 }

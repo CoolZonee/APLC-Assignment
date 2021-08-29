@@ -2,10 +2,12 @@ package main.java;
 
 import java.util.List;
 
-public class user {
+public class User {
     DAO DAO;
     String role, username, password, sex, name, age;
-   
+   public void User(){
+   }
+
     
     public boolean authenticate(String username, String password){
         List<String> authenticationData=DAO.readAll("src/main/resource/userDetails.txt");

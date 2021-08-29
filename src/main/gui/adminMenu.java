@@ -3,23 +3,19 @@ import javax.swing.JOptionPane;
 import main.java.*;
 
 
-public class adminMenu extends javax.swing.JPanel {
-
-    public adminMenu() {
+public class AdminMenu extends javax.swing.JPanel {
+    Frame Frame;
+    public AdminMenu() {
         initComponents();
     }
-    private void initAdditionalComponents(){
-        txtUsernameAdminPage.setText(this.admin.getUsername());
-        txtNameAdminPage.setText(this.admin.getName());
-        txtAgeAdminPage.setText(this.admin.getAge());
+    public void initAdditionalComponents(){
+        txtUsernameAdminPage.setText(this.Frame.Admin.getUsername());
+        txtNameAdminPage.setText(this.Frame.Admin.getName());
+        txtAgeAdminPage.setText(this.Frame.Admin.getAge());
         
     }
-    public void setFrame(frame frame) {
-        this.frame = frame;
-    }
-    public void setAdmin(admin admin){
-        this.admin=admin;
-        this.initAdditionalComponents();
+    public void setFrame(Frame frame) {
+        this.Frame = frame;
     }
  
     
@@ -183,18 +179,18 @@ public class adminMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnLoginAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginAdminActionPerformed
-        int result = JOptionPane.showConfirmDialog(frame,"Are you sure you want to logout?", "Logout Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(Frame,"Are you sure you want to logout?", "Logout Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(result == JOptionPane.YES_OPTION){
-            this.frame.userLogin1.resetCredentialField();
-            this.frame.changePages(0);
-            this.frame.userLogin1.btnLogin.requestFocus();
+            this.Frame.UserLogin.resetCredentialField();
+            this.Frame.changePages(0);
+            this.Frame.UserLogin.btnLogin.requestFocus();
         }else if (result == JOptionPane.NO_OPTION){
-           this.frame.changePages(1);
+           this.Frame.changePages(1);
         }
     }//GEN-LAST:event_btnReturnLoginAdminActionPerformed
 
     private void btnEditProductAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductAdminActionPerformed
-        this.frame.changePages(3);
+        this.Frame.changePages(3);
     }//GEN-LAST:event_btnEditProductAdminActionPerformed
 
 
@@ -213,6 +209,6 @@ public class adminMenu extends javax.swing.JPanel {
     private javax.swing.JTextField txtNameAdminPage;
     private javax.swing.JTextField txtUsernameAdminPage;
     // End of variables declaration//GEN-END:variables
-    frame frame;
-    admin admin;
+    
+
 }
