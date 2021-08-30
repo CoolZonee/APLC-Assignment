@@ -62,6 +62,8 @@ public class Product {
 
     }
     
+   
+    
     // Setter
     public void setCode(String code) {
         this.code = code;

@@ -31,6 +31,8 @@ public class frame extends javax.swing.JFrame {
         productPage = new main.gui.ProductPage();
         jPanel2 = new javax.swing.JPanel();
         manageCustomerPage2 = new main.gui.ManageCustomerPage();
+        jPanel3 = new javax.swing.JPanel();
+        orderProduct1 = new main.gui.OrderProduct();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
@@ -56,9 +58,14 @@ public class frame extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("tab5", jPanel2);
 
+        jPanel3.add(orderProduct1);
+
+        jTabbedPane2.addTab("tab6", jPanel3);
+
         getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, 750));
 
-        setBounds(0, 0, 1316, 799);
+        setSize(new java.awt.Dimension(1316, 799));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void userLogin1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_userLogin1PropertyChange
@@ -101,8 +108,10 @@ public class frame extends javax.swing.JFrame {
     public main.gui.customerMenu customerMenu3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane2;
     private main.gui.ManageCustomerPage manageCustomerPage2;
+    private main.gui.OrderProduct orderProduct1;
     private main.gui.ProductPage productPage;
     private main.gui.userLogin userLogin1;
     // End of variables declaration//GEN-END:variables

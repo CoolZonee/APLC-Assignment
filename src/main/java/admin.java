@@ -3,7 +3,6 @@ package main.java;
 import java.util.List;
 
 public class Admin extends User{
-
     public Admin() {}
     public Admin(
             String role, 

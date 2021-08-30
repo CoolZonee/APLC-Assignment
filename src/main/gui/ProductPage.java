@@ -291,7 +291,7 @@ public class ProductPage extends javax.swing.JPanel {
     
     private void loadData() {
         Product[] products = this.admin.loadProduct();
-        for (Product product: products) {
+            for (Product product: products) {
             Vector vector = new Vector();
             vector.add(product.getCode());
             vector.add(product.getName());
