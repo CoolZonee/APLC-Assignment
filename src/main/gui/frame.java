@@ -30,7 +30,7 @@ public class Frame extends javax.swing.JFrame {
         UserLogin = new main.gui.UserLogin();
         AdminMenu = new main.gui.AdminMenu();
         CustomerMenu = new main.gui.CustomerMenu();
-        productPage = new main.gui.ProductPage();
+        ProductPage = new main.gui.ProductPage();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -46,7 +46,7 @@ public class Frame extends javax.swing.JFrame {
         jTabbedPane2.addTab("tab1", UserLogin);
         jTabbedPane2.addTab("tab2", AdminMenu);
         jTabbedPane2.addTab("tab3", CustomerMenu);
-        jTabbedPane2.addTab("tab4", productPage);
+        jTabbedPane2.addTab("tab4", ProductPage);
 
         getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, 750));
 
@@ -92,9 +92,9 @@ public class Frame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public main.gui.AdminMenu AdminMenu;
     public main.gui.CustomerMenu CustomerMenu;
+    private main.gui.ProductPage ProductPage;
     public main.gui.UserLogin UserLogin;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private main.gui.ProductPage productPage;
     // End of variables declaration//GEN-END:variables
 
 }
