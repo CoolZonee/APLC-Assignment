@@ -4,18 +4,18 @@ import javax.swing.JOptionPane;
 
 
 public class AdminMenu extends javax.swing.JPanel {
-    Frame Frame;
+    Frame frame;
     public AdminMenu() {
         initComponents();
     }
     public void initAdditionalComponents(){
-        txtUsernameAdminPage.setText(this.Frame.Admin.getUsername());
-        txtNameAdminPage.setText(this.Frame.Admin.getName());
-        txtAgeAdminPage.setText(this.Frame.Admin.getAge());
+        txtUsernameAdminPage.setText(this.frame.admin.getUsername());
+        txtNameAdminPage.setText(this.frame.admin.getName());
+        txtAgeAdminPage.setText(this.frame.admin.getAge());
         
     }
     public void setFrame(Frame frame) {
-        this.Frame = frame;
+        this.frame = frame;
     }
  
     
@@ -179,18 +179,18 @@ public class AdminMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnLoginAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginAdminActionPerformed
-        int result = JOptionPane.showConfirmDialog(Frame,"Are you sure you want to logout?", "Logout Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(frame,"Are you sure you want to logout?", "Logout Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(result == JOptionPane.YES_OPTION){
-            this.Frame.UserLogin.resetCredentialField();
-            this.Frame.changePages(0);
-            this.Frame.UserLogin.btnLogin.requestFocus();
+            this.frame.userLogin.resetCredentialField();
+            this.frame.changePages(0);
+            this.frame.userLogin.btnLogin.requestFocus();
         }else if (result == JOptionPane.NO_OPTION){
-           this.Frame.changePages(1);
+           this.frame.changePages(1);
         }
     }//GEN-LAST:event_btnReturnLoginAdminActionPerformed
 
     private void btnEditProductAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductAdminActionPerformed
-        this.Frame.changePages(3);
+        this.frame.changePages(3);
     }//GEN-LAST:event_btnEditProductAdminActionPerformed
 
 

@@ -5,15 +5,15 @@ import java.awt.Font;
 import main.java.*;
 
 public class UserLogin extends javax.swing.JPanel {
-    Frame Frame;
+    Frame frame;
     Font fontPlain=new Font("Tahoma", Font.PLAIN,11);
     Font fontItalics=new Font("Tahoma", Font.ITALIC,11);    
     public UserLogin() {
         initComponents();
         resetCredentialField();
     }
-    public void setFrame(Frame Frame) {
-        this.Frame = Frame;
+    public void setFrame(Frame frame) {
+        this.frame = frame;
     }
     public void clearInvalidCredentials(){
         lblInvalidCredentials.setVisible(false);
@@ -184,16 +184,16 @@ public class UserLogin extends javax.swing.JPanel {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
-        if (Frame.User.authenticate(txtUsernameLogin.getText(),String.valueOf(txtPasswordLogin.getPassword()))==true){
-            if ("A".equals(Frame.User.getRole())){
-                Frame.Admin=new Admin(Frame.User.getRole(),Frame.User.getUsername(),Frame.User.getPassword(), Frame.User.getSex(), Frame.User.getName(), Frame.User.getAge());
-                this.Frame.AdminMenu.initAdditionalComponents();
-                this.Frame.changePages(1);
+        if (frame.user.authenticate(txtUsernameLogin.getText(),String.valueOf(txtPasswordLogin.getPassword()))==true){
+            if ("A".equals(frame.user.getRole())){
+                frame.admin=new Admin(frame.user.getRole(),frame.user.getUsername(),frame.user.getPassword(), frame.user.getSex(), frame.user.getName(), frame.user.getAge());
+                this.frame.adminMenu.initAdditionalComponents();
+                this.frame.changePages(1);
 
             }else{
-                Frame.Customer=new Customer(Frame.User.getRole(),Frame.User.getUsername(),Frame.User.getPassword(), Frame.User.getSex(), Frame.User.getName(), Frame.User.getAge());
-                this.Frame.CustomerMenu.initAdditionalComponents();
-                this.Frame.changePages(2);
+                frame.customer=new Customer(frame.user.getRole(),frame.user.getUsername(),frame.user.getPassword(), frame.user.getSex(), frame.user.getName(), frame.user.getAge());
+                this.frame.customerMenu.initAdditionalComponents();
+                this.frame.changePages(2);
             }
         }else{
             resetCredentialField();

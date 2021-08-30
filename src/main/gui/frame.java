@@ -1,54 +1,47 @@
 package main.gui;
+
 import main.java.*;
+
 public class Frame extends javax.swing.JFrame {
 
-    User User=new User();
-    Admin Admin;
-    Customer Customer;
-    public Frame() {  
+    User user = new User();
+    Admin admin;
+    Customer customer;
+
+    public Frame() {
         initComponents();
         setFrame();
 
     }
-    public void setFrame(){
-        this.UserLogin.setFrame(this);
-        this.AdminMenu.setFrame(this);
-        this.CustomerMenu.setFrame(this);
+
+    public void setFrame() {
+        this.userLogin.setFrame(this);
+        this.adminMenu.setFrame(this);
+        this.customerMenu.setFrame(this);
     }
-    
-    public void changePages(int tab){
-        this.jTabbedPane2.setSelectedIndex(tab);
+
+    public void changePages(int tab) {
+        this.jTabbedPane.setSelectedIndex(tab);
 
     }
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        UserLogin = new main.gui.UserLogin();
-        AdminMenu = new main.gui.AdminMenu();
-        CustomerMenu = new main.gui.CustomerMenu();
-        ProductPage = new main.gui.ProductPage();
+        jTabbedPane = new javax.swing.JTabbedPane();
+        userLogin = new main.gui.UserLogin();
+        adminMenu = new main.gui.AdminMenu();
+        customerMenu = new main.gui.CustomerMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPane2.setToolTipText("");
+        jTabbedPane.addTab("tab1", userLogin);
+        jTabbedPane.addTab("tab2", adminMenu);
+        jTabbedPane.addTab("tab3", customerMenu);
 
-        UserLogin.setRequestFocusEnabled(false);
-        UserLogin.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                UserLoginPropertyChange(evt);
-            }
-        });
-        jTabbedPane2.addTab("tab1", UserLogin);
-        jTabbedPane2.addTab("tab2", AdminMenu);
-        jTabbedPane2.addTab("tab3", CustomerMenu);
-        jTabbedPane2.addTab("tab4", ProductPage);
-
-        getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1290, 750));
+        getContentPane().add(jTabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 760));
 
         setBounds(0, 0, 1316, 799);
     }// </editor-fold>//GEN-END:initComponents
@@ -82,19 +75,15 @@ public class Frame extends javax.swing.JFrame {
             public void run() {
                 new Frame().setVisible(true);
 
-                
-                
-
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public main.gui.AdminMenu AdminMenu;
-    public main.gui.CustomerMenu CustomerMenu;
-    private main.gui.ProductPage ProductPage;
-    public main.gui.UserLogin UserLogin;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    public main.gui.AdminMenu adminMenu;
+    public main.gui.CustomerMenu customerMenu;
+    public javax.swing.JTabbedPane jTabbedPane;
+    public main.gui.UserLogin userLogin;
     // End of variables declaration//GEN-END:variables
 
 }

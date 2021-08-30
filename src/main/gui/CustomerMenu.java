@@ -1,28 +1,23 @@
 package main.gui;
-import main.java.*;
+import javax.swing.JOptionPane;
+
 
 public class CustomerMenu extends javax.swing.JPanel {
 
-    /**
-     * Creates new form adminMenu
-     */
-    
+    Frame frame;
     public CustomerMenu() {
         initComponents();
     }
-    private void initAdditionalComponents(){
-        txtUsernameCustomerPage.setText(this.customer.getUsername());
-        txtNameCustomerPage.setText(this.customer.getName());
-        txtAgeCustomerPage.setText(this.customer.getAge());
+    public void initAdditionalComponents(){
+        txtUsernameCustomerPage.setText(this.frame.customer.getUsername());
+        txtNameCustomerPage.setText(this.frame.customer.getName());
+        txtAgeCustomerPage.setText(this.frame.customer.getAge());
         
     }
     public void setFrame(Frame frame) {
         this.frame = frame;
     }
-    public void setCustomer(Customer customer){
-        this.customer=customer;
-        this.initAdditionalComponents();
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -166,7 +161,14 @@ public class CustomerMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnLoginCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginCustomerActionPerformed
-        //this.frame.changePages(0);
+        int result = JOptionPane.showConfirmDialog(frame,"Are you sure you want to logout?", "Logout Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        if(result == JOptionPane.YES_OPTION){
+            this.frame.userLogin.resetCredentialField();
+            this.frame.changePages(0);
+            this.frame.userLogin.btnLogin.requestFocus();
+        }else if (result == JOptionPane.NO_OPTION){
+           this.frame.changePages(2);
+        }
         
     }//GEN-LAST:event_btnReturnLoginCustomerActionPerformed
 
@@ -184,6 +186,6 @@ public class CustomerMenu extends javax.swing.JPanel {
     private javax.swing.JTextField txtNameCustomerPage;
     private javax.swing.JTextField txtUsernameCustomerPage;
     // End of variables declaration//GEN-END:variables
-    Frame frame;
-    Customer customer;
+    
+
 }
