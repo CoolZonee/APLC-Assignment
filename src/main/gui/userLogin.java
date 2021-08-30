@@ -3,13 +3,13 @@ package main.gui;
 
 import main.java.*;
 
-public class userLogin extends javax.swing.JPanel {
+public class UserLogin extends javax.swing.JPanel {
 
-    public userLogin() {
+    public UserLogin() {
         initComponents();
         lblInvalidCredentials.setVisible(false);
     }
-    public void setFrame(frame frame) {
+    public void setFrame(Frame frame) {
         this.frame = frame;
     }
     public void clearInvalidCredentials(){
@@ -30,14 +30,9 @@ public class userLogin extends javax.swing.JPanel {
         lblInvalidCredentials = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
 
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        add(txtUsernameLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 270, 39));
-        add(txtPasswordLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 270, 40));
-
         lblInvalidCredentials.setForeground(new java.awt.Color(255, 51, 51));
         lblInvalidCredentials.setText("Invalid Username & Password");
         lblInvalidCredentials.setToolTipText("");
-        add(lblInvalidCredentials, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, -1, -1));
 
         btnLogin.setLabel("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -45,7 +40,36 @@ public class userLogin extends javax.swing.JPanel {
                 btnLoginActionPerformed(evt);
             }
         });
-        add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 460, 102, 38));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(480, 480, 480)
+                .addComponent(txtUsernameLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(480, 480, 480)
+                .addComponent(txtPasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(540, 540, 540)
+                .addComponent(lblInvalidCredentials))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(560, 560, 560)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(300, 300, 300)
+                .addComponent(txtUsernameLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(txtPasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(lblInvalidCredentials)
+                .addGap(16, 16, 16)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -57,7 +81,7 @@ public class userLogin extends javax.swing.JPanel {
                 admin.setAge(user.getAge());
                 admin.setPassword(user.getPassword());
                 admin.setSex(user.getSex());
-                this.frame.adminMenu1.setAdmin(this.admin);
+                this.frame.adminMenu.setAdmin(this.admin);
                 this.frame.changePages(1);
 
             }else{
@@ -66,7 +90,7 @@ public class userLogin extends javax.swing.JPanel {
                 customer.setAge(user.getAge());
                 customer.setPassword(user.getPassword());
                 customer.setSex(user.getSex());
-                this.frame.customerMenu3.setCustomer(this.customer);
+                this.frame.customerMenu.setCustomer(this.customer);
                 this.frame.changePages(2);
             }
             txtUsernameLogin.setText("");
@@ -85,7 +109,7 @@ public class userLogin extends javax.swing.JPanel {
     User user=new User();
     Admin admin=new Admin();
     Customer customer=new Customer();
-    frame frame;
+    Frame frame;
     
 }
 

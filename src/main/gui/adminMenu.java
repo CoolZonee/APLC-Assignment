@@ -2,9 +2,9 @@ package main.gui;
 import main.java.*;
 
 
-public class adminMenu extends javax.swing.JPanel {
+public class AdminMenu extends javax.swing.JPanel {
 
-    public adminMenu() {
+    public AdminMenu() {
         initComponents();
     }
     private void initAdditionalComponents(){
@@ -13,7 +13,7 @@ public class adminMenu extends javax.swing.JPanel {
         txtAgeAdminPage.setText(this.admin.getAge());
         
     }
-    public void setFrame(frame frame) {
+    public void setFrame(Frame frame) {
         this.frame = frame;
     }
     public void setAdmin(Admin admin){
@@ -177,7 +177,7 @@ public class adminMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnLoginAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginAdminActionPerformed
-        this.frame.changePages(0);
+        //this.frame.changePages(0);
         
         
     }//GEN-LAST:event_btnReturnLoginAdminActionPerformed
@@ -198,6 +198,6 @@ public class adminMenu extends javax.swing.JPanel {
     private javax.swing.JTextField txtNameAdminPage;
     private javax.swing.JTextField txtUsernameAdminPage;
     // End of variables declaration//GEN-END:variables
-    frame frame;
+    Frame frame;
     Admin admin;
 }

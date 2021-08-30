@@ -1,13 +1,13 @@
 package main.gui;
 import main.java.*;
 
-public class customerMenu extends javax.swing.JPanel {
+public class CustomerMenu extends javax.swing.JPanel {
 
     /**
      * Creates new form adminMenu
      */
     
-    public customerMenu() {
+    public CustomerMenu() {
         initComponents();
     }
     private void initAdditionalComponents(){
@@ -16,7 +16,7 @@ public class customerMenu extends javax.swing.JPanel {
         txtAgeCustomerPage.setText(this.customer.getAge());
         
     }
-    public void setFrame(frame frame) {
+    public void setFrame(Frame frame) {
         this.frame = frame;
     }
     public void setCustomer(Customer customer){
@@ -166,7 +166,7 @@ public class customerMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReturnLoginCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginCustomerActionPerformed
-        this.frame.changePages(0);
+        //this.frame.changePages(0);
         
     }//GEN-LAST:event_btnReturnLoginCustomerActionPerformed
 
@@ -184,6 +184,6 @@ public class customerMenu extends javax.swing.JPanel {
     private javax.swing.JTextField txtNameCustomerPage;
     private javax.swing.JTextField txtUsernameCustomerPage;
     // End of variables declaration//GEN-END:variables
-    frame frame;
+    Frame frame;
     Customer customer;
 }
