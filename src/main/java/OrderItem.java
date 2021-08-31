@@ -1,11 +1,6 @@
-
 package main.java;
 
-import javax.swing.table.DefaultTableModel;
-
-
 public class OrderItem {
-    
     private String code, name;
     int quantity;
     double price;
@@ -27,7 +22,7 @@ public class OrderItem {
         this.code = code;
         this.name = name;
         this.quantity = quantity;
-        this.price = (price * quantity);
+        this.price = price;
     }
     
     public void addOrderItem(){

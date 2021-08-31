@@ -260,33 +260,20 @@ public class OrderProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_tblProductKeyReleased
 
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
-        cart.resetQuantityCheck();
-        order.clearOrder();
-        boolean isValid=true;
-        Product[] productArr = Product.loadProduct();
-        for (int row=0;row < cartTableModel.getRowCount(); row++){
-            String cartName = cartTableModel.getValueAt(row, 0).toString();
-            int cartQuantity = Integer.parseInt(cartTableModel.getValueAt(row, 2).toString());
-            for(Product productCheck: productArr){
-                if(cartName.equals(productCheck.getName())){
-                    if (cartQuantity>productCheck.getQuantity()){
-                        //if (this.cart.checkProductQuantity(productCheck,cartName, cartQuantity, row)){
-                             
-                            isValid=false;
-//                        }else{
-//                            isValid=false;
-//                        }
-                    }else{
-                        OrderItem orderItem = new OrderItem(productCheck.getCode(),productCheck.getName(),cartQuantity, (productCheck.getPrice() * cartQuantity));
-                        order.addOrderItem(orderItem);
-                    }
-                }
+        this.cart.resetQuantityCheck();
+        this.cart.setIsQuantityValid(true);
+        this.order.clearOrder();
+        
+        if(!this.cart.checkProductQuantity().isEmpty() && this.cart.getIsQuantityValid()) {
+            for (OrderItem orderItem: this.cart.checkProductQuantity() ) {
+                this.order.addOrderItem(orderItem);
             }
         }
+        
         if (this.cart.isEmpty()){
             JOptionPane.showMessageDialog(frame, "No products selected");
         }else{
-            if (!isValid){
+            if (!this.cart.getIsQuantityValid()){
                 JOptionPane.showMessageDialog(frame, cart.getQuantityInvalidMessage());            
             }else{
                 frame.orderConfirmation.setOrder(this.order);

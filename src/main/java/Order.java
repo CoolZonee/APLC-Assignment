@@ -8,13 +8,11 @@ public class Order {
     double paid = 0, change = 0 , total = 0;
 //    private int noOfItems;
 //    private int typesOfItems;
-    public List <OrderItem> orderItem = new ArrayList<OrderItem>();
+    public List <OrderItem> orderItem = new ArrayList<>();
     private String uuid;
     private String date;
     private String username;
     public static String resource = "src/main/resource/Order.txt";
-    
-    
     
     public Order() {
         setNewUUID();
@@ -22,8 +20,8 @@ public class Order {
     
     public void addOrder(){
         DAO.append(this.toString(), resource);
-    
     }
+    
     public void setOrderItem(List <OrderItem> orderItem){
         this.orderItem = orderItem;
     }
@@ -32,22 +30,7 @@ public class Order {
             this.orderItem.clear();  
         }
     }
-
-    @Override
-    public String toString() {
-        return this.uuid + ";" + 
-                this.total + ";" + 
-                this.paid + ";" + 
-                this.change + ";" +
-                this.date + ";" + 
-                this.username;
-    }
     
-    
-    
-    public boolean cartEmpty(){
-        return this.orderItem.isEmpty();
-    }
     public void addOrderItem(OrderItem orderItem) {
         this.orderItem.add(orderItem);
     }
@@ -65,7 +48,7 @@ public class Order {
     }
 
     public double getTotal() {
-        this.total=calculateTotalprice(this.orderItem);
+        this.total = calculateTotalprice(this.orderItem);
         return this.total;
     }
 //    public int noOfItemsPurchased(List<OrderItem> orderItem){
@@ -124,8 +107,13 @@ public class Order {
         this.date = date;
     }
 
-    
-    
-    
-    
+    @Override
+    public String toString() {
+        return this.uuid + ";" + 
+                this.total + ";" + 
+                this.paid + ";" + 
+                this.change + ";" +
+                this.date + ";" + 
+                this.username;
+    }
 }

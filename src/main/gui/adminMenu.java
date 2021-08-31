@@ -1,8 +1,6 @@
 package main.gui;
 import javax.swing.JOptionPane;
 
-
-
 public class AdminMenu extends javax.swing.JPanel {
     Frame frame;
     public AdminMenu() {

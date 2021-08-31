@@ -1,7 +1,9 @@
 package main.java;
 
 import java.util.List;
-
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.PrinterJob;
 
 public class User {
     String role, username, password, sex, name, age;
@@ -43,9 +45,8 @@ public class User {
                     this.name + ";" + 
                     getFullRole() + ";" + 
                     DateAndTime.getCurrentTime());
-        
-        
     }
+    
     public void saveLogoutTime(){
         String loginDataFinal= (this.loginData +";" + 
                     DateAndTime.getCurrentTime()+ ";" +
@@ -53,6 +54,39 @@ public class User {
         DAO.append(loginDataFinal, resourceLog);
     }
     
+    
+    public void addOrder(Order order) {
+        order.addOrder();
+    }
+    
+//    public void (Order order) {
+//        order.
+//    }
+            
+    public void printReceipt() {
+        PrinterJob pj = PrinterJob.getPrinterJob();
+        ReceiptPrintable ts = new ReceiptPrintable();
+        pj.setJobName("Receipt");
+        PageFormat pf = pj.defaultPage();
+        Paper paper = pf.getPaper();
+        
+        double bodyHeight = 0.0;
+        double headerHeight = 3.0 * 5;
+        double footerHeight = 5.0;
+        double width = 8;
+        double height = headerHeight+bodyHeight+footerHeight;
+        paper.setSize(width, height);
+        paper.setImageableArea(0, 10, width, height - 1);
+        pf.setOrientation(PageFormat.PORTRAIT);
+        pf.setPaper(paper);
+        pj.setPrintable(ts, pf);
+        
+        try{
+            pj.print();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
     
     public void setRole(String role) {
         this.role = role;

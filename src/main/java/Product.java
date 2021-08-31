@@ -7,15 +7,17 @@ public class Product {
     private int quantity;
     private double price;
     private boolean isNew = true;
+    private boolean isFragile;
     public static String resource = "src/main/resource/Product.txt";
 
     public Product() {}
     
-    public Product(String code, String name, int quantity, double price) {
+    public Product(String code, String name, int quantity, double price, boolean isFragile) {
         this.code = code;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+        this.isFragile = isFragile;
     }
 
     public static Product[] loadProduct() {
@@ -27,7 +29,8 @@ public class Product {
                     details[0], 
                     details[1], 
                     Integer.parseInt(details[2]), 
-                    Double.parseDouble(details[3])
+                    Double.parseDouble(details[3]),
+                    Boolean.parseBoolean(details[4])
             );
         }
         return products;
@@ -91,6 +94,10 @@ public class Product {
         this.isNew = isNew;
     }
 
+    public void setIsFragile(boolean isFragile) {
+        this.isFragile = isFragile;
+    }
+    
     // Getter
     public String getCode() {
         return code;
@@ -112,12 +119,17 @@ public class Product {
         return this.isNew;
     }
     
+    public boolean getIsFragile() {
+        return this.isFragile;
+    }
+    
     @Override
     public String toString() {
         return this.getCode() + ";"
                 + this.getName() + ";"
                 + String.valueOf(this.getQuantity()) + ";"
-                + String.valueOf(this.getPrice());
+                + String.valueOf(this.getPrice()) + ";"
+                + String.valueOf(this.getIsFragile());
     }
 }
 

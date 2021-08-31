@@ -60,6 +60,8 @@ public class ProductPage extends javax.swing.JPanel {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        lblFragile = new javax.swing.JLabel();
+        ckbFragile = new javax.swing.JCheckBox();
         txtSearchProduct = new javax.swing.JTextField();
 
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
@@ -67,14 +69,14 @@ public class ProductPage extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Code", "Name", "Quantity", "Price (RM)"
+                "Code", "Name", "Quantity", "Price (RM)", "Fragile"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -136,6 +138,8 @@ public class ProductPage extends javax.swing.JPanel {
             }
         });
 
+        lblFragile.setText("Fragile:");
+
         javax.swing.GroupLayout pnlProductDetailsLayout = new javax.swing.GroupLayout(pnlProductDetails);
         pnlProductDetails.setLayout(pnlProductDetailsLayout);
         pnlProductDetailsLayout.setHorizontalGroup(
@@ -154,11 +158,13 @@ public class ProductPage extends javax.swing.JPanel {
                     .addGroup(pnlProductDetailsLayout.createSequentialGroup()
                         .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblPrice)
-                            .addComponent(lblQuantity))
+                            .addComponent(lblQuantity)
+                            .addComponent(lblFragile))
                         .addGap(34, 34, 34)
                         .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                            .addComponent(txtPrice)))
+                            .addComponent(txtPrice)
+                            .addComponent(ckbFragile)))
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,20 +183,24 @@ public class ProductPage extends javax.swing.JPanel {
                     .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlProductDetailsLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblName)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlProductDetailsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                            .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFragile, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ckbFragile))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
             .addGroup(pnlProductDetailsLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,7 +230,7 @@ public class ProductPage extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(pnlProductDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(26, 26, 26))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -247,6 +257,7 @@ public class ProductPage extends javax.swing.JPanel {
         this.product.setName(txtName.getText());
         this.product.setQuantity(Integer.parseInt(txtQuantity.getText()));
         this.product.setPrice(Double.parseDouble(txtPrice.getText()));
+        this.product.setIsFragile(ckbFragile.isSelected());
         if (this.product.getIsNew()) {
             this.admin.addProduct(this.product);
             Vector vector = new Vector();
@@ -254,6 +265,7 @@ public class ProductPage extends javax.swing.JPanel {
             vector.add(this.product.getName());
             vector.add(this.product.getQuantity());
             vector.add(this.product.getPrice());
+            vector.add(this.product.getIsFragile());
             this.dfTable.addRow(vector);
         } else {
             this.admin.updateProduct(this.product);
@@ -271,10 +283,12 @@ public class ProductPage extends javax.swing.JPanel {
         this.product.setName(this.dfTable.getValueAt(this.selectedRow, 1).toString());
         this.product.setQuantity(Integer.parseInt(this.dfTable.getValueAt(this.selectedRow, 2).toString()));
         this.product.setPrice(Double.parseDouble(this.dfTable.getValueAt(this.selectedRow, 3).toString()));
+        this.product.setIsFragile(Boolean.parseBoolean(this.dfTable.getValueAt(this.selectedRow, 4).toString()));
         txtCode.setText(this.product.getCode());
         txtName.setText(this.product.getName());
         txtQuantity.setText(String.valueOf(this.product.getQuantity()));
         txtPrice.setText(String.valueOf(this.product.getPrice()));
+        ckbFragile.setSelected(this.product.getIsFragile());
         this.enableUpdateDeleteBtn(true);
     }
     
@@ -297,6 +311,7 @@ public class ProductPage extends javax.swing.JPanel {
             vector.add(product.getName());
             vector.add(product.getQuantity());
             vector.add(product.getPrice());
+            vector.add(product.getIsFragile());
             this.dfTable.addRow(vector);
         }
     }
@@ -308,6 +323,7 @@ public class ProductPage extends javax.swing.JPanel {
         txtQuantity.setText("");
         txtPrice.setText("");
         tblProduct.clearSelection();
+        ckbFragile.setSelected(false);
         this.product = new Product();
         this.enableUpdateDeleteBtn(false);
     }
@@ -319,9 +335,11 @@ public class ProductPage extends javax.swing.JPanel {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JCheckBox ckbFragile;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCode;
+    private javax.swing.JLabel lblFragile;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPrice;
     private javax.swing.JLabel lblQuantity;
