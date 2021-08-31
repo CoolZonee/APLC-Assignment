@@ -1,7 +1,9 @@
 
 package main.java;
 
-import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class OrderItem {
@@ -12,7 +14,7 @@ public class OrderItem {
     Product currentProduct;
     String orderUuid;
     public String quantityInvalidMessage;
-    private String resource = "src/main/resource/OrderItem.txt";
+    private static String resource = "src/main/resource/OrderItem.txt";
     
     public OrderItem() {
     }
@@ -23,13 +25,36 @@ public class OrderItem {
         this.price = orderItem.getPrice();
     }
 
-    public OrderItem(String code, String name, int quantity, double price) {
+    public OrderItem(String uuid, String code, String name, int quantity, double price) {
+        this.orderUuid = uuid;
         this.code = code;
         this.name = name;
         this.quantity = quantity;
-        this.price = (price * quantity);
+        this.price = price;
     }
-    
+    public static List <OrderItem> loadOrderItem(){
+        List <String> allOrderItems = DAO.readAll(resource);
+        List <OrderItem> orderItems = new ArrayList<OrderItem>();
+        for (String line : allOrderItems){
+            String[] orderItemDetails = line.split(";");
+            orderItems.add(new OrderItem(orderItemDetails[0], 
+                                orderItemDetails[1], 
+                                orderItemDetails[2], 
+                                Integer.parseInt(orderItemDetails[3]), 
+                                Double.parseDouble(orderItemDetails[4])));       
+        }
+        return orderItems;
+    }
+    public static List <OrderItem> loadUuidOrderItem(String uuid){
+        List <OrderItem> allOrderItems = loadOrderItem();
+        List <OrderItem> uuidOrderItem = new ArrayList<OrderItem>();
+        for (OrderItem orderItem : allOrderItems){
+            if (orderItem.getOrderUuid().equals(uuid)){
+                uuidOrderItem.add(orderItem);
+            }
+        }
+        return uuidOrderItem;
+    }
     public void addOrderItem(){
         DAO.append(this.toString(),resource);
     }
@@ -81,7 +106,7 @@ public class OrderItem {
                     + this.code + ";" + 
                     this.name + ";" +
                     this.quantity + ";" +
-                    this.price;
+                    String.format("%.2f", this.price);
                     
         
     }
@@ -100,6 +125,10 @@ public class OrderItem {
 
     public double getPrice() {
         return price;
+    }
+
+    public String getOrderUuid() {
+        return orderUuid;
     }
     
 //    public OrderItem[] createOrderItem(){

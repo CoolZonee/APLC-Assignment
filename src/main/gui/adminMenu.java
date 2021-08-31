@@ -1,10 +1,17 @@
 package main.gui;
+import java.util.List;
 import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
+import main.java.Order;
+import main.java.OrderItem;
 
 
 public class AdminMenu extends javax.swing.JPanel {
     Frame frame;
+    DefaultTableModel orderHistoryAdminTableModel;
+    List <Order> userOrder;
+    String uuid;
+    Order uuidOrder;
     public AdminMenu() {
         initComponents();
     }
@@ -12,12 +19,25 @@ public class AdminMenu extends javax.swing.JPanel {
         txtUsernameAdminPage.setText(this.frame.admin.getUsername());
         txtNameAdminPage.setText(this.frame.admin.getName());
         txtAgeAdminPage.setText(this.frame.admin.getAge());
+        btnDeleteOrder.setEnabled(false);
+        btnViewOrder.setEnabled(false);
+        orderHistoryAdminTableModel = (DefaultTableModel)tblOrderHistoryAdmin.getModel();
+        orderHistoryAdminTableModel.setRowCount(0);
+        fillOrderHistoryTable();
         
     }
     public void setFrame(Frame frame) {
         this.frame = frame;
     }
- 
+    public void fillOrderHistoryTable(){
+        userOrder = Order.loadUserOrder(frame.user.getUsername());
+        for(Order order : this.userOrder){
+            String[] dataRow = order.toStringUser().split(";");
+            orderHistoryAdminTableModel.addRow(dataRow);
+        }
+        
+        
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,9 +59,11 @@ public class AdminMenu extends javax.swing.JPanel {
         lblAgeAdminPage = new javax.swing.JLabel();
         txtUsernameAdminPage = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblPastPurchasesAdmin = new javax.swing.JTable();
+        tblOrderHistoryAdmin = new javax.swing.JTable();
         lblAdminPage1 = new javax.swing.JLabel();
         btnViewLoginHistory = new javax.swing.JButton();
+        btnDeleteOrder = new javax.swing.JButton();
+        btnViewOrder = new javax.swing.JButton();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -86,16 +108,16 @@ public class AdminMenu extends javax.swing.JPanel {
 
         txtUsernameAdminPage.setEditable(false);
 
-        tblPastPurchasesAdmin.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrderHistoryAdmin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "UUID", "Total", "Paid", "Change", "Date"
+                "Order ID", "Total", "Paid", "Change", "Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -109,8 +131,13 @@ public class AdminMenu extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblPastPurchasesAdmin.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tblPastPurchasesAdmin);
+        tblOrderHistoryAdmin.getTableHeader().setReorderingAllowed(false);
+        tblOrderHistoryAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblOrderHistoryAdminMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblOrderHistoryAdmin);
 
         lblAdminPage1.setText("Past Purchases");
 
@@ -118,6 +145,20 @@ public class AdminMenu extends javax.swing.JPanel {
         btnViewLoginHistory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewLoginHistoryActionPerformed(evt);
+            }
+        });
+
+        btnDeleteOrder.setText("Delete Order");
+        btnDeleteOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteOrderActionPerformed(evt);
+            }
+        });
+
+        btnViewOrder.setText("View Order");
+        btnViewOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewOrderActionPerformed(evt);
             }
         });
 
@@ -154,14 +195,21 @@ public class AdminMenu extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnOrderPageAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEditProductAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEditCustomerAdmin)
-                .addGap(29, 29, 29)
-                .addComponent(btnViewLoginHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(336, 336, 336))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnOrderPageAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEditProductAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEditCustomerAdmin)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnViewLoginHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(336, 336, 336))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnViewOrder)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeleteOrder)
+                        .addGap(86, 86, 86))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,7 +218,11 @@ public class AdminMenu extends javax.swing.JPanel {
                 .addComponent(lblAdminPage1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDeleteOrder)
+                    .addComponent(btnViewOrder))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAdminPage2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsernameAdminPage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -223,19 +275,41 @@ public class AdminMenu extends javax.swing.JPanel {
         this.frame.loginHistory.initAdditionalComponents();
     }//GEN-LAST:event_btnViewLoginHistoryActionPerformed
 
+    private void btnDeleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOrderActionPerformed
+        uuidOrder = Order.getOrder(uuid);
+        System.out.println(uuidOrder);
+    }//GEN-LAST:event_btnDeleteOrderActionPerformed
+
+    private void tblOrderHistoryAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrderHistoryAdminMouseClicked
+        btnDeleteOrder.setEnabled(true);
+        btnViewOrder.setEnabled(true);
+        int row = tblOrderHistoryAdmin.getSelectedRow();
+        uuid = orderHistoryAdminTableModel.getValueAt(row, 0).toString();
+        
+        
+    }//GEN-LAST:event_tblOrderHistoryAdminMouseClicked
+
+    private void btnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderActionPerformed
+        frame.orderConfirmation.initAdditionalComponentsView(OrderItem.loadUuidOrderItem(uuid), Order.getOrder(uuid));
+        frame.changePages(7);
+        
+    }//GEN-LAST:event_btnViewOrderActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeleteOrder;
     private javax.swing.JButton btnEditCustomerAdmin;
     private javax.swing.JButton btnEditProductAdmin;
     private javax.swing.JButton btnOrderPageAdmin;
     private javax.swing.JButton btnReturnLoginAdmin;
     private javax.swing.JButton btnViewLoginHistory;
+    private javax.swing.JButton btnViewOrder;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAdminPage1;
     private javax.swing.JLabel lblAdminPage2;
     private javax.swing.JLabel lblAgeAdminPage;
     private javax.swing.JLabel lblNameAdminPage;
-    private javax.swing.JTable tblPastPurchasesAdmin;
+    private javax.swing.JTable tblOrderHistoryAdmin;
     private javax.swing.JTextField txtAgeAdminPage;
     private javax.swing.JTextField txtNameAdminPage;
     private javax.swing.JTextField txtUsernameAdminPage;

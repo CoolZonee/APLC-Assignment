@@ -6,6 +6,7 @@
 package main.gui;
 
 import java.text.NumberFormat;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
@@ -35,18 +36,34 @@ public class OrderConfirmation extends javax.swing.JPanel {
         
     }
     public void initAdditionalComponents(){
+        btnEnterAmount.setEnabled(true);
         btnPay.setEnabled(false);
+        btnBackMenu.setEnabled(false);
+        txtPaymentAmount.setEditable(true);
         txtPaymentAmount.setText("");
         orderSummaryTableModel = (DefaultTableModel)tblOrderSummary.getModel();
         orderSummaryTableModel.setRowCount(0);
-        fillOrderSummaryTable();
-        txtPayableAmount.setText( "RM" + String.format("%.2f", this.order.getTotal()));
+        fillOrderSummaryTable(this.order.orderItem);
+        txtPayableAmount.setText( "RM" + String.format("%.2f", this.order.getAndSetTotal()));
+        txtChange.setText("RM0.00");
         
         
         
     }
-    public void fillOrderSummaryTable(){
-        for (OrderItem orderItem1: this.order.orderItem){
+    public void initAdditionalComponentsView(List <OrderItem> orderItem, Order order){
+        btnEnterAmount.setEnabled(false);
+        btnPay.setEnabled(false);
+        txtPaymentAmount.setEditable(false);
+        btnBackMenu.setEnabled(true);
+        orderSummaryTableModel = (DefaultTableModel)tblOrderSummary.getModel();
+        orderSummaryTableModel.setRowCount(0);
+        fillOrderSummaryTable(orderItem);
+        txtPaymentAmount.setText("RM" + String.format("%.2f", order.getPaid()));
+        txtChange.setText("RM" + String.format("%.2f", order.getChange()));
+        txtPayableAmount.setText( "RM" + String.format("%.2f", order.getTotal()));
+    }
+    public void fillOrderSummaryTable(List <OrderItem> orderItem){
+        for (OrderItem orderItem1: orderItem){
             orderSummaryTableModel.addRow(new Object[]{orderItem1.getCode(), 
                                                         orderItem1.getName(),
                                                         orderItem1.getQuantity(),
@@ -89,6 +106,7 @@ public class OrderConfirmation extends javax.swing.JPanel {
         txtPayableAmount = new javax.swing.JTextField();
         txtChange = new javax.swing.JTextField();
         btnEnterAmount = new javax.swing.JButton();
+        btnBackMenu = new javax.swing.JButton();
 
         txtPaymentAmount.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 
@@ -145,6 +163,13 @@ public class OrderConfirmation extends javax.swing.JPanel {
             }
         });
 
+        btnBackMenu.setText("Menu");
+        btnBackMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackMenuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,15 +204,18 @@ public class OrderConfirmation extends javax.swing.JPanel {
                                 .addGap(221, 221, 221))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btnEnterAmount)
-                                .addGap(142, 142, 142))))))
+                                .addGap(142, 142, 142))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(270, 270, 270))))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(lblOrderSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(387, 387, 387))
+                .addComponent(btnBackMenu)
+                .addGap(45, 45, 45))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,16 +241,18 @@ public class OrderConfirmation extends javax.swing.JPanel {
                         .addComponent(lblChange)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(txtChange, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88)
+                        .addGap(44, 44, 44)
                         .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))))
+                        .addGap(36, 36, 36)
+                        .addComponent(btnBackMenu)
+                        .addGap(21, 21, 21))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnterAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterAmountActionPerformed
         this.order.setPaid(((Number)txtPaymentAmount.getValue()).doubleValue());
-        txtChange.setText("RM" + String.format("%.2f", this.order.getChange()));
-        if (this.order.getPaid()<this.order.getTotal()){
+        txtChange.setText("RM" + String.format("%.2f", this.order.getAndSetChange()));
+        if (this.order.getPaid()<this.order.getAndSetTotal()){
             JOptionPane.showMessageDialog(frame, "Insufficient Amount");
         }else{
             isSufficient=true;
@@ -231,15 +261,20 @@ public class OrderConfirmation extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEnterAmountActionPerformed
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
-        this.order.setNewUUID();
         this.order.setDate(DateAndTime.getCurrentDate());
+        this.order.setUsername(frame.user.getUsername());
         this.order.addOrder();
+        for(OrderItem orderItem1 : order.orderItem){
+            orderItem1.addOrderItem();
+        }
         
         JOptionPane.showMessageDialog(frame,"Order Successful!","Order Status",JOptionPane.INFORMATION_MESSAGE);
 
         if (frame.user.getRole().equals("A")){
+            frame.adminMenu.initAdditionalComponents();
             frame.changePages(1);
         }else{
+            frame.customerMenu.initAdditionalComponents();
             frame.changePages(2);
         }
         
@@ -248,8 +283,19 @@ public class OrderConfirmation extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnPayActionPerformed
 
+    private void btnBackMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackMenuActionPerformed
+        if (frame.user.getRole().equals("A")){
+            frame.adminMenu.initAdditionalComponents();
+            frame.changePages(1);
+        }else{
+            frame.customerMenu.initAdditionalComponents();
+            frame.changePages(2);
+        }
+    }//GEN-LAST:event_btnBackMenuActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBackMenu;
     private javax.swing.JButton btnEnterAmount;
     private javax.swing.JButton btnPay;
     private javax.swing.JLabel jLabel1;

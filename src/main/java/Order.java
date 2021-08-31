@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Order {
-    double paid = 0, change = 0 , total = 0;
+    private double paid = 0, change = 0 , total = 0;
 //    private int noOfItems;
 //    private int typesOfItems;
     public List <OrderItem> orderItem = new ArrayList<OrderItem>();
@@ -13,17 +13,28 @@ public class Order {
     private String date;
     private String username;
     public static String resource = "src/main/resource/Order.txt";
+
+    public Order(String uuid, String date, String username, double paid, double change, double total) {
+        this.uuid = uuid;
+        this.date = date;
+        this.username = username;
+        this.paid = paid;
+        this.change = change;
+        this.total = total;
+        
+    }
     
     
     
     public Order() {
-        setNewUUID();
+        setNewUuid();
     }
     
     public void addOrder(){
         DAO.append(this.toString(), resource);
     
     }
+    
     public void setOrderItem(List <OrderItem> orderItem){
         this.orderItem = orderItem;
     }
@@ -32,15 +43,56 @@ public class Order {
             this.orderItem.clear();  
         }
     }
-
+    public static List <Order> loadOrder(){
+        List <String> allOrder = DAO.readAll(resource);
+        List <Order> orders = new ArrayList<Order>();
+        for (String line : allOrder){
+            String[] orderDetails = line.split(";");
+            orders.add(new Order(orderDetails[0], 
+                                orderDetails[4], 
+                                orderDetails[5], 
+                                Double.parseDouble(orderDetails[2]), 
+                                Double.parseDouble(orderDetails[3]), 
+                                Double.parseDouble(orderDetails[1])));       
+        }
+        return orders;
+    }
+    public static Order getOrder(String uuid){
+         List <Order> allOrders = loadOrder();
+         Order matchOrder = new Order();
+         for(Order order : allOrders){
+             if (order.getUuid().equals(uuid)){
+                 matchOrder = order;
+             }
+         }
+         return matchOrder;
+    }
+    public static List <Order> loadUserOrder(String username){
+        List <Order> allOrders = loadOrder();
+        List <Order> userOrders = new ArrayList<Order>();
+        for (Order order: allOrders){
+            if(order.username.equals(username)){
+                userOrders.add(order);
+            }
+        }
+        return userOrders;
+    }
+    
     @Override
     public String toString() {
         return this.uuid + ";" + 
-                this.total + ";" + 
-                this.paid + ";" + 
-                this.change + ";" +
+                String.format("%.2f", this.total) + ";" + 
+                String.format("%.2f", this.paid) + ";" + 
+                String.format("%.2f", this.change) + ";" +
                 this.date + ";" + 
                 this.username;
+    }
+    public String toStringUser(){
+        return (this.uuid + ";" + 
+                String.format("%.2f", this.total) + ";" + 
+                String.format("%.2f", this.paid) + ";" + 
+                String.format("%.2f", this.change) + ";" +
+                this.date);
     }
     
     
@@ -64,7 +116,7 @@ public class Order {
         return change;
     }
 
-    public double getTotal() {
+    public double getAndSetTotal() {
         this.total=calculateTotalprice(this.orderItem);
         return this.total;
     }
@@ -91,7 +143,7 @@ public class Order {
 //        return this.typesOfItems;
 //    }
 
-    public double getChange() {
+    public double getAndSetChange() {
         this.change= calculateChange(this);
         return this.change;
     }
@@ -108,7 +160,7 @@ public class Order {
         this.uuid = uuid;
     }
     
-    public void setNewUUID(){
+    public void setNewUuid(){
         this.uuid = UUID.randomUUID().toString();  
     }
 
@@ -122,6 +174,18 @@ public class Order {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public double getChange() {
+        return change;
+    }
+
+    public double getTotal() {
+        return total;
     }
 
     

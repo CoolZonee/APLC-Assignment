@@ -3,7 +3,7 @@ package main.java;
 import java.util.List;
 
 
-public class User {
+public class User implements Authentication {
     String role, username, password, sex, name, age;
     private boolean isNew = true;  
     private String loginData;
@@ -21,6 +21,7 @@ public class User {
         this.age = age;
     }
     
+    @Override
     public boolean authenticate(String username, String password){
         List<String> authenticationData = DAO.readAll(resource);
         for(String line: authenticationData){

@@ -277,7 +277,7 @@ public class OrderProduct extends javax.swing.JPanel {
 //                            isValid=false;
 //                        }
                     }else{
-                        OrderItem orderItem = new OrderItem(productCheck.getCode(),productCheck.getName(),cartQuantity, (productCheck.getPrice() * cartQuantity));
+                        OrderItem orderItem = new OrderItem(order.getUuid(), productCheck.getCode(),productCheck.getName(),cartQuantity, (productCheck.getPrice() * cartQuantity));
                         order.addOrderItem(orderItem);
                     }
                 }
