@@ -2,10 +2,13 @@ package main.java;
 
 import java.util.List;
 
+
 public class User {
     String role, username, password, sex, name, age;
-    private boolean isNew = true;    
+    private boolean isNew = true;  
+    private String loginData;
     public static String resource = "src/main/resource/userDetails.txt";
+    public static String resourceLog = "src/main/resource/userLog.txt";
 
     public User() {}
     
@@ -34,6 +37,22 @@ public class User {
         }
         return false;
     }
+    
+    public void logLoginTime(){
+        this.loginData=(this.username + ";" + 
+                    this.name + ";" + 
+                    getFullRole() + ";" + 
+                    DateAndTime.getCurrentTime());
+        
+        
+    }
+    public void saveLogoutTime(){
+        String loginDataFinal= (this.loginData +";" + 
+                    DateAndTime.getCurrentTime()+ ";" +
+                    DateAndTime.getCurrentDate() + ";");
+        DAO.append(loginDataFinal, resourceLog);
+    }
+    
     
     public void setRole(String role) {
         this.role = role;
@@ -90,6 +109,14 @@ public class User {
     public boolean getIsNew() {
         return this.isNew;
     }
+    public String getFullRole(){
+        if (this.role.equals("A")){
+            return "Admin";
+        }else{
+            return "Customer";
+        }
+    }
+        
     
     @Override
     public String toString() {

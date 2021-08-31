@@ -61,7 +61,13 @@ public class Product {
         DAO.rewrite(allProduct, resource);
 
     }
-    
+    public void addQuantity (int quantity) {
+    this.quantity += quantity;
+}
+
+    public void minusQuantity (int quantity) {
+        this.quantity -= quantity;
+    }
    
     
     // Setter

@@ -25,7 +25,25 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/frame.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/Customer.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/Frame.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/OrderItem.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/TableSortFilter.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/DAO.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/User.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/ProductPage.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/Product.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/Order.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/Cart.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/LoginHistory.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/OrderProduct.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/resource/userLog.txt</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/UserLogin.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/CustomerMenu.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/AdminMenu.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/DateAndTime.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/resource/Product.txt</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/Admin.java</file>
         </group>
     </open-files>
 </project-private>

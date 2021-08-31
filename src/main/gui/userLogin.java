@@ -15,14 +15,11 @@ public class UserLogin extends javax.swing.JPanel {
     public void setFrame(Frame frame) {
         this.frame = frame;
     }
-    public void clearInvalidCredentials(){
-        lblInvalidCredentials.setVisible(false);
-    }
+
     public void resetCredentialField(){
         lblInvalidCredentials.setVisible(false);
         txtUsernameLogin.setFont(fontItalics);
         txtPasswordLogin.setFont(fontItalics);
-        //txtPasswordLogin.setEchoChar((char)0);
         txtUsernameLogin.setText("Enter username here");
         txtPasswordLogin.setText("Enter password here");
         showPasswordState();
@@ -185,6 +182,7 @@ public class UserLogin extends javax.swing.JPanel {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
         if (frame.user.authenticate(txtUsernameLogin.getText(),String.valueOf(txtPasswordLogin.getPassword()))==true){
+            frame.user.logLoginTime();
             if ("A".equals(frame.user.getRole())){
                 frame.admin=new Admin(frame.user.getRole(),frame.user.getUsername(),frame.user.getPassword(), frame.user.getSex(), frame.user.getName(), frame.user.getAge());
                 this.frame.adminMenu.initAdditionalComponents();

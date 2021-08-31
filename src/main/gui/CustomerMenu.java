@@ -42,6 +42,11 @@ public class CustomerMenu extends javax.swing.JPanel {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnOrderPage.setText("Order Page");
+        btnOrderPage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrderPageActionPerformed(evt);
+            }
+        });
 
         btnReturnLoginCustomer.setText("Logout");
         btnReturnLoginCustomer.addActionListener(new java.awt.event.ActionListener() {
@@ -68,11 +73,11 @@ public class CustomerMenu extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No.", "Product", "Quantity", "Price", "Date"
+                "UUID", "Total", "Paid", "Change", "Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -163,6 +168,7 @@ public class CustomerMenu extends javax.swing.JPanel {
     private void btnReturnLoginCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnLoginCustomerActionPerformed
         int result = JOptionPane.showConfirmDialog(frame,"Are you sure you want to logout?", "Logout Confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(result == JOptionPane.YES_OPTION){
+            this.frame.user.saveLogoutTime();
             this.frame.userLogin.resetCredentialField();
             this.frame.changePages(0);
             this.frame.userLogin.btnLogin.requestFocus();
@@ -171,6 +177,10 @@ public class CustomerMenu extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_btnReturnLoginCustomerActionPerformed
+
+    private void btnOrderPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderPageActionPerformed
+        this.frame.changePages(4);
+    }//GEN-LAST:event_btnOrderPageActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

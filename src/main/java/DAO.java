@@ -82,4 +82,20 @@ public class DAO {
             }
         }
     }
+    
+    public static void clear(String targetFile){
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(new File(targetFile));
+            writer.print("");
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        finally {
+            if (new File(targetFile).exists()) {
+                writer.close();
+            }
+        }
+    }
 }

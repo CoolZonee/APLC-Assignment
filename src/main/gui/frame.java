@@ -7,6 +7,7 @@ public class Frame extends javax.swing.JFrame {
     User user = new User();
     Admin admin;
     Customer customer;
+    Order order = new Order();
 
     public Frame() {
         initComponents();
@@ -18,6 +19,9 @@ public class Frame extends javax.swing.JFrame {
         this.userLogin.setFrame(this);
         this.adminMenu.setFrame(this);
         this.customerMenu.setFrame(this);
+        this.loginHistory.setFrame(this);
+        this.orderProduct.setFrame(this);
+        this.orderConfirmation.setFrame(this);
     }
 
     public void changePages(int tab) {
@@ -33,6 +37,11 @@ public class Frame extends javax.swing.JFrame {
         userLogin = new main.gui.UserLogin();
         adminMenu = new main.gui.AdminMenu();
         customerMenu = new main.gui.CustomerMenu();
+        productPage = new main.gui.ProductPage();
+        orderProduct = new main.gui.OrderProduct();
+        manageCustomerPage = new main.gui.ManageCustomerPage();
+        loginHistory = new main.gui.LoginHistory();
+        orderConfirmation = new main.gui.OrderConfirmation();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -40,6 +49,11 @@ public class Frame extends javax.swing.JFrame {
         jTabbedPane.addTab("tab1", userLogin);
         jTabbedPane.addTab("tab2", adminMenu);
         jTabbedPane.addTab("tab3", customerMenu);
+        jTabbedPane.addTab("tab4", productPage);
+        jTabbedPane.addTab("tab5", orderProduct);
+        jTabbedPane.addTab("tab6", manageCustomerPage);
+        jTabbedPane.addTab("tab7", loginHistory);
+        jTabbedPane.addTab("tab8", orderConfirmation);
 
         getContentPane().add(jTabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 760));
 
@@ -83,6 +97,11 @@ public class Frame extends javax.swing.JFrame {
     public main.gui.AdminMenu adminMenu;
     public main.gui.CustomerMenu customerMenu;
     public javax.swing.JTabbedPane jTabbedPane;
+    public main.gui.LoginHistory loginHistory;
+    private main.gui.ManageCustomerPage manageCustomerPage;
+    public main.gui.OrderConfirmation orderConfirmation;
+    public main.gui.OrderProduct orderProduct;
+    private main.gui.ProductPage productPage;
     public main.gui.UserLogin userLogin;
     // End of variables declaration//GEN-END:variables
 

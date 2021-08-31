@@ -6,6 +6,7 @@
 package main.gui;
 
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -14,6 +15,8 @@ import javax.swing.table.TableRowSorter;
 import main.java.Admin;
 import main.java.Cart;
 import main.java.Product;
+import main.java.OrderItem;
+import main.java.Order;
 import main.java.TableSortFilter;
 
 public class OrderProduct extends javax.swing.JPanel {
@@ -23,7 +26,16 @@ public class OrderProduct extends javax.swing.JPanel {
     private Cart cart = new Cart();
     private Product product;
     private int selectedRow;
+    private int quantityCheck;
+    private Order order= new Order();
+    private Product[] products;
+    //OrderItem orderItem = new OrderItem();
+    Frame frame;
     Admin admin = new Admin();
+    
+    public void setFrame(Frame frame){
+        this.frame=frame;
+    }
     
     public OrderProduct() {
         initComponents();
@@ -31,9 +43,9 @@ public class OrderProduct extends javax.swing.JPanel {
         this.cartTableModel = (DefaultTableModel)tblCart.getModel();
         this.rowSorter = new TableRowSorter<>(tblProduct.getModel());
         // Disable sorting function
-        for(int i = 0; i < tblProduct.getColumnCount(); i++) {
-            this.rowSorter.setSortable(i, false);
-        }
+//        for(int i = 0; i < tblProduct.getColumnCount(); i++) {
+//            this.rowSorter.setSortable(i, false);
+//        }
         // Enable filter function
         this.tblProduct.setRowSorter(rowSorter);
         TableSortFilter.addFilter(rowSorter, tblProduct, txtSearchProduct);
@@ -157,9 +169,16 @@ public class OrderProduct extends javax.swing.JPanel {
                 "Name", "Price", "Quantity"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, true
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -241,6 +260,43 @@ public class OrderProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_tblProductKeyReleased
 
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
+        cart.resetQuantityCheck();
+        order.clearOrder();
+        boolean isValid=true;
+        Product[] productArr = Product.loadProduct();
+        for (int row=0;row < cartTableModel.getRowCount(); row++){
+            String cartName = cartTableModel.getValueAt(row, 0).toString();
+            int cartQuantity = Integer.parseInt(cartTableModel.getValueAt(row, 2).toString());
+            for(Product productCheck: productArr){
+                if(cartName.equals(productCheck.getName())){
+                    if (cartQuantity>productCheck.getQuantity()){
+                        //if (this.cart.checkProductQuantity(productCheck,cartName, cartQuantity, row)){
+                             
+                            isValid=false;
+//                        }else{
+//                            isValid=false;
+//                        }
+                    }else{
+                        OrderItem orderItem = new OrderItem(productCheck.getCode(),productCheck.getName(),cartQuantity, (productCheck.getPrice() * cartQuantity));
+                        order.addOrderItem(orderItem);
+                    }
+                }
+            }
+        }
+        if (this.cart.isEmpty()){
+            JOptionPane.showMessageDialog(frame, "No products selected");
+        }else{
+            if (!isValid){
+                JOptionPane.showMessageDialog(frame, cart.getQuantityInvalidMessage());            
+            }else{
+                frame.orderConfirmation.setOrder(this.order);
+                frame.orderConfirmation.initAdditionalComponents();
+                
+                this.frame.changePages(7);
+            }
+        }
+            
+        
 //        this.user.setUsername(txtUsername.getText());
 //        this.user.setName(txtName.getText());
 //        this.user.setRole(cmbRole.getSelectedItem().toString());
@@ -274,7 +330,7 @@ public class OrderProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void loadData() {
-        Product[] products = this.admin.loadProduct();
+        this.products = this.admin.loadProduct();
         for (Product product: products) {
             Vector vector = new Vector();
             vector.add(product.getName());
