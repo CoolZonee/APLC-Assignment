@@ -3,3 +3,5 @@ JoshuaLotion;Jamie Yong;Admin;22:31:11;22:39:34;01/09/21;
 WeiJiee;Chia Wei Jie;Customer;22:41:07;22:42:45;01/09/21;
 Keat;Lim Chee Keat;Admin;22:42:50;22:44:33;01/09/21;
 JoshuaLotion;Jamie Yong;Admin;00:41:45;01:02:51;02/09/21;
+JoshuaLotion;Jamie Yong;Admin;01:15:00;01:15:24;02/09/21;
+Keat;Lim Chee Keat;Admin;01:15:50;01:16:57;02/09/21;

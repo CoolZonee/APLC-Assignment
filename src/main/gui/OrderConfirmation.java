@@ -205,7 +205,7 @@ public class OrderConfirmation extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBackMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBackOrder)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -279,14 +279,20 @@ public class OrderConfirmation extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnterAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterAmountActionPerformed
-        this.order.setPaid(((Number)txtPaymentAmount.getValue()).doubleValue());
-        txtChange.setText("RM" + String.format("%.2f", this.order.getAndSetChange()));
-        if (this.order.getPaid()<this.order.getAndSetTotal()){
-            JOptionPane.showMessageDialog(frame, "Insufficient Amount");
-        }else{
-            isSufficient=true;
-            btnPay.setEnabled(true);
+        try{
+            this.order.setPaid(((Number)txtPaymentAmount.getValue()).doubleValue());
+            txtChange.setText("RM" + String.format("%.2f", this.order.getAndSetChange()));
+            if (this.order.getPaid()<this.order.getAndSetTotal()){
+                JOptionPane.showMessageDialog(frame, "Insufficient Amount");
+            }else{
+                isSufficient=true;
+                btnPay.setEnabled(true);
+            }
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(frame, "Invalid input");
+            
         }
+        
     }//GEN-LAST:event_btnEnterAmountActionPerformed
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
