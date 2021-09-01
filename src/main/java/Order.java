@@ -117,7 +117,14 @@ public class Order {
     public void addOrderItem(OrderItem orderItem) {
         this.orderItem.add(orderItem);
     }
-    
+    public boolean hasFragileProduct(List <Product> orderedProduct){
+        for(Product product : orderedProduct){
+            if (product.getIsFragile()){
+                return true;
+            }
+        }
+        return false;
+    }
     public double calculateTotalprice(List<OrderItem> orderItem){
         double total = 0;
         for (OrderItem orderItem1 : orderItem){

@@ -14,7 +14,7 @@ public class Cart {
         this.orderedProducts = new ArrayList<>();
         this.isQuantityValid = true;
     }
-        
+     
     public List<OrderItem> checkProductQuantity(String orderUUID){
         List<OrderItem> orderItem = new ArrayList<>();
         Product[] productArr = Product.loadProduct();
@@ -48,7 +48,11 @@ public class Cart {
         }
         return orderItem;
     }
-    
+    public void clearFinalCart(){
+        if (!orderedProducts.isEmpty()){
+            this.orderedProducts.clear();  
+        }
+    }
     public void setIsQuantityValid(boolean option) {
         this.isQuantityValid = option;
     }

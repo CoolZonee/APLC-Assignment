@@ -19,7 +19,7 @@ public class Product {
         this.price = price;
         this.isFragile = isFragile;
     }
-
+    
     public static Product[] loadProduct() {
         List<String> allProduct = DAO.readAll(resource);
         Product[] products = new Product[allProduct.size()];
@@ -64,6 +64,7 @@ public class Product {
         DAO.rewrite(allProduct, resource);
 
     }
+
     public void addQuantity (int quantity) {
     this.quantity += quantity;
 }

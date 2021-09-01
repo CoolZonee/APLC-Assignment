@@ -51,7 +51,9 @@ public class OrderConfirmation extends javax.swing.JPanel {
         fillOrderSummaryTable(this.order.orderItem);
         txtPayableAmount.setText( "RM" + String.format("%.2f", this.order.getAndSetTotal()));
         txtChange.setText("RM0.00");
-        
+        if(order.hasFragileProduct(productSelected)){
+            JOptionPane.showMessageDialog(frame, "RM10 packaging fee has been added as order contains fragile items");
+        }
     }
     public void initAdditionalComponentsView(List <OrderItem> orderItem, Order order){
         btnEnterAmount.setEnabled(false);
@@ -74,6 +76,9 @@ public class OrderConfirmation extends javax.swing.JPanel {
                                                        orderItem1.getPrice(),
                                                        orderItem1.getTotalPrice()});
         }
+//        if (order.hasFragileProduct(productSelected)){
+//            orderSummaryTableModel.addRow(new Object[])
+//        }
     }
 
     public void setFrame(Frame frame){
@@ -146,6 +151,7 @@ public class OrderConfirmation extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblOrderSummary.setRowSelectionAllowed(false);
         jScrollPane1.setViewportView(tblOrderSummary);
 
         lblOrderSummary.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
