@@ -20,8 +20,7 @@ public class Order {
         this.username = username;
         this.paid = paid;
         this.change = change;
-        this.total = total;
-        
+        this.total = total;        
     }
     
     public Order() {
@@ -35,6 +34,7 @@ public class Order {
     public void setOrderItem(List <OrderItem> orderItem){
         this.orderItem = orderItem;
     }
+    
     public void clearOrder(){
         if (!orderItem.isEmpty()){
             this.orderItem.clear();  
@@ -64,6 +64,7 @@ public class Order {
          }
          return matchOrder;
     }
+    
     public static List <Order> loadUserOrder(String username){
         List <Order> allOrders = loadOrder();
         List <Order> userOrders = new ArrayList<Order>();
@@ -100,7 +101,7 @@ public class Order {
     public double calculateTotalprice(List<OrderItem> orderItem){
         double total = 0;
         for (OrderItem orderItem1 : orderItem){
-            total = total + orderItem1.getPrice();
+            total = total + orderItem1.getTotalPrice();
         }
         return total;
     }

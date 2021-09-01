@@ -5,24 +5,21 @@
  */
 package main.gui;
 
-import java.awt.Frame;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import main.java.Admin;
 import main.java.TableSortFilter;
 import main.java.User;
 
-public class ManageCustomerPage extends javax.swing.JPanel {
+public class ManageUserPage extends javax.swing.JPanel {
     private DefaultTableModel dfTable;
     private TableRowSorter<TableModel> rowSorter;
     private User user = new User();
     private int selectedRow;
     private Frame frame;
-    Admin admin = new Admin();
     
-    public ManageCustomerPage() {
+    public ManageUserPage() {
         initComponents();
         this.dfTable = (DefaultTableModel)tblCustomer.getModel();
         this.rowSorter = new TableRowSorter<>(tblCustomer.getModel());
@@ -32,6 +29,10 @@ public class ManageCustomerPage extends javax.swing.JPanel {
         }
         this.tblCustomer.setRowSorter(rowSorter);
         TableSortFilter.addFilter(rowSorter, tblCustomer, txtSearchProduct);
+    }
+    
+    public void initAddtionalComponents () {
+        this.dfTable.setRowCount(0);
         this.enableUpdateDeleteBtn(false);
         this.loadData();
     }
@@ -62,6 +63,7 @@ public class ManageCustomerPage extends javax.swing.JPanel {
         cmbRole = new javax.swing.JComboBox<>();
         cmbSex = new javax.swing.JComboBox<>();
         txtSearchProduct = new javax.swing.JTextField();
+        btnBack = new javax.swing.JButton();
 
         tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -212,22 +214,33 @@ public class ManageCustomerPage extends javax.swing.JPanel {
 
         btnUpdate.getAccessibleContext().setAccessibleName("Add New User");
 
+        btnBack.setText("Back to Menu");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(pnlProductDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSearchProduct))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(pnlProductDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtSearchProduct)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(16, 16, 16)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,7 +265,7 @@ public class ManageCustomerPage extends javax.swing.JPanel {
         this.user.setSex(cmbSex.getSelectedItem().toString());
         this.user.setAge(txtAge.getText());
         if (this.user.getIsNew()) {
-            this.admin.addUser(this.user);
+            this.frame.admin.addUser(this.user);
             Vector vector = new Vector();
             vector.add(this.user.getUsername());
             vector.add(this.user.getName());
@@ -261,7 +274,7 @@ public class ManageCustomerPage extends javax.swing.JPanel {
             vector.add(this.user.getAge());
             this.dfTable.addRow(vector);
         } else {
-            this.admin.updateUser(this.user);
+            this.frame.admin.updateUser(this.user);
             this.dfTable.setRowCount(0);
             this.loadData();
         }
@@ -270,7 +283,7 @@ public class ManageCustomerPage extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        this.admin.removeUser(this.user);
+        this.frame.admin.removeUser(this.user);
         this.dfTable.removeRow(this.selectedRow);
         this.clearAll();
     }//GEN-LAST:event_btnDeleteActionPerformed
@@ -278,6 +291,16 @@ public class ManageCustomerPage extends javax.swing.JPanel {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         this.clearAll();
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        if (frame.user.getRole().equals("A")){
+            frame.adminMenu.initAdditionalComponents();
+            frame.changePages(1);
+        }else{
+            frame.customerMenu.initAdditionalComponents();
+            frame.changePages(2);
+        }
+    }//GEN-LAST:event_btnBackActionPerformed
     
     private void changeSelectedData() {
         this.selectedRow = tblCustomer.getSelectedRow();
@@ -307,7 +330,7 @@ public class ManageCustomerPage extends javax.swing.JPanel {
     }
     
     private void loadData() {
-        User[] users = this.admin.loadUser();
+        User[] users = this.frame.admin.loadUser();
         for (User user: users) {
             Vector vector = new Vector();
             vector.add(user.getUsername());
@@ -336,6 +359,7 @@ public class ManageCustomerPage extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;

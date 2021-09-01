@@ -35,8 +35,6 @@ public class AdminMenu extends javax.swing.JPanel {
             String[] dataRow = order.toStringUser().split(";");
             orderHistoryAdminTableModel.addRow(dataRow);
         }
-        
-        
     }
     
     /**
@@ -177,11 +175,7 @@ public class AdminMenu extends javax.swing.JPanel {
                     .addComponent(txtAgeAdminPage))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnReturnLoginAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1055, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 105, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -193,23 +187,28 @@ public class AdminMenu extends javax.swing.JPanel {
                         .addGap(34, 34, 34)
                         .addComponent(lblAdminPage1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnOrderPageAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEditProductAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEditCustomerAdmin)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnViewLoginHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(336, 336, 336))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnViewOrder)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDeleteOrder)
-                        .addGap(86, 86, 86))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnOrderPageAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEditProductAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEditCustomerAdmin)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnViewLoginHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(242, 242, 242))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnViewOrder)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDeleteOrder))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1055, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 105, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,21 +227,20 @@ public class AdminMenu extends javax.swing.JPanel {
                     .addComponent(txtUsernameAdminPage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnViewLoginHistory, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(btnEditCustomerAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnViewLoginHistory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditProductAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnOrderPageAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
+                    .addComponent(btnOrderPageAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEditCustomerAdmin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNameAdminPage)
                     .addComponent(txtNameAdminPage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblAgeAdminPage)
-                        .addComponent(txtAgeAdminPage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAgeAdminPage)
+                    .addComponent(txtAgeAdminPage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReturnLoginAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
+                .addGap(23, 23, 23))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -260,14 +258,17 @@ public class AdminMenu extends javax.swing.JPanel {
 
     private void btnEditProductAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductAdminActionPerformed
         this.frame.changePages(3);
+        this.frame.productPage.initAdditionalComponents();
     }//GEN-LAST:event_btnEditProductAdminActionPerformed
 
     private void btnOrderPageAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderPageAdminActionPerformed
         this.frame.changePages(4);
+        this.frame.orderProduct.initAdditionalComponents();
     }//GEN-LAST:event_btnOrderPageAdminActionPerformed
 
     private void btnEditCustomerAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCustomerAdminActionPerformed
         this.frame.changePages(5);
+        this.frame.manageUserPage.initAddtionalComponents();
     }//GEN-LAST:event_btnEditCustomerAdminActionPerformed
 
     private void btnViewLoginHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewLoginHistoryActionPerformed
@@ -285,12 +286,12 @@ public class AdminMenu extends javax.swing.JPanel {
         btnViewOrder.setEnabled(true);
         int row = tblOrderHistoryAdmin.getSelectedRow();
         uuid = orderHistoryAdminTableModel.getValueAt(row, 0).toString();
-        
-        
     }//GEN-LAST:event_tblOrderHistoryAdminMouseClicked
 
     private void btnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderActionPerformed
         frame.orderConfirmation.initAdditionalComponentsView(OrderItem.loadUuidOrderItem(uuid), Order.getOrder(uuid));
+        frame.orderConfirmation.setBackMenu(true);
+        frame.orderConfirmation.setOrder(Order.getOrder(uuid));
         frame.changePages(7);
         
     }//GEN-LAST:event_btnViewOrderActionPerformed

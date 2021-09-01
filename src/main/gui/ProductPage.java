@@ -5,12 +5,10 @@
  */
 package main.gui;
 
-import java.awt.Frame;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import main.java.Admin;
 import main.java.Product;
 import main.java.TableSortFilter;
 
@@ -20,7 +18,6 @@ public class ProductPage extends javax.swing.JPanel {
     private Product product = new Product();
     private int selectedRow;
     private Frame frame;
-    Admin admin = new Admin();
     
     public ProductPage() {
         initComponents();
@@ -32,10 +29,13 @@ public class ProductPage extends javax.swing.JPanel {
         }
         this.tblProduct.setRowSorter(rowSorter);
         TableSortFilter.addFilter(rowSorter, tblProduct, txtSearchProduct);
+    }
+
+    public void initAdditionalComponents() {
+        this.dfTable.setRowCount(0);
         this.enableUpdateDeleteBtn(false);
         this.loadData();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,6 +63,7 @@ public class ProductPage extends javax.swing.JPanel {
         lblFragile = new javax.swing.JLabel();
         ckbFragile = new javax.swing.JCheckBox();
         txtSearchProduct = new javax.swing.JTextField();
+        btnBack = new javax.swing.JButton();
 
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -195,9 +196,9 @@ public class ProductPage extends javax.swing.JPanel {
                             .addComponent(lblPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblFragile, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ckbFragile))
+                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckbFragile)
+                            .addComponent(lblFragile, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20))))
@@ -209,28 +210,39 @@ public class ProductPage extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnBack.setText("Back to Menu");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlProductDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1180, Short.MAX_VALUE)
-                    .addComponent(txtSearchProduct))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(pnlProductDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1180, Short.MAX_VALUE)
+                        .addComponent(txtSearchProduct)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(16, 16, 16)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(pnlProductDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(15, 15, 15))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -243,7 +255,7 @@ public class ProductPage extends javax.swing.JPanel {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        this.admin.removeProduct(this.product);
+        this.frame.admin.removeProduct(this.product);
         this.dfTable.removeRow(this.selectedRow);
         this.clearAll();
     }//GEN-LAST:event_btnDeleteActionPerformed
@@ -259,7 +271,7 @@ public class ProductPage extends javax.swing.JPanel {
         this.product.setPrice(Double.parseDouble(txtPrice.getText()));
         this.product.setIsFragile(ckbFragile.isSelected());
         if (this.product.getIsNew()) {
-            this.admin.addProduct(this.product);
+            this.frame.admin.addProduct(this.product);
             Vector vector = new Vector();
             vector.add(this.product.getCode());
             vector.add(this.product.getName());
@@ -268,13 +280,23 @@ public class ProductPage extends javax.swing.JPanel {
             vector.add(this.product.getIsFragile());
             this.dfTable.addRow(vector);
         } else {
-            this.admin.updateProduct(this.product);
+            this.frame.admin.updateProduct(this.product);
             this.dfTable.setRowCount(0);
             this.loadData();
         }
         
         this.clearAll();
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        if (frame.user.getRole().equals("A")){
+            frame.adminMenu.initAdditionalComponents();
+            frame.changePages(1);
+        }else{
+            frame.customerMenu.initAdditionalComponents();
+            frame.changePages(2);
+        }
+    }//GEN-LAST:event_btnBackActionPerformed
    
     private void changeSelectedData() {
         this.selectedRow = tblProduct.getSelectedRow();
@@ -304,7 +326,7 @@ public class ProductPage extends javax.swing.JPanel {
     }
     
     private void loadData() {
-        Product[] products = this.admin.loadProduct();
+        Product[] products = this.frame.admin.loadProduct();
             for (Product product: products) {
             Vector vector = new Vector();
             vector.add(product.getCode());
@@ -332,6 +354,7 @@ public class ProductPage extends javax.swing.JPanel {
         this.frame = frame;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;

@@ -60,27 +60,16 @@ public class User implements Authentication {
         order.addOrder();
     }
     
-//    public void (Order order) {
-//        order.
-//    }
+    public List <Order> loadOrder(Order order) {
+        return order.loadOrder();
+    }
+    
+    
             
-    public void printReceipt() {
+    public static void printReceipt(Order order) {
         PrinterJob pj = PrinterJob.getPrinterJob();
-        ReceiptPrintable ts = new ReceiptPrintable();
-        pj.setJobName("Receipt");
-        PageFormat pf = pj.defaultPage();
-        Paper paper = pf.getPaper();
-        
-        double bodyHeight = 0.0;
-        double headerHeight = 3.0 * 5;
-        double footerHeight = 5.0;
-        double width = 8;
-        double height = headerHeight+bodyHeight+footerHeight;
-        paper.setSize(width, height);
-        paper.setImageableArea(0, 10, width, height - 1);
-        pf.setOrientation(PageFormat.PORTRAIT);
-        pf.setPaper(paper);
-        pj.setPrintable(ts, pf);
+        ReceiptPrintable print = new ReceiptPrintable(order);
+        pj.setPrintable(print, print.getPageFormat(pj));
         
         try{
             pj.print();

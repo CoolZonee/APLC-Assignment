@@ -9,6 +9,7 @@ public class OrderItem {
     private String code, name;
     int quantity;
     double price;
+    double totalPrice;
     Product currentProduct;
     String orderUuid;
     public String quantityInvalidMessage;
@@ -21,6 +22,7 @@ public class OrderItem {
         this.name = orderItem.getName();
         this.quantity = orderItem.getQuantity();
         this.price = orderItem.getPrice();
+        this.totalPrice = orderItem.getTotalPrice();
     }
 
     public OrderItem(String uuid, String code, String name, int quantity, double price) {
@@ -29,7 +31,9 @@ public class OrderItem {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+        this.totalPrice = quantity * price;
     }
+    
     public static List <OrderItem> loadOrderItem(){
         List <String> allOrderItems = DAO.readAll(resource);
         List <OrderItem> orderItems = new ArrayList<OrderItem>();
@@ -123,6 +127,10 @@ public class OrderItem {
 
     public double getPrice() {
         return price;
+    }
+    
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
     public String getOrderUuid() {

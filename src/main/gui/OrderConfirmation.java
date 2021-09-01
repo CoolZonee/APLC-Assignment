@@ -15,10 +15,6 @@ import main.java.DateAndTime;
 import main.java.Order;
 import main.java.OrderItem;
 
-/**
- *
- * @author jamie
- */
 public class OrderConfirmation extends javax.swing.JPanel {
     Frame frame;
     DefaultFormatterFactory formatter;
@@ -30,10 +26,7 @@ public class OrderConfirmation extends javax.swing.JPanel {
     public OrderConfirmation() {
         initComponents();
     }
-    public void setOrder(Order order){
-        this.order = order;
-        
-    }
+    
     public void initAdditionalComponents(){
         btnEnterAmount.setEnabled(true);
         btnPay.setEnabled(false);
@@ -45,8 +38,6 @@ public class OrderConfirmation extends javax.swing.JPanel {
         fillOrderSummaryTable(this.order.orderItem);
         txtPayableAmount.setText( "RM" + String.format("%.2f", this.order.getAndSetTotal()));
         txtChange.setText("RM0.00");
-        
-        
         
     }
     public void initAdditionalComponentsView(List <OrderItem> orderItem, Order order){
@@ -61,12 +52,14 @@ public class OrderConfirmation extends javax.swing.JPanel {
         txtChange.setText("RM" + String.format("%.2f", order.getChange()));
         txtPayableAmount.setText( "RM" + String.format("%.2f", order.getTotal()));
     }
+    
     public void fillOrderSummaryTable(List <OrderItem> orderItem){
         for (OrderItem orderItem1: orderItem){
             orderSummaryTableModel.addRow(new Object[]{orderItem1.getCode(), 
                                                        orderItem1.getName(),
                                                        orderItem1.getQuantity(),
-                                                       orderItem1.getPrice()});
+                                                       orderItem1.getPrice(),
+                                                       orderItem1.getTotalPrice()});
         }
     }
 
@@ -105,6 +98,8 @@ public class OrderConfirmation extends javax.swing.JPanel {
         txtChange = new javax.swing.JTextField();
         btnEnterAmount = new javax.swing.JButton();
         btnBackMenu = new javax.swing.JButton();
+        btnBackOrder = new javax.swing.JButton();
+        btnPrint = new javax.swing.JButton();
 
         txtPaymentAmount.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 
@@ -120,14 +115,14 @@ public class OrderConfirmation extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Code", "Name", "Quantity", " Price "
+                "Code", "Name", "Quantity", "Price ", "Total Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -161,10 +156,24 @@ public class OrderConfirmation extends javax.swing.JPanel {
             }
         });
 
-        btnBackMenu.setText("Menu");
+        btnBackMenu.setText("Back to Menu");
         btnBackMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackMenuActionPerformed(evt);
+            }
+        });
+
+        btnBackOrder.setText("Back to Order Page");
+        btnBackOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackOrderActionPerformed(evt);
+            }
+        });
+
+        btnPrint.setText("Print");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
             }
         });
 
@@ -174,58 +183,63 @@ public class OrderConfirmation extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(234, 234, 234)
-                        .addComponent(lblChange)
+                        .addComponent(btnBackMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(btnBackOrder)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel1)
-                                        .addComponent(lblPaymentAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addContainerGap())
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(68, 68, 68)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtPaymentAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtPayableAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(212, 212, 212)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnEnterAmount)
-                                .addGap(142, 142, 142))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(270, 270, 270))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(txtChange, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(230, 230, 230))))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(lblOrderSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBackMenu)
-                .addGap(45, 45, 45))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblOrderSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGap(68, 68, 68)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtChange, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(txtPaymentAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txtPayableAmount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(212, 212, 212))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel1)
+                                                .addComponent(lblPaymentAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(60, 60, 60)
+                                                    .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(164, 164, 164)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(btnEnterAmount)
+                                        .addGap(142, 142, 142))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(234, 234, 234)
+                                .addComponent(lblChange)
+                                .addGap(0, 0, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(lblOrderSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBackMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBackOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(lblOrderSummary, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(106, Short.MAX_VALUE))
+                        .addContainerGap(76, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
                         .addComponent(txtPayableAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(94, 94, 94)
                         .addComponent(lblPaymentAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,13 +249,13 @@ public class OrderConfirmation extends javax.swing.JPanel {
                         .addComponent(btnEnterAmount)
                         .addGap(40, 40, 40)
                         .addComponent(lblChange)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtChange, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(btnBackMenu)
-                        .addGap(21, 21, 21))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -265,7 +279,8 @@ public class OrderConfirmation extends javax.swing.JPanel {
         }
         
         JOptionPane.showMessageDialog(frame,"Order Successful!","Order Status",JOptionPane.INFORMATION_MESSAGE);
-
+        this.frame.user.printReceipt(this.order);
+        
         if (frame.user.getRole().equals("A")){
             frame.adminMenu.initAdditionalComponents();
             frame.changePages(1);
@@ -286,11 +301,37 @@ public class OrderConfirmation extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnBackMenuActionPerformed
 
+    private void btnBackOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackOrderActionPerformed
+        this.frame.changePages(4);
+    }//GEN-LAST:event_btnBackOrderActionPerformed
 
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        this.frame.user.printReceipt(this.order);
+    }//GEN-LAST:event_btnPrintActionPerformed
+ 
+    public void setBackMenu (boolean isMenu) {
+        if (isMenu) {
+            btnBackMenu.setVisible(true);
+            btnBackOrder.setVisible(false);
+            btnPrint.setVisible(true);
+        } else {
+            btnBackMenu.setVisible(false);
+            btnBackOrder.setVisible(true);
+            btnPrint.setVisible(false);
+        }
+    }
+    
+    public void setOrder(Order order){
+        this.order = order;
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBackMenu;
+    private javax.swing.JButton btnBackOrder;
     private javax.swing.JButton btnEnterAmount;
     private javax.swing.JButton btnPay;
+    private javax.swing.JButton btnPrint;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblChange;

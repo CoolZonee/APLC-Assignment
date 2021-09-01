@@ -13,7 +13,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import main.java.Admin;
 import main.java.Cart;
 import main.java.Product;
 import main.java.OrderItem;
@@ -24,12 +23,11 @@ public class OrderProduct extends javax.swing.JPanel {
     private DefaultTableModel productTableModel;
     private DefaultTableModel cartTableModel;
     private TableRowSorter<TableModel> rowSorter;
-    private Cart cart = new Cart();
-    private Order order= new Order();
+    private Cart cart;
+    private Order order;
     private Product[] products;
     //OrderItem orderItem = new OrderItem();
     Frame frame;
-    Admin admin = new Admin();
     
     public void setFrame(Frame frame){
         this.frame=frame;
@@ -49,7 +47,7 @@ public class OrderProduct extends javax.swing.JPanel {
         TableSortFilter.addFilter(rowSorter, tblProduct, txtSearchProduct);
         
 //        this.enableUpdateDeleteBtn(false);
-        this.loadData();
+        
         this.productTableModel.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
@@ -100,6 +98,13 @@ public class OrderProduct extends javax.swing.JPanel {
         });
     }
     
+    public void initAdditionalComponents() {
+        this.cart = new Cart();
+        this.order = new Order();
+        this.productTableModel.setRowCount(0);
+        this.cartTableModel.setRowCount(0);
+        this.loadData();
+    }
 
                                     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -115,6 +120,7 @@ public class OrderProduct extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtTotalPrice = new javax.swing.JTextField();
         btnClear = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         tblProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -198,6 +204,13 @@ public class OrderProduct extends javax.swing.JPanel {
             }
         });
 
+        btnBack.setText("Back to Menu");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,6 +218,7 @@ public class OrderProduct extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
@@ -227,7 +241,9 @@ public class OrderProduct extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(26, 26, 26)
+                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtSearchProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
@@ -278,6 +294,7 @@ public class OrderProduct extends javax.swing.JPanel {
             }else{
                 frame.orderConfirmation.setOrder(this.order);
                 frame.orderConfirmation.initAdditionalComponents();
+                frame.orderConfirmation.setBackMenu(false);
                 
                 this.frame.changePages(7);
             }
@@ -316,8 +333,18 @@ public class OrderProduct extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnClearActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        if (frame.user.getRole().equals("A")){
+            frame.adminMenu.initAdditionalComponents();
+            frame.changePages(1);
+        }else{
+            frame.customerMenu.initAdditionalComponents();
+            frame.changePages(2);
+        }
+    }//GEN-LAST:event_btnBackActionPerformed
+
     private void loadData() {
-        this.products = this.admin.loadProduct();
+        this.products = this.frame.admin.loadProduct();
         for (Product product: products) {
             Vector vector = new Vector();
             vector.add(product.getName());
@@ -328,6 +355,7 @@ public class OrderProduct extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnOrder;
     private javax.swing.JLabel jLabel2;

@@ -35,7 +35,7 @@ public class Cart {
                                 product.getCode(), 
                                 product.getName(), 
                                 cartQuantity, 
-                                (product.getPrice() * cartQuantity)
+                                product.getPrice()
                         );
                         orderItem.add(item);
                     }
