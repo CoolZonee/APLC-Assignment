@@ -1,8 +1,6 @@
 package main.java;
 
 import java.util.List;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
 import java.awt.print.PrinterJob;
 
 public class User implements Authentication {
@@ -55,21 +53,26 @@ public class User implements Authentication {
         DAO.append(loginDataFinal, resourceLog);
     }
     
+    public List<Product> loadProduct() {
+        return Product.loadProduct();
+    }
     
     public void addOrder(Order order) {
         order.addOrder();
     }
     
-    public List <Order> loadOrder(Order order) {
-        return order.loadOrder();
+    public List <Order> loadOrder() {
+        return Order.loadUserOrder(getUsername());
     }
     
+    public void removeOrder(Order order) {
+        order.removeOrder();
+    }
     
-            
     public static void printReceipt(Order order) {
         PrinterJob pj = PrinterJob.getPrinterJob();
         ReceiptPrintable print = new ReceiptPrintable(order);
-        pj.setPrintable(print, print.getPageFormat(pj));
+        pj.setPrintable(print, print.getPageFormat(pj, order.orderItem.size()));
         
         try{
             pj.print();

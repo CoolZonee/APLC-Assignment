@@ -1,5 +1,5 @@
 package main.gui;
-
+import javax.swing.ImageIcon;
 import main.java.*;
 
 public class Frame extends javax.swing.JFrame {
@@ -7,12 +7,12 @@ public class Frame extends javax.swing.JFrame {
     User user = new User();
     Admin admin = new Admin();
     Customer customer = new Customer();
-    Order order = new Order();
 
     public Frame() {
         initComponents();
         setFrame();
-
+        ImageIcon img = new ImageIcon("src/main/resource/shop.png");
+        this.setIconImage(img.getImage());
     }
 
     public void setFrame() {
@@ -46,6 +46,7 @@ public class Frame extends javax.swing.JFrame {
         orderConfirmation = new main.gui.OrderConfirmation();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Giants Grocer");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTabbedPane.addTab("tab1", userLogin);
@@ -78,5 +79,6 @@ public class Frame extends javax.swing.JFrame {
     public main.gui.ProductPage productPage;
     public main.gui.UserLogin userLogin;
     // End of variables declaration//GEN-END:variables
+
 
 }

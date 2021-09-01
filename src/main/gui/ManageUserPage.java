@@ -5,7 +5,10 @@
  */
 package main.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -16,6 +19,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     private DefaultTableModel dfTable;
     private TableRowSorter<TableModel> rowSorter;
     private User user = new User();
+    private List<User> users;
     private int selectedRow;
     private Frame frame;
     
@@ -29,6 +33,7 @@ public class ManageUserPage extends javax.swing.JPanel {
         }
         this.tblCustomer.setRowSorter(rowSorter);
         TableSortFilter.addFilter(rowSorter, tblCustomer, txtSearchProduct);
+        this.users = new ArrayList<>();
     }
     
     public void initAddtionalComponents () {
@@ -62,6 +67,8 @@ public class ManageUserPage extends javax.swing.JPanel {
         lblRole = new javax.swing.JLabel();
         cmbRole = new javax.swing.JComboBox<>();
         cmbSex = new javax.swing.JComboBox<>();
+        lblPassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
         txtSearchProduct = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
 
@@ -114,7 +121,7 @@ public class ManageUserPage extends javax.swing.JPanel {
 
         txtUsername.setToolTipText("");
 
-        btnUpdate.setText("Add New Customer");
+        btnUpdate.setText("Add New User");
         btnUpdate.setActionCommand("Add New User");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +151,8 @@ public class ManageUserPage extends javax.swing.JPanel {
 
         cmbSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select Sex-", "M", "F" }));
 
+        lblPassword.setText("Password:");
+
         javax.swing.GroupLayout pnlProductDetailsLayout = new javax.swing.GroupLayout(pnlProductDetails);
         pnlProductDetails.setLayout(pnlProductDetailsLayout);
         pnlProductDetailsLayout.setHorizontalGroup(
@@ -153,12 +162,14 @@ public class ManageUserPage extends javax.swing.JPanel {
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblName)
                     .addComponent(lblUsername)
-                    .addComponent(lblRole))
+                    .addComponent(lblRole)
+                    .addComponent(lblPassword))
                 .addGap(28, 28, 28)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtUsername)
                     .addComponent(txtName)
-                    .addComponent(cmbRole, 0, 223, Short.MAX_VALUE))
+                    .addComponent(cmbRole, 0, 223, Short.MAX_VALUE)
+                    .addComponent(txtPassword))
                 .addGap(112, 112, 112)
                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlProductDetailsLayout.createSequentialGroup()
@@ -195,21 +206,30 @@ public class ManageUserPage extends javax.swing.JPanel {
                         .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlProductDetailsLayout.createSequentialGroup()
+                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlProductDetailsLayout.createSequentialGroup()
+                                .addComponent(lblAge, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProductDetailsLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblPassword)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
                         .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblName)
-                            .addComponent(lblAge, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblRole))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(14, 14, 14))))
             .addGroup(pnlProductDetailsLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnUpdate.getAccessibleContext().setAccessibleName("Add New User");
@@ -260,20 +280,28 @@ public class ManageUserPage extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         this.user.setUsername(txtUsername.getText());
+        this.user.setPassword(String.valueOf(txtPassword.getPassword()));
         this.user.setName(txtName.getText());
         this.user.setRole(cmbRole.getSelectedItem().toString());
         this.user.setSex(cmbSex.getSelectedItem().toString());
         this.user.setAge(txtAge.getText());
         if (this.user.getIsNew()) {
-            this.frame.admin.addUser(this.user);
-            Vector vector = new Vector();
-            vector.add(this.user.getUsername());
-            vector.add(this.user.getName());
-            vector.add(this.user.getRole());
-            vector.add(this.user.getSex());
-            vector.add(this.user.getAge());
-            this.dfTable.addRow(vector);
+            if (this.frame.admin.checkIfRecordExist(this.user.getUsername())) {
+                this.frame.admin.addUser(this.user);
+                Vector vector = new Vector();
+                vector.add(this.user.getUsername());
+                vector.add(this.user.getName());
+                vector.add(this.user.getRole());
+                vector.add(this.user.getSex());
+                vector.add(this.user.getAge());
+                this.users.add(this.user);
+                this.dfTable.addRow(vector);
+                JOptionPane.showMessageDialog(frame, "Successfully added new user!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(frame, "User Existed!", "Error", JOptionPane.ERROR_MESSAGE);
+            }            
         } else {
+            JOptionPane.showMessageDialog(frame, "Successfully updated user details!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.frame.admin.updateUser(this.user);
             this.dfTable.setRowCount(0);
             this.loadData();
@@ -283,9 +311,19 @@ public class ManageUserPage extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        this.frame.admin.removeUser(this.user);
-        this.dfTable.removeRow(this.selectedRow);
-        this.clearAll();
+        int result = JOptionPane.showConfirmDialog(
+                frame, 
+                "Are you sure you want to delete " + this.user.getName() + "?", 
+                "Delete Confirmation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            this.frame.admin.removeUser(this.user);
+            this.dfTable.removeRow(this.selectedRow);
+            JOptionPane.showMessageDialog(frame, "Successfully deleted user " + this.user.getName() + "!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            this.users.remove(this.user);
+            this.clearAll();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -304,13 +342,10 @@ public class ManageUserPage extends javax.swing.JPanel {
     
     private void changeSelectedData() {
         this.selectedRow = tblCustomer.getSelectedRow();
+        this.user = users.get(selectedRow);
         this.user.setIsNew(false);
-        this.user.setUsername(this.dfTable.getValueAt(this.selectedRow, 0).toString());
-        this.user.setName(this.dfTable.getValueAt(this.selectedRow, 1).toString());
-        this.user.setRole(this.dfTable.getValueAt(this.selectedRow, 2).toString());
-        this.user.setSex(this.dfTable.getValueAt(this.selectedRow, 3).toString());
-        this.user.setAge(this.dfTable.getValueAt(this.selectedRow, 4).toString());
         txtUsername.setText(this.user.getUsername());
+        txtPassword.setText(this.user.getPassword());
         txtName.setText(this.user.getName());
         cmbRole.setSelectedItem(this.user.getRole());
         cmbSex.setSelectedItem(this.user.getSex());
@@ -330,7 +365,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     }
     
     private void loadData() {
-        User[] users = this.frame.admin.loadUser();
+        this.users = this.frame.admin.loadUser();
         for (User user: users) {
             Vector vector = new Vector();
             vector.add(user.getUsername());
@@ -345,6 +380,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     public void clearAll() {
         txtSearchProduct.setText("");
         txtUsername.setText("");
+        txtPassword.setText("");
         txtName.setText("");
         cmbRole.setSelectedIndex(0);
         cmbSex.setSelectedIndex(0);
@@ -368,6 +404,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblRole;
     private javax.swing.JLabel lblSex;
     private javax.swing.JLabel lblUsername;
@@ -375,6 +412,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     private javax.swing.JTable tblCustomer;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtName;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtSearchProduct;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

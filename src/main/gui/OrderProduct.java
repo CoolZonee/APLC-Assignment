@@ -26,7 +26,7 @@ public class OrderProduct extends javax.swing.JPanel {
     private TableRowSorter<TableModel> rowSorter;
     private Cart cart;
     private Order order;
-    private Product[] products;
+    private List<Product> products;
     //OrderItem orderItem = new OrderItem();
     Frame frame;
     
@@ -39,15 +39,8 @@ public class OrderProduct extends javax.swing.JPanel {
         this.productTableModel = (DefaultTableModel)tblProduct.getModel();
         this.cartTableModel = (DefaultTableModel)tblCart.getModel();
         this.rowSorter = new TableRowSorter<>(tblProduct.getModel());
-        // Disable sorting function
-//        for(int i = 0; i < tblProduct.getColumnCount(); i++) {
-//            this.rowSorter.setSortable(i, false);
-//        }
-        // Enable filter function
         this.tblProduct.setRowSorter(rowSorter);
         TableSortFilter.addFilter(rowSorter, tblProduct, txtSearchProduct);
-        
-//        this.enableUpdateDeleteBtn(false);
         
         this.productTableModel.addTableModelListener(new TableModelListener() {
             @Override
@@ -97,6 +90,7 @@ public class OrderProduct extends javax.swing.JPanel {
                 txtTotalPrice.setText(String.format("%.2f", totalPrice));
             }   
         });
+        this.products = new ArrayList<>();
     }
     
     public void initAdditionalComponents() {
@@ -301,29 +295,6 @@ public class OrderProduct extends javax.swing.JPanel {
                 this.frame.changePages(7);
             }
         }
-            
-        
-//        this.user.setUsername(txtUsername.getText());
-//        this.user.setName(txtName.getText());
-//        this.user.setRole(cmbRole.getSelectedItem().toString());
-//        this.user.setSex(cmbSex.getSelectedItem().toString());
-//        this.user.setAge(txtAge.getText());
-//        if (this.user.getIsNew()) {
-//            this.admin.addUser(this.user);
-//            Vector vector = new Vector();
-//            vector.add(this.user.getUsername());
-//            vector.add(this.user.getName());
-//            vector.add(this.user.getRole());
-//            vector.add(this.user.getSex());
-//            vector.add(this.user.getAge());
-//            this.dfTable.addRow(vector);
-//        } else {
-//            this.admin.updateUser(this.user);
-//            this.dfTable.setRowCount(0);
-//            this.loadData();
-//        }
-//
-//        this.clearAll();
     }//GEN-LAST:event_btnOrderActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -346,7 +317,7 @@ public class OrderProduct extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void loadData() {
-        this.products = this.frame.admin.loadProduct();
+        this.products = this.frame.user.loadProduct();
         for (Product product: products) {
             Vector vector = new Vector();
             vector.add(product.getName());

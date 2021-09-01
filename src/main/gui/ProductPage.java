@@ -5,7 +5,10 @@
  */
 package main.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -16,6 +19,7 @@ public class ProductPage extends javax.swing.JPanel {
     private DefaultTableModel dfTable;
     private TableRowSorter<TableModel> rowSorter;
     private Product product = new Product();
+    private List<Product> products;
     private int selectedRow;
     private Frame frame;
     
@@ -29,6 +33,7 @@ public class ProductPage extends javax.swing.JPanel {
         }
         this.tblProduct.setRowSorter(rowSorter);
         TableSortFilter.addFilter(rowSorter, tblProduct, txtSearchProduct);
+        this.products = new ArrayList<>();
     }
 
     public void initAdditionalComponents() {
@@ -255,9 +260,20 @@ public class ProductPage extends javax.swing.JPanel {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        this.frame.admin.removeProduct(this.product);
-        this.dfTable.removeRow(this.selectedRow);
-        this.clearAll();
+        int result = JOptionPane.showConfirmDialog(
+                frame, 
+                "Are you sure you want to delete " + this.product.getName() + "?", 
+                "Delete Confirmation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
+            this.frame.admin.removeProduct(this.product);
+            this.dfTable.removeRow(this.selectedRow);
+            JOptionPane.showMessageDialog(frame, "Successfully deleted product " + this.product.getName() + "!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            this.products.remove(product);
+            this.clearAll();
+        }
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tblProductKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProductKeyReleased
@@ -271,15 +287,23 @@ public class ProductPage extends javax.swing.JPanel {
         this.product.setPrice(Double.parseDouble(txtPrice.getText()));
         this.product.setIsFragile(ckbFragile.isSelected());
         if (this.product.getIsNew()) {
-            this.frame.admin.addProduct(this.product);
-            Vector vector = new Vector();
-            vector.add(this.product.getCode());
-            vector.add(this.product.getName());
-            vector.add(this.product.getQuantity());
-            vector.add(this.product.getPrice());
-            vector.add(this.product.getIsFragile());
-            this.dfTable.addRow(vector);
+            if(this.frame.admin.checkProduct(this.product)) {
+                this.frame.admin.addProduct(this.product);
+                Vector vector = new Vector();
+                vector.add(this.product.getCode());
+                vector.add(this.product.getName());
+                vector.add(this.product.getQuantity());
+                vector.add(this.product.getPrice());
+                vector.add(this.product.getIsFragile());
+                this.products.add(product);
+                this.dfTable.addRow(vector);
+                JOptionPane.showMessageDialog(frame, "Successfully added new product!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Product existed!", "Product", JOptionPane.ERROR_MESSAGE);
+            }
+            
         } else {
+            JOptionPane.showMessageDialog(frame, "Successfully updated product!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.frame.admin.updateProduct(this.product);
             this.dfTable.setRowCount(0);
             this.loadData();
@@ -300,12 +324,8 @@ public class ProductPage extends javax.swing.JPanel {
    
     private void changeSelectedData() {
         this.selectedRow = tblProduct.getSelectedRow();
+        this.product = products.get(selectedRow);
         this.product.setIsNew(false);
-        this.product.setCode(this.dfTable.getValueAt(this.selectedRow, 0).toString());
-        this.product.setName(this.dfTable.getValueAt(this.selectedRow, 1).toString());
-        this.product.setQuantity(Integer.parseInt(this.dfTable.getValueAt(this.selectedRow, 2).toString()));
-        this.product.setPrice(Double.parseDouble(this.dfTable.getValueAt(this.selectedRow, 3).toString()));
-        this.product.setIsFragile(Boolean.parseBoolean(this.dfTable.getValueAt(this.selectedRow, 4).toString()));
         txtCode.setText(this.product.getCode());
         txtName.setText(this.product.getName());
         txtQuantity.setText(String.valueOf(this.product.getQuantity()));
@@ -326,7 +346,7 @@ public class ProductPage extends javax.swing.JPanel {
     }
     
     private void loadData() {
-        Product[] products = this.frame.admin.loadProduct();
+        products = this.frame.admin.loadProduct();
             for (Product product: products) {
             Vector vector = new Vector();
             vector.add(product.getCode());

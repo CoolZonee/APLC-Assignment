@@ -233,6 +233,7 @@ public class CustomerMenu extends javax.swing.JPanel {
 
     private void btnOrderPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderPageActionPerformed
         this.frame.changePages(4);
+        this.frame.orderProduct.initAdditionalComponents();
     }//GEN-LAST:event_btnOrderPageActionPerformed
 
     private void btnDeleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOrderActionPerformed

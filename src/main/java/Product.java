@@ -1,8 +1,9 @@
 package main.java;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Product {
+public class Product implements CheckRecord {
     private String code, name;
     private int quantity;
     private double price;
@@ -20,17 +21,18 @@ public class Product {
         this.isFragile = isFragile;
     }
 
-    public static Product[] loadProduct() {
+    public static List<Product> loadProduct() {
         List<String> allProduct = DAO.readAll(resource);
-        Product[] products = new Product[allProduct.size()];
-        for (int i = 0; i < allProduct.size(); i++) {              
-            String[] details = allProduct.get(i).split(";");
-            products[i] = new Product(
+        List<Product> products = new ArrayList<>();
+        for (String line: allProduct) {              
+            String[] details = line.split(";");
+            products.add(new Product(
                     details[0], 
                     details[1], 
                     Integer.parseInt(details[2]), 
                     Double.parseDouble(details[3]),
                     Boolean.parseBoolean(details[4])
+                )
             );
         }
         return products;
@@ -52,6 +54,18 @@ public class Product {
         DAO.rewrite(allProduct, resource);
     }
     
+    @Override
+    public boolean checkIfRecordExist(String code) {
+        List<Product> productList = loadProduct();
+        boolean valid = true;
+        for (Product p: productList) {
+            if (p.getCode().equals(code)) {
+                valid = false;
+            }
+        }
+        return valid;
+    }
+    
     public void removeProduct() {
         List<String> allProduct = DAO.readAll(resource);
         for(int i = 0; i < allProduct.size(); i++) {
@@ -64,9 +78,10 @@ public class Product {
         DAO.rewrite(allProduct, resource);
 
     }
+    
     public void addQuantity (int quantity) {
-    this.quantity += quantity;
-}
+        this.quantity += quantity;
+    }
 
     public void minusQuantity (int quantity) {
         this.quantity -= quantity;

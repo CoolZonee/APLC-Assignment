@@ -17,7 +17,7 @@ public class Cart {
         
     public List<OrderItem> checkProductQuantity(String orderUUID){
         List<OrderItem> orderItem = new ArrayList<>();
-        Product[] productArr = Product.loadProduct();
+        List<Product> productArr = Product.loadProduct();
         for (Product cartItem: this.getProducts()){
              String cartName = cartItem.getName();
              int cartQuantity = cartItem.getQuantity();

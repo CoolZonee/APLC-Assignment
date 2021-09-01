@@ -30,16 +30,7 @@ public class Order {
     public void addOrder(){
         DAO.append(this.toString(), resource);
     }
-    
-    public void setOrderItem(List <OrderItem> orderItem){
-        this.orderItem = orderItem;
-    }
-    
-    public void clearOrder(){
-        if (!orderItem.isEmpty()){
-            this.orderItem.clear();  
-        }
-    }
+
     public static List <Order> loadOrder(){
         List <String> allOrder = DAO.readAll(resource);
         List <Order> orders = new ArrayList<Order>();
@@ -65,6 +56,18 @@ public class Order {
          return matchOrder;
     }
     
+    public void removeOrder() {
+        List<String> allOrders = DAO.readAll(resource);
+        for(int i=0; i<allOrders.size();i++) {
+            String[] orderDetails = allOrders.get(i).split(";");
+            if (orderDetails[0].equals(this.getUuid())) {
+                allOrders.remove(i);
+                break;
+            }
+        }
+        DAO.rewrite(allOrders, resource);
+    }
+    
     public static List <Order> loadUserOrder(String username){
         List <Order> allOrders = loadOrder();
         List <Order> userOrders = new ArrayList<Order>();
@@ -74,6 +77,16 @@ public class Order {
             }
         }
         return userOrders;
+    }
+    
+    public void setOrderItem(List <OrderItem> orderItem){
+        this.orderItem = orderItem;
+    }
+    
+    public void clearOrder(){
+        if (!orderItem.isEmpty()){
+            this.orderItem.clear();  
+        }
     }
     
     @Override
@@ -99,21 +112,8 @@ public class Order {
             productSelected.get(i).updateProduct();
         }
     }
-    public void removeOrder() {
-        List<String> allOrders = DAO.readAll(resource);
-        for(int i=0; i<allOrders.size();i++) {
-            String[] orderDetails = allOrders.get(i).split(";");
-            if (orderDetails[0].equals(this.getUuid())) {
-                allOrders.remove(i);
-                break;
-            }
-        }
-        DAO.rewrite(allOrders, resource);
-    }
     
-    public boolean cartEmpty(){
-        return this.orderItem.isEmpty();
-    }
+    
     public void addOrderItem(OrderItem orderItem) {
         this.orderItem.add(orderItem);
     }
@@ -134,29 +134,7 @@ public class Order {
         this.total=calculateTotalprice(this.orderItem);
         return this.total;
     }
-//    public int noOfItemsPurchased(List<OrderItem> orderItem){
-//        int noOfItems=0;
-//        for (OrderItem orderItem1 : orderItem){
-//            noOfItems = noOfItems + orderItem1.getQuantity();
-//        }
-//        return noOfItems;
-//    }
-//    public int typesOfItemsPurchased(List<OrderItem> orderItem){
-//        int typesOfItems = 0;
-//        typesOfItems = orderItem.size();
-//        return typesOfItems;
-//    }    
-
-//    public int getNoOfItems() {
-//        this.noOfItems = noOfItemsPurchased(this.orderItem);
-//        return this.noOfItems;
-//    }
-//
-//    public int getTypesOfItems() {
-//        this.typesOfItems = typesOfItemsPurchased(this.orderItem);
-//        return this.typesOfItems;
-//    }
-
+    
     public double getAndSetChange() {
         this.change= calculateChange(this);
         return this.change;
@@ -201,9 +179,4 @@ public class Order {
     public double getTotal() {
         return total;
     }
-
-    
-    
-    
-    
 }

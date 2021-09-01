@@ -16,8 +16,6 @@ import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.List;
-import static main.java.test.cm_to_pp;
-
 
 public class ReceiptPrintable implements Printable {
     private Order order;
@@ -40,7 +38,7 @@ public class ReceiptPrintable implements Printable {
                 int yShift = 10;
                 g2d.setFont(new Font("Monospaced", Font.PLAIN,9));
                 g2d.drawString("--------------------------------------------", 12,y); y+= yShift;
-                g2d.drawString("                  Receipt", 12,y); y+= yShift;
+                g2d.drawString("                Receipt", 12,y); y+= yShift;
                 g2d.drawString("--------------------------------------------", 12,y); y+= yShift;
                 g2d.drawString("OrderID: ", 12,y); y+= yShift;
                 g2d.drawString("   " + this.order.getUuid(), 12, y); y+= yShift;
@@ -102,10 +100,10 @@ public class ReceiptPrintable implements Printable {
                 g2d.drawString("                                            ", 12,y); y+= yShift;
 
                 g2d.drawString("********************************************", 12,y); y+= yShift;
-                g2d.drawString("            THANK YOU COME AGAIN            ", 12,y); y+= yShift;
+                g2d.drawString("          THANK YOU COME AGAIN            ", 12,y); y+= yShift;
                 g2d.drawString("********************************************", 12,y); y+= yShift;
-                g2d.drawString("         SOFTWARE BY: Keat and Jamie        ", 12,y); y+= yShift;
-                g2d.drawString("            Contact: 03-123456789           ", 12,y); y+= yShift;
+                g2d.drawString("       SOFTWARE BY: Keat and Jamie        ", 12,y); y+= yShift;
+                g2d.drawString("          Contact: 03-123456789           ", 12,y); y+= yShift;
 
             
             }catch(Exception e){
@@ -117,16 +115,16 @@ public class ReceiptPrintable implements Printable {
         return result;
     }
     
-    public static PageFormat getPageFormat(PrinterJob pj) {
+    public PageFormat getPageFormat(PrinterJob pj, int numOfItem) {
         pj.setJobName("Receipt");
         PageFormat pf = pj.defaultPage();
         Paper paper = pf.getPaper();
         
         double bodyHeight = 0.0;
-        double headerHeight = 3.0 * 5;
+        double headerHeight = 3.0 * 10;
         double footerHeight = 5.0;
-        double width = 8;
-        double height = headerHeight+bodyHeight+footerHeight;
+        double width = cm_to_pp(8);
+        double height = cm_to_pp(headerHeight+bodyHeight+footerHeight);
         paper.setSize(width, height);
         paper.setImageableArea(0, 10, width, height-cm_to_pp(1));
         pf.setOrientation(PageFormat.PORTRAIT);
@@ -134,4 +132,12 @@ public class ReceiptPrintable implements Printable {
         
         return pf;
     }   
+    
+    protected double cm_to_pp(double cm){
+        return toPPI(cm * 0.393600787);
+    }
+    
+    protected double toPPI(double inch){
+        return inch * 72d;
+    }
 }
