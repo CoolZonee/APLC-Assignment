@@ -5,6 +5,8 @@
  */
 package main.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
@@ -264,6 +266,7 @@ public class OrderProduct extends javax.swing.JPanel {
         order.clearOrder();
         boolean isValid=true;
         Product[] productArr = Product.loadProduct();
+        List <Product> productsSelected = new ArrayList<Product>(); 
         for (int row=0;row < cartTableModel.getRowCount(); row++){
             String cartName = cartTableModel.getValueAt(row, 0).toString();
             int cartQuantity = Integer.parseInt(cartTableModel.getValueAt(row, 2).toString());
@@ -277,6 +280,7 @@ public class OrderProduct extends javax.swing.JPanel {
 //                            isValid=false;
 //                        }
                     }else{
+                        productsSelected.add(productCheck);
                         OrderItem orderItem = new OrderItem(order.getUuid(), productCheck.getCode(),productCheck.getName(),cartQuantity, (productCheck.getPrice() * cartQuantity));
                         order.addOrderItem(orderItem);
                     }
@@ -289,6 +293,7 @@ public class OrderProduct extends javax.swing.JPanel {
             if (!isValid){
                 JOptionPane.showMessageDialog(frame, cart.getQuantityInvalidMessage());            
             }else{
+                frame.orderConfirmation.setProduct(productsSelected);
                 frame.orderConfirmation.setOrder(this.order);
                 frame.orderConfirmation.initAdditionalComponents();
                 

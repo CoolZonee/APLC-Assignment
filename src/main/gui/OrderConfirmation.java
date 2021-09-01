@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import main.java.DateAndTime;
 import main.java.Order;
 import main.java.OrderItem;
+import main.java.Product;
 /**
  *
  * @author jamie
@@ -28,12 +29,16 @@ public class OrderConfirmation extends javax.swing.JPanel {
     private DefaultTableModel orderSummaryTableModel;
     boolean isSufficient=false;
     Order order;
+    List <Product> productSelected;
     public OrderConfirmation() {
         initComponents();
     }
     public void setOrder(Order order){
         this.order = order;
         
+    }
+    public void setProduct(List<Product> productSelected){
+        this.productSelected = productSelected;
     }
     public void initAdditionalComponents(){
         btnEnterAmount.setEnabled(true);
@@ -267,9 +272,9 @@ public class OrderConfirmation extends javax.swing.JPanel {
         for(OrderItem orderItem1 : order.orderItem){
             orderItem1.addOrderItem();
         }
-        
+        order.updateProductQuantity(this.productSelected);
         JOptionPane.showMessageDialog(frame,"Order Successful!","Order Status",JOptionPane.INFORMATION_MESSAGE);
-
+        
         if (frame.user.getRole().equals("A")){
             frame.adminMenu.initAdditionalComponents();
             frame.changePages(1);

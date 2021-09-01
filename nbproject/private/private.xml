@@ -35,14 +35,16 @@
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/Product.java</file>
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/Order.java</file>
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/Cart.java</file>
-            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/LoginHistory.java</file>
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/OrderProduct.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/LoginHistory.java</file>
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/resource/userLog.txt</file>
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/UserLogin.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/OrderConfirmation.java</file>
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/CustomerMenu.java</file>
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/gui/AdminMenu.java</file>
-            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/DateAndTime.java</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/resource/OrderItem.txt</file>
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/resource/Product.txt</file>
+            <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/resource/Order.txt</file>
             <file>file:/C:/Users/jamie/Desktop/RetailStoreJava/src/main/java/Admin.java</file>
         </group>
     </open-files>

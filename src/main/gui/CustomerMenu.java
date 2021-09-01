@@ -237,7 +237,8 @@ public class CustomerMenu extends javax.swing.JPanel {
 
     private void btnDeleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOrderActionPerformed
         uuidOrder = Order.getOrder(uuid);
-        System.out.println(uuidOrder);
+        uuidOrder.removeOrder();
+        initAdditionalComponents();
     }//GEN-LAST:event_btnDeleteOrderActionPerformed
 
     private void btnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderActionPerformed
