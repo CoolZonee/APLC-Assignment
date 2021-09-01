@@ -1,10 +1,18 @@
 package main.gui;
+import java.util.List;
 import javax.swing.JOptionPane;
+import main.java.Order;
+import javax.swing.table.DefaultTableModel;
+import main.java.OrderItem;
 
 
 public class CustomerMenu extends javax.swing.JPanel {
 
     Frame frame;
+    DefaultTableModel orderHistoryCustomerTableModel;
+    List <Order> userOrder;
+    String uuid;
+    Order uuidOrder;
     public CustomerMenu() {
         initComponents();
     }
@@ -12,12 +20,25 @@ public class CustomerMenu extends javax.swing.JPanel {
         txtUsernameCustomerPage.setText(this.frame.customer.getUsername());
         txtNameCustomerPage.setText(this.frame.customer.getName());
         txtAgeCustomerPage.setText(this.frame.customer.getAge());
+        btnDeleteOrder.setEnabled(false);
+        btnViewOrder.setEnabled(false);
+        orderHistoryCustomerTableModel = (DefaultTableModel)tblOrderHistoryCustomer.getModel();
+        orderHistoryCustomerTableModel.setRowCount(0);
+        fillOrderHistoryTable();
         
     }
     public void setFrame(Frame frame) {
         this.frame = frame;
     }
-
+    public void fillOrderHistoryTable(){
+        userOrder = Order.loadUserOrder(frame.user.getUsername());
+        for(Order order : this.userOrder){
+            String[] dataRow = order.toStringUser().split(";");
+            orderHistoryCustomerTableModel.addRow(dataRow);
+        }
+        
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,8 +57,10 @@ public class CustomerMenu extends javax.swing.JPanel {
         lblAgeCustomerPage = new javax.swing.JLabel();
         txtUsernameCustomerPage = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblPastPurchasesCustomer = new javax.swing.JTable();
+        tblOrderHistoryCustomer = new javax.swing.JTable();
         lblCustomerPage1 = new javax.swing.JLabel();
+        btnDeleteOrder = new javax.swing.JButton();
+        btnViewOrder = new javax.swing.JButton();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -68,16 +91,16 @@ public class CustomerMenu extends javax.swing.JPanel {
 
         txtUsernameCustomerPage.setEditable(false);
 
-        tblPastPurchasesCustomer.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrderHistoryCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "UUID", "Total", "Paid", "Change", "Date"
+                "Order ID", "Total", "Paid", "Change", "Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -91,10 +114,29 @@ public class CustomerMenu extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblPastPurchasesCustomer.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tblPastPurchasesCustomer);
+        tblOrderHistoryCustomer.getTableHeader().setReorderingAllowed(false);
+        tblOrderHistoryCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblOrderHistoryCustomerMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblOrderHistoryCustomer);
 
         lblCustomerPage1.setText("Past Purchases");
+
+        btnDeleteOrder.setText("Delete Order");
+        btnDeleteOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteOrderActionPerformed(evt);
+            }
+        });
+
+        btnViewOrder.setText("View Order");
+        btnViewOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewOrderActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -119,10 +161,6 @@ public class CustomerMenu extends javax.swing.JPanel {
                         .addComponent(btnOrderPage, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1055, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 105, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
@@ -133,6 +171,17 @@ public class CustomerMenu extends javax.swing.JPanel {
                         .addGap(34, 34, 34)
                         .addComponent(lblCustomerPage1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnViewOrder)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeleteOrder))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1055, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 105, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,7 +190,11 @@ public class CustomerMenu extends javax.swing.JPanel {
                 .addComponent(lblCustomerPage1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnDeleteOrder)
+                    .addComponent(btnViewOrder))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCustomerPage2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsernameCustomerPage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -182,16 +235,35 @@ public class CustomerMenu extends javax.swing.JPanel {
         this.frame.changePages(4);
     }//GEN-LAST:event_btnOrderPageActionPerformed
 
+    private void btnDeleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOrderActionPerformed
+        uuidOrder = Order.getOrder(uuid);
+        System.out.println(uuidOrder);
+    }//GEN-LAST:event_btnDeleteOrderActionPerformed
+
+    private void btnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderActionPerformed
+        frame.orderConfirmation.initAdditionalComponentsView(OrderItem.loadUuidOrderItem(uuid), Order.getOrder(uuid));
+        frame.changePages(7);
+    }//GEN-LAST:event_btnViewOrderActionPerformed
+
+    private void tblOrderHistoryCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrderHistoryCustomerMouseClicked
+        btnDeleteOrder.setEnabled(true);
+        btnViewOrder.setEnabled(true);
+        int row = tblOrderHistoryCustomer.getSelectedRow();
+        uuid = orderHistoryCustomerTableModel.getValueAt(row, 0).toString();
+    }//GEN-LAST:event_tblOrderHistoryCustomerMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeleteOrder;
     private javax.swing.JButton btnOrderPage;
     private javax.swing.JButton btnReturnLoginCustomer;
+    private javax.swing.JButton btnViewOrder;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAgeCustomerPage;
     private javax.swing.JLabel lblCustomerPage1;
     private javax.swing.JLabel lblCustomerPage2;
     private javax.swing.JLabel lblNameCustomerPage;
-    private javax.swing.JTable tblPastPurchasesCustomer;
+    private javax.swing.JTable tblOrderHistoryCustomer;
     private javax.swing.JTextField txtAgeCustomerPage;
     private javax.swing.JTextField txtNameCustomerPage;
     private javax.swing.JTextField txtUsernameCustomerPage;

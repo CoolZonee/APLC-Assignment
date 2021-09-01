@@ -5,6 +5,7 @@
  */
 package main.gui;
 
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
@@ -24,9 +25,6 @@ public class OrderProduct extends javax.swing.JPanel {
     private DefaultTableModel cartTableModel;
     private TableRowSorter<TableModel> rowSorter;
     private Cart cart = new Cart();
-    private Product product;
-    private int selectedRow;
-    private int quantityCheck;
     private Order order= new Order();
     private Product[] products;
     //OrderItem orderItem = new OrderItem();
@@ -264,8 +262,10 @@ public class OrderProduct extends javax.swing.JPanel {
         this.cart.setIsQuantityValid(true);
         this.order.clearOrder();
         
-        if(!this.cart.checkProductQuantity().isEmpty() && this.cart.getIsQuantityValid()) {
-            for (OrderItem orderItem: this.cart.checkProductQuantity() ) {
+        List <OrderItem> orderItemList = this.cart.checkProductQuantity(this.order.getUuid());
+        
+        if(!orderItemList.isEmpty() && this.cart.getIsQuantityValid()) {
+            for (OrderItem orderItem: orderItemList) {
                 this.order.addOrderItem(orderItem);
             }
         }

@@ -13,7 +13,7 @@ public class Cart {
         this.isQuantityValid = true;
     }
         
-    public List<OrderItem> checkProductQuantity(){
+    public List<OrderItem> checkProductQuantity(String orderUUID){
         List<OrderItem> orderItem = new ArrayList<>();
         Product[] productArr = Product.loadProduct();
         for (Product cartItem: this.getProducts()){
@@ -31,6 +31,7 @@ public class Cart {
                     }
                     else{
                         OrderItem item = new OrderItem(
+                                orderUUID,
                                 product.getCode(), 
                                 product.getName(), 
                                 cartQuantity, 
