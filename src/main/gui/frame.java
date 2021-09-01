@@ -48,6 +48,8 @@ public class Frame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Giants Grocer");
 
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        
         jTabbedPane.addTab("tab1", userLogin);
         jTabbedPane.addTab("tab2", adminMenu);
         jTabbedPane.addTab("tab3", customerMenu);
@@ -57,6 +59,7 @@ public class Frame extends javax.swing.JFrame {
         jTabbedPane.addTab("tab7", loginHistory);
         jTabbedPane.addTab("tab8", orderConfirmation);
 
+        getContentPane().add(jTabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, -29, 1310, 790));
 
         setSize(new java.awt.Dimension(1300, 800));
         setLocationRelativeTo(null);
