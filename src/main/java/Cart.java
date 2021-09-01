@@ -5,11 +5,13 @@ import java.util.List;
 
 public class Cart {
     private List<Product> products;
+    private List<Product> orderedProducts;
     private String quantityInvalidMessage;
     private boolean isQuantityValid;
     
     public Cart() {
         this.products = new ArrayList<>();
+        this.orderedProducts = new ArrayList<>();
         this.isQuantityValid = true;
     }
         
@@ -30,6 +32,7 @@ public class Cart {
                         this.isQuantityValid = false;
                     }
                     else{
+                        this.orderedProducts.add(product);
                         OrderItem item = new OrderItem(
                                 orderUUID,
                                 product.getCode(), 
@@ -88,6 +91,10 @@ public class Cart {
     
     public String toString() {
         return "cart" + this.products.toString();
+    }
+    
+    public List<Product> getOrderedProducts() {
+        return this.orderedProducts;
     }
     
 }

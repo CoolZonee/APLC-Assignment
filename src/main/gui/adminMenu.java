@@ -278,7 +278,8 @@ public class AdminMenu extends javax.swing.JPanel {
 
     private void btnDeleteOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOrderActionPerformed
         uuidOrder = Order.getOrder(uuid);
-        System.out.println(uuidOrder);
+        uuidOrder.removeOrder();
+        initAdditionalComponents();
     }//GEN-LAST:event_btnDeleteOrderActionPerformed
 
     private void tblOrderHistoryAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrderHistoryAdminMouseClicked

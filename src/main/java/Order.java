@@ -93,7 +93,27 @@ public class Order {
                 this.date);
     }
     
+    public void updateProductQuantity(List <Product> productSelected){
+        for (int i = 0; i< productSelected.size(); i++){
+            productSelected.get(i).minusQuantity(this.orderItem.get(i).getQuantity());
+            productSelected.get(i).updateProduct();
+        }
+    }
+    public void removeOrder() {
+        List<String> allOrders = DAO.readAll(resource);
+        for(int i=0; i<allOrders.size();i++) {
+            String[] orderDetails = allOrders.get(i).split(";");
+            if (orderDetails[0].equals(this.getUuid())) {
+                allOrders.remove(i);
+                break;
+            }
+        }
+        DAO.rewrite(allOrders, resource);
+    }
     
+    public boolean cartEmpty(){
+        return this.orderItem.isEmpty();
+    }
     public void addOrderItem(OrderItem orderItem) {
         this.orderItem.add(orderItem);
     }

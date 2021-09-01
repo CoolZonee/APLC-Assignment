@@ -5,6 +5,7 @@
  */
 package main.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -292,6 +293,7 @@ public class OrderProduct extends javax.swing.JPanel {
             if (!this.cart.getIsQuantityValid()){
                 JOptionPane.showMessageDialog(frame, cart.getQuantityInvalidMessage());            
             }else{
+                frame.orderConfirmation.setProduct(cart.getOrderedProducts());
                 frame.orderConfirmation.setOrder(this.order);
                 frame.orderConfirmation.initAdditionalComponents();
                 frame.orderConfirmation.setBackMenu(false);

@@ -6,6 +6,7 @@
 package main.gui;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
@@ -14,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import main.java.DateAndTime;
 import main.java.Order;
 import main.java.OrderItem;
+import main.java.Product;
 
 public class OrderConfirmation extends javax.swing.JPanel {
     Frame frame;
@@ -23,10 +25,21 @@ public class OrderConfirmation extends javax.swing.JPanel {
     private DefaultTableModel orderSummaryTableModel;
     boolean isSufficient=false;
     Order order;
+    List <Product> productSelected;
     public OrderConfirmation() {
         initComponents();
+        this.productSelected = new ArrayList<>();
     }
-    
+    public void setOrder(Order order){
+        this.order = order;
+        
+    }
+    public void setProduct(List<Product> productSelected){
+        if (!this.productSelected.isEmpty()) {
+            this.productSelected.clear();
+        };
+        this.productSelected = productSelected;
+    }
     public void initAdditionalComponents(){
         btnEnterAmount.setEnabled(true);
         btnPay.setEnabled(false);
@@ -277,7 +290,7 @@ public class OrderConfirmation extends javax.swing.JPanel {
         for(OrderItem orderItem1 : order.orderItem){
             orderItem1.addOrderItem();
         }
-        
+        this.order.updateProductQuantity(this.productSelected);
         JOptionPane.showMessageDialog(frame,"Order Successful!","Order Status",JOptionPane.INFORMATION_MESSAGE);
         this.frame.user.printReceipt(this.order);
         
@@ -319,11 +332,6 @@ public class OrderConfirmation extends javax.swing.JPanel {
             btnBackOrder.setVisible(true);
             btnPrint.setVisible(false);
         }
-    }
-    
-    public void setOrder(Order order){
-        this.order = order;
-        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
