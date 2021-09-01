@@ -272,6 +272,7 @@ public class OrderProduct extends javax.swing.JPanel {
         this.cart.resetQuantityCheck();
         this.cart.setIsQuantityValid(true);
         this.order.clearOrder();
+        this.cart.clearFinalCart();
         
         List <OrderItem> orderItemList = this.cart.checkProductQuantity(this.order.getUuid());
         
@@ -287,12 +288,19 @@ public class OrderProduct extends javax.swing.JPanel {
             if (!this.cart.getIsQuantityValid()){
                 JOptionPane.showMessageDialog(frame, cart.getQuantityInvalidMessage());            
             }else{
+                if (order.hasFragileProduct(cart.getOrderedProducts())){
+                    order.orderItem.add(new OrderItem(order.getUuid(),
+                                                    "", "Packaging Fee",
+                                                    1, 10.00));
+                }
                 frame.orderConfirmation.setProduct(cart.getOrderedProducts());
                 frame.orderConfirmation.setOrder(this.order);
+                this.frame.changePages(7);
                 frame.orderConfirmation.initAdditionalComponents();
+                
                 frame.orderConfirmation.setBackMenu(false);
                 
-                this.frame.changePages(7);
+                
             }
         }
     }//GEN-LAST:event_btnOrderActionPerformed

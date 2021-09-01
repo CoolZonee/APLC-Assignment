@@ -14,6 +14,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import main.java.Product;
 import main.java.TableSortFilter;
+import main.java.Validation;
 
 public class ProductPage extends javax.swing.JPanel {
     private DefaultTableModel dfTable;
@@ -39,6 +40,7 @@ public class ProductPage extends javax.swing.JPanel {
     public void initAdditionalComponents() {
         this.dfTable.setRowCount(0);
         this.enableUpdateDeleteBtn(false);
+        this.clearAll();
         this.loadData();
     }
     /**
@@ -118,9 +120,31 @@ public class ProductPage extends javax.swing.JPanel {
         lblPrice.setText("Price:");
 
         txtCode.setToolTipText("");
+        txtCode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodeKeyPressed(evt);
+            }
+        });
+
+        txtQuantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtQuantityKeyPressed(evt);
+            }
+        });
+
+        txtPrice.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPriceKeyPressed(evt);
+            }
+        });
 
         txtName.setColumns(20);
         txtName.setRows(5);
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNameKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(txtName);
 
         btnUpdate.setText("Add New Product");
@@ -321,6 +345,42 @@ public class ProductPage extends javax.swing.JPanel {
             frame.changePages(2);
         }
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtQuantityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantityKeyPressed
+        if (Validation.isNumeric(evt.getKeyChar())) {
+            txtQuantity.setEditable(true);
+        } else {
+            txtQuantity.setEditable(false);
+        }
+        this.checkInput();
+    }//GEN-LAST:event_txtQuantityKeyPressed
+
+    private void txtPriceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyPressed
+        if (Validation.isNumericOrDot(evt.getKeyChar())) {
+            txtPrice.setEditable(true);
+        } else {
+            txtPrice.setEditable(false);
+        }
+        this.checkInput();
+    }//GEN-LAST:event_txtPriceKeyPressed
+
+    private void txtCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodeKeyPressed
+        if (Validation.isNumeric(evt.getKeyChar())) {
+            txtCode.setEditable(true);
+        } else {
+            txtCode.setEditable(false);
+        }
+        this.checkInput();
+    }//GEN-LAST:event_txtCodeKeyPressed
+
+    private void txtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyPressed
+        if (Validation.isString(evt.getKeyChar())) {
+            txtName.setEditable(true);
+        } else {
+            txtName.setEditable(false);
+        }
+        this.checkInput();
+    }//GEN-LAST:event_txtNameKeyPressed
    
     private void changeSelectedData() {
         this.selectedRow = tblProduct.getSelectedRow();
@@ -366,6 +426,7 @@ public class ProductPage extends javax.swing.JPanel {
         txtPrice.setText("");
         tblProduct.clearSelection();
         ckbFragile.setSelected(false);
+        btnUpdate.setEnabled(false);
         this.product = new Product();
         this.enableUpdateDeleteBtn(false);
     }
@@ -373,6 +434,16 @@ public class ProductPage extends javax.swing.JPanel {
     public void setFrame(Frame frame) {
         this.frame = frame;
     }
+    
+    private void checkInput() {
+        btnUpdate.setEnabled(true);
+        if (txtCode.getText().isBlank() || 
+                txtName.getText().isEmpty() ||
+                txtQuantity.getText().isEmpty() ||
+                txtPrice.getText().isEmpty()) {
+            btnUpdate.setEnabled(false);
+        }
+    } 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;

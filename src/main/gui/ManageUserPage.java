@@ -14,6 +14,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import main.java.TableSortFilter;
 import main.java.User;
+import main.java.Validation;
 
 public class ManageUserPage extends javax.swing.JPanel {
     private DefaultTableModel dfTable;
@@ -39,6 +40,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     public void initAddtionalComponents () {
         this.dfTable.setRowCount(0);
         this.enableUpdateDeleteBtn(false);
+        this.clearAll();
         this.loadData();
     }
 
@@ -120,9 +122,19 @@ public class ManageUserPage extends javax.swing.JPanel {
         lblAge.setText("Age:");
 
         txtUsername.setToolTipText("");
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyPressed(evt);
+            }
+        });
+
+        txtAge.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtAgeKeyPressed(evt);
+            }
+        });
 
         btnUpdate.setText("Add New User");
-        btnUpdate.setActionCommand("Add New User");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateActionPerformed(evt);
@@ -144,14 +156,35 @@ public class ManageUserPage extends javax.swing.JPanel {
         });
 
         txtName.setToolTipText("");
+        txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNameKeyPressed(evt);
+            }
+        });
 
         lblRole.setText("Role:");
 
         cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select Role-", "A", "C" }));
+        cmbRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbRoleActionPerformed(evt);
+            }
+        });
 
         cmbSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select Sex-", "M", "F" }));
+        cmbSex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSexActionPerformed(evt);
+            }
+        });
 
         lblPassword.setText("Password:");
+
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlProductDetailsLayout = new javax.swing.GroupLayout(pnlProductDetails);
         pnlProductDetails.setLayout(pnlProductDetailsLayout);
@@ -207,23 +240,19 @@ public class ManageUserPage extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlProductDetailsLayout.createSequentialGroup()
                         .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblAge, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPassword)
                             .addGroup(pnlProductDetailsLayout.createSequentialGroup()
-                                .addComponent(lblAge, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProductDetailsLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblPassword)
-                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblName))))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblName)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblRole))
-                        .addGap(14, 14, 14))))
+                        .addGroup(pnlProductDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblRole)
+                            .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(14, Short.MAX_VALUE))))
             .addGroup(pnlProductDetailsLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,8 +260,6 @@ public class ManageUserPage extends javax.swing.JPanel {
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        btnUpdate.getAccessibleContext().setAccessibleName("Add New User");
 
         btnBack.setText("Back to Menu");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -339,6 +366,40 @@ public class ManageUserPage extends javax.swing.JPanel {
             frame.changePages(2);
         }
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyPressed
+        if (Validation.isString(evt.getKeyChar())) {
+            txtName.setEditable(true);
+        } else {
+            txtName.setEditable(false);
+        }
+        this.checkInput();
+    }//GEN-LAST:event_txtNameKeyPressed
+
+    private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
+        this.checkInput();
+    }//GEN-LAST:event_txtUsernameKeyPressed
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        this.checkInput();
+    }//GEN-LAST:event_txtPasswordKeyPressed
+
+    private void txtAgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAgeKeyPressed
+        if (Validation.isNumeric(evt.getKeyChar())) {
+            txtAge.setEditable(true);
+        } else {
+            txtAge.setEditable(false);
+        }
+        this.checkInput();
+    }//GEN-LAST:event_txtAgeKeyPressed
+
+    private void cmbSexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSexActionPerformed
+        this.checkInput();
+    }//GEN-LAST:event_cmbSexActionPerformed
+
+    private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
+        this.checkInput();
+    }//GEN-LAST:event_cmbRoleActionPerformed
     
     private void changeSelectedData() {
         this.selectedRow = tblCustomer.getSelectedRow();
@@ -386,12 +447,25 @@ public class ManageUserPage extends javax.swing.JPanel {
         cmbSex.setSelectedIndex(0);
         txtAge.setText("");
         tblCustomer.clearSelection();
+        btnUpdate.setEnabled(false);
         this.user = new User();
         this.enableUpdateDeleteBtn(false);
     }
     
     public void setFrame(Frame frame) {
         this.frame = frame;
+    }
+    
+    public void checkInput(){
+        btnUpdate.setEnabled(true);
+        if (txtUsername.getText().isEmpty() ||
+                String.valueOf(txtPassword).isEmpty() ||
+                txtName.getText().isEmpty() ||
+                txtAge.getText().isEmpty() ||
+                cmbRole.getSelectedIndex() == 0 ||
+                cmbSex.getSelectedIndex() == 0) {
+            btnUpdate.setEnabled(false);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

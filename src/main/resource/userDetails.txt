@@ -1,5 +1,6 @@
 JoshuaLotion;1234abcd;A;Jamie Yong;17;M;
 WeiJiee;1212abab;C;Chia Wei Jie;18;M;
 Jasmine;1212abab;C;Jasmine Yong;16;F
-Keat;1234;A;Lim Chee Keat;21;M
-jinggybear;jinggy;C;Lee Sze Cin;20;F
+Keat;1234abcd;A;Lim Chee Keat;20;M;
+jinggybear;1212abab;A;Lee Sze Cin;20;F
+h3ngy1ng;1212abab;C;Wong Heng Ying;20;F

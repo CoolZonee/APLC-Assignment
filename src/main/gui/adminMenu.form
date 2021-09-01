@@ -60,8 +60,8 @@
                               <Component id="btnOrderPageAdmin" min="-2" pref="107" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnEditProductAdmin" min="-2" pref="110" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnEditCustomerAdmin" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="btnEditUserAdmin" min="-2" pref="97" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnViewLoginHistory" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
@@ -90,9 +90,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Component id="lblAdminPage1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="txtSearch" min="-2" pref="33" max="-2" attributes="0"/>
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace pref="9" max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="413" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -109,7 +109,7 @@
                   <Component id="btnViewLoginHistory" alignment="1" min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="btnEditProductAdmin" alignment="1" max="32767" attributes="0"/>
                   <Component id="btnOrderPageAdmin" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnEditCustomerAdmin" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btnEditUserAdmin" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -144,12 +144,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditProductAdminActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnEditCustomerAdmin">
+    <Component class="javax.swing.JButton" name="btnEditUserAdmin">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Edit Customers"/>
+        <Property name="text" type="java.lang.String" value="Edit Users"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditCustomerAdminActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditUserAdminActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnReturnLoginAdmin">

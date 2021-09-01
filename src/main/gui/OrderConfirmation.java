@@ -51,7 +51,9 @@ public class OrderConfirmation extends javax.swing.JPanel {
         fillOrderSummaryTable(this.order.orderItem);
         txtPayableAmount.setText( "RM" + String.format("%.2f", this.order.getAndSetTotal()));
         txtChange.setText("RM0.00");
-        
+        if(order.hasFragileProduct(productSelected)){
+            JOptionPane.showMessageDialog(frame, "RM10 packaging fee has been added as order contains fragile items");
+        }
     }
     public void initAdditionalComponentsView(List <OrderItem> orderItem, Order order){
         btnEnterAmount.setEnabled(false);
@@ -75,6 +77,9 @@ public class OrderConfirmation extends javax.swing.JPanel {
                                                        orderItem1.getPrice(),
                                                        orderItem1.getTotalPrice()});
         }
+//        if (order.hasFragileProduct(productSelected)){
+//            orderSummaryTableModel.addRow(new Object[])
+//        }
     }
 
     public void setFrame(Frame frame){
@@ -147,6 +152,7 @@ public class OrderConfirmation extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblOrderSummary.setRowSelectionAllowed(false);
         jScrollPane1.setViewportView(tblOrderSummary);
 
         lblOrderSummary.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -274,14 +280,20 @@ public class OrderConfirmation extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnterAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterAmountActionPerformed
-        this.order.setPaid(((Number)txtPaymentAmount.getValue()).doubleValue());
-        txtChange.setText("RM" + String.format("%.2f", this.order.getAndSetChange()));
-        if (this.order.getPaid()<this.order.getAndSetTotal()){
-            JOptionPane.showMessageDialog(frame, "Insufficient Amount");
-        }else{
-            isSufficient=true;
-            btnPay.setEnabled(true);
+        try{
+            this.order.setPaid(((Number)txtPaymentAmount.getValue()).doubleValue());
+            txtChange.setText("RM" + String.format("%.2f", this.order.getAndSetChange()));
+            if (this.order.getPaid()<this.order.getAndSetTotal()){
+                JOptionPane.showMessageDialog(frame, "Insufficient Amount");
+            }else{
+                isSufficient=true;
+                btnPay.setEnabled(true);
+            }
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(frame, "Invalid input");
+            
         }
+        
     }//GEN-LAST:event_btnEnterAmountActionPerformed
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
