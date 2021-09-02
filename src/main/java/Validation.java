@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main.java;
 
-/**
- *
- * @author jieke
- */
 public class Validation {
     public static boolean isString(char c) {
         if (Character.isLetter(c) || Character.isWhitespace(c) || Character.isISOControl(c)) {

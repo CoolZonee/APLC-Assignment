@@ -1,16 +1,12 @@
-
 package main.gui;
+
 import java.util.List;
-//import javax.swing.event.TableModelEvent;
-//import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import main.java.*;
-import javax.swing.table.TableRowSorter;
-import javax.swing.table.TableModel;
+
 public class LoginHistory extends javax.swing.JPanel {
     Frame frame;
     private String resource="src/main/resource/userLog.txt";
-    //private TableRowSorter<TableModel> rowSorter;
     private DefaultTableModel loginHistoryTableModel;
     public LoginHistory() {
         initComponents();
@@ -23,22 +19,11 @@ public class LoginHistory extends javax.swing.JPanel {
     public void initAdditionalComponents(){
         loginHistoryTableModel = (DefaultTableModel)tblLoginHistory.getModel();
         loginHistoryTableModel.setRowCount(0);
-//        if(tblLoginHistory.getRowCount() > 0){
-//            for (int i=tblLoginHistory.getRowCount()- 1; i >= 0; i--){
-//                loginHistoryTableModel.removeRow(i); 
-//            }
-//        }
-        //rowSorter = new TableRowSorter<>(tblLoginHistory.getModel());
-        
-        List<String> loginHistoryData = DAO.readAll(resource);
-        
-        
+        List<String> loginHistoryData = DAO.readAll(resource);  
         for(String line:loginHistoryData){
                 String[] dataRow = line.split(";"); 
                 loginHistoryTableModel.addRow(dataRow);
         }
-        
-        //TableSortFilter.addFilter(rowSorter, tblLoginHistory, txtSearchHistory);
     }
 
     /**

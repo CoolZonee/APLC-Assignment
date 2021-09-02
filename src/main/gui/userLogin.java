@@ -1,6 +1,5 @@
 package main.gui;
 
-
 import java.awt.Font;
 import main.java.*;
 
@@ -22,9 +21,7 @@ public class UserLogin extends javax.swing.JPanel {
         txtPasswordLogin.setFont(fontItalics);
         txtUsernameLogin.setText("Enter username here");
         txtPasswordLogin.setText("Enter password here");
-        showPasswordState();
-            
-        
+        showPasswordState();  
     }
     private void showPasswordState(){
         if (chkShowPassword.isSelected()==true || String.valueOf(txtPasswordLogin.getPassword()).equals("Enter password here") ){

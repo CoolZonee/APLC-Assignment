@@ -1,4 +1,3 @@
-
 package main.java;
 
 import java.io.BufferedWriter;
@@ -8,11 +7,7 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
 import java.util.List;
-
-
-
 
 public class DAO {
     public static List<String> readAll(String targetFile){

@@ -23,9 +23,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblNameAdminPage" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblAgeAdminPage" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lblNameAdminPage" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAgeAdminPage" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -37,41 +37,12 @@
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="lblAdminPage2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txtUsernameAdminPage" min="-2" pref="128" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="lblAdminPage1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnOrderPageAdmin" min="-2" pref="107" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnEditProductAdmin" min="-2" pref="110" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="btnEditUserAdmin" min="-2" pref="97" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnViewLoginHistory" min="-2" pref="100" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnViewOrder" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnDeleteOrder" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="btnViewOrder" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnDeleteOrder" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
@@ -80,17 +51,37 @@
                           <Component id="jScrollPane1" pref="1055" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="lblAdminPage2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="txtUsernameAdminPage" min="-2" pref="128" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnOrderPageAdmin" min="-2" pref="107" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnEditProductAdmin" min="-2" pref="110" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="btnEditUserAdmin" min="-2" pref="97" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnViewLoginHistory" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="242" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+              <Component id="lblAdminPage1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Component id="lblAdminPage1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="txtSearch" min="-2" pref="33" max="-2" attributes="0"/>
               <EmptySpace pref="9" max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="413" max="-2" attributes="0"/>
@@ -99,17 +90,18 @@
                   <Component id="btnDeleteOrder" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnViewOrder" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblAdminPage2" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="txtUsernameAdminPage" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnViewLoginHistory" alignment="1" min="-2" pref="36" max="-2" attributes="0"/>
-                  <Component id="btnEditProductAdmin" alignment="1" max="32767" attributes="0"/>
-                  <Component id="btnOrderPageAdmin" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnEditUserAdmin" alignment="1" max="32767" attributes="0"/>
+              <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btnViewLoginHistory" alignment="1" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btnEditProductAdmin" alignment="1" max="32767" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="lblAdminPage2" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="txtUsernameAdminPage" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="btnEditUserAdmin" alignment="1" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="btnOrderPageAdmin" alignment="1" min="-2" pref="36" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -250,7 +242,7 @@
     </Container>
     <Component class="javax.swing.JLabel" name="lblAdminPage1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Past Purchases"/>
+        <Property name="text" type="java.lang.String" value="Order History"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnViewLoginHistory">

@@ -3,8 +3,6 @@ package main.java;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class OrderItem {
     private String code, name;
     int quantity;
@@ -47,6 +45,7 @@ public class OrderItem {
         }
         return orderItems;
     }
+    
     public static List <OrderItem> loadUuidOrderItem(String uuid){
         List <OrderItem> allOrderItems = loadOrderItem();
         List <OrderItem> uuidOrderItem = new ArrayList<OrderItem>();
@@ -60,47 +59,6 @@ public class OrderItem {
     public void addOrderItem(){
         DAO.append(this.toString(),resource);
     }
-
-//    public void checkProductQuantity(DefaultTableModel tableModel){
-//        String quantity =(String) tableModel.getValueAt(1, 2);
-//        int quantity1= Integer.parseInt(quantity);
-//        System.out.println(quantity1);
-//    }
-    
-    //check product quantity
-    
-    
-//    public void resetQuantityCheck(){
-//        this.quantityInvalidMessage="";
-//    }
-    
-    
-//    public boolean checkProductQuantity(DefaultTableModel tableModel, int row){
-//        //for (int i=0;i < tableModel.getRowCount();i++){
-//        for(Product productCheck: product){
-//            if(tableModel.getValueAt(row, 0).toString().equals(productCheck.getName())){
-//                String quantityString = tableModel.getValueAt(row, 2).toString();
-//                int quantityTable= Integer.parseInt(quantityString);
-//                if (quantityTable>productCheck.getQuantity()){
-//                    this.quantityInvalidMessage = (this.quantityInvalidMessage +
-//                                                    "The available quantity for: " + 
-//                                                    productCheck.getName() + 
-//                                                    " is: " + productCheck.getQuantity()
-//                                                    + "\n");
-//                    return false;
-//                }else{
-//                    this.code = productCheck.getCode();
-//                    this.name = productCheck.getName();
-//                    this.quantity = quantityTable;
-//                    this.price = (productCheck.getPrice() * this.quantity);
-//                    return true;                   
-//                }
-//
-//            }
-//        }
-//        
-//        return true;
-//    }
 
     @Override
     public String toString() {
@@ -136,23 +94,12 @@ public class OrderItem {
     public String getOrderUuid() {
         return orderUuid;
     }
-    
-//    public OrderItem[] createOrderItem(){
-//        
-//    }
-//    public void setCurrentProduct(Product product){
-//        this.currentProduct=product;
-//    }
-//    
-//    public Product getCurrentProduct(){
-//        return this.currentProduct;
-//    }
+
     public String getQuantityInvalidMessage() {
         return quantityInvalidMessage;
     }
     
-    
-    
+     
 }
 
 

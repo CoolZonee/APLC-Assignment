@@ -80,7 +80,7 @@ public class Admin extends User implements CheckRecord{
     }
     
     
-    /************ Customer CRUD End ***************/
+    /************ User CRUD End ***************/
     
     /************ Product CRUD ***************/
     public void addProduct(Product product) {

@@ -147,5 +147,3 @@ public class Product implements CheckRecord {
                 + String.valueOf(this.getIsFragile());
     }
 }
-
-// productCode;Name;Quantity;Price 

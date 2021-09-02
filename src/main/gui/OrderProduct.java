@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main.gui;
 
 import java.util.ArrayList;
@@ -27,7 +22,6 @@ public class OrderProduct extends javax.swing.JPanel {
     private Cart cart;
     private Order order;
     private List<Product> products;
-    //OrderItem orderItem = new OrderItem();
     Frame frame;
     
     public void setFrame(Frame frame){
@@ -140,16 +134,6 @@ public class OrderProduct extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblProduct.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblProductMouseClicked(evt);
-            }
-        });
-        tblProduct.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tblProductKeyReleased(evt);
-            }
-        });
         jScrollPane1.setViewportView(tblProduct);
 
         btnOrder.setText("Order");
@@ -258,15 +242,6 @@ public class OrderProduct extends javax.swing.JPanel {
                 .addGap(23, 23, 23))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tblProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductMouseClicked
-//        this.changeSelectedData();
-//System.out.println(productTableModel.getDataVector().elementAt(tblProduct.getSelectedRow()));
-    }//GEN-LAST:event_tblProductMouseClicked
-
-    private void tblProductKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProductKeyReleased
-//        this.changeSelectedData();
-    }//GEN-LAST:event_tblProductKeyReleased
 
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
         this.cart.resetQuantityCheck();

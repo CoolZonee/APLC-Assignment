@@ -143,7 +143,6 @@ public class User implements Authentication {
             return "Customer";
         }
     }
-        
     
     @Override
     public String toString() {

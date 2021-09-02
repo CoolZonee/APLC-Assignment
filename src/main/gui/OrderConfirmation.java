@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main.gui;
 
 import java.text.NumberFormat;
@@ -28,6 +23,8 @@ public class OrderConfirmation extends javax.swing.JPanel {
     List <Product> productSelected;
     public OrderConfirmation() {
         initComponents();
+        txtPayableAmount.setEditable(false);
+        txtChange.setEditable(false);
         this.productSelected = new ArrayList<>();
     }
     public void setOrder(Order order){
@@ -77,9 +74,6 @@ public class OrderConfirmation extends javax.swing.JPanel {
                                                        orderItem1.getPrice(),
                                                        orderItem1.getTotalPrice()});
         }
-//        if (order.hasFragileProduct(productSelected)){
-//            orderSummaryTableModel.addRow(new Object[])
-//        }
     }
 
     public void setFrame(Frame frame){

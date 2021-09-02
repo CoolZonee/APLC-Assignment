@@ -6,8 +6,6 @@ import java.util.UUID;
 
 public class Order {
     private double paid = 0, change = 0 , total = 0;
-//    private int noOfItems;
-//    private int typesOfItems;
     public List <OrderItem> orderItem = new ArrayList<>();
     private String uuid;
     private String date;
@@ -112,7 +110,6 @@ public class Order {
             productSelected.get(i).updateProduct();
         }
     }
-    
     
     public void addOrderItem(OrderItem orderItem) {
         this.orderItem.add(orderItem);

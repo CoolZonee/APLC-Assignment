@@ -1,9 +1,9 @@
-
 package main.java;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
 public class DateAndTime {
     private static DateFormat date = new SimpleDateFormat("dd/MM/yy");
     private static DateFormat time = new SimpleDateFormat("HH:mm:ss");
