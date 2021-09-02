@@ -257,6 +257,7 @@ public class CustomerMenu extends javax.swing.JPanel {
 
     private void btnViewOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrderActionPerformed
         frame.orderConfirmation.initAdditionalComponentsView(OrderItem.loadUuidOrderItem(uuid), Order.getOrder(uuid));
+        frame.orderConfirmation.setBackMenu(true);
         frame.changePages(7);
     }//GEN-LAST:event_btnViewOrderActionPerformed
 
