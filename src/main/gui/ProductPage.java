@@ -396,7 +396,6 @@ public class ProductPage extends javax.swing.JPanel {
             btnUpdate.setText("Update Product Details");
         }
         btnDelete.setEnabled(option);
-        btnDelete.setEnabled(option);
         txtCode.setEditable(!option);
     }
     
