@@ -4,7 +4,7 @@ import java.util.List;
 import java.awt.print.PrinterJob;
 
 public class User implements Authentication {
-    String role, username, password, sex, name, age;
+    private String role, username, password, sex, name, age;
     private boolean isNew = true;  
     private String loginData;
     public static String resource = "src/main/resource/userDetails.txt";
