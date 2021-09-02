@@ -39,7 +39,7 @@ public class AdminMenu extends javax.swing.JPanel {
         this.frame = frame;
     }
     public void fillOrderHistoryTable(){
-        this.userOrder = this.frame.user.loadOrder();
+        this.userOrder = this.frame.user.loadUserOrder();
         for(Order order : this.userOrder){
             String[] dataRow = order.toStringUser().split(";");
             orderHistoryAdminTableModel.addRow(dataRow);

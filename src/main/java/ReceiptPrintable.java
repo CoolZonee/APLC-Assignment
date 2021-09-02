@@ -75,7 +75,7 @@ public class ReceiptPrintable implements Printable {
                     space+= " ";
                 }
                 g2d.drawString("--------------------------------------------", 12,y); y+= yShift;
-                g2d.drawString(" TotalAmount"+space+"RM"+ this.order.getTotal() , 12,y); y+= yShift;
+                g2d.drawString(" TotalAmount"+space+"RM"+ String.format("%.2f", this.order.getTotal()) , 12,y); y+= yShift;
                 g2d.drawString("--------------------------------------------", 12,y); y+= yShift;
                 space = "";
                 size = 24;
@@ -83,7 +83,7 @@ public class ReceiptPrintable implements Printable {
                     space += " ";
                 }
                 
-                g2d.drawString(" Paid"+space+"RM"+ this.order.getPaid() , 12,y); y+= yShift;
+                g2d.drawString(" Paid"+space+"RM"+ String.format("%.2f", this.order.getPaid()) , 12,y); y+= yShift;
                 g2d.drawString("--------------------------------------------", 12,y); y+= yShift;
                 space = "";
                 size = 22;

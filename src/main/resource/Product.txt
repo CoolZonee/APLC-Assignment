@@ -1,4 +1,4 @@
-2134453478752;KitKat;99;1.3;false
+2134453478752;KitKat;49;1.3;false
 6356120828015;Massimo Bread;50;0.90;false
 8270126121528;Gardernia Bread;49;0.9;false
 7064937715703;3 Layer Mask;148;1.0;true
@@ -7,3 +7,4 @@
 7995442348665;Glass;14;50.0;true
 9834937665787;Brush;50;5.0;false
 6532059856423;Family Plate set;23;45.6;true
+1032059856567;Kinder Bueno;30;7.5;false

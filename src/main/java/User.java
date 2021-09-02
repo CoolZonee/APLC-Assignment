@@ -62,6 +62,10 @@ public class User implements Authentication {
     }
     
     public List <Order> loadOrder() {
+        return Order.loadOrder();
+    }
+    
+    public List <Order> loadUserOrder() {
         return Order.loadUserOrder(getUsername());
     }
     

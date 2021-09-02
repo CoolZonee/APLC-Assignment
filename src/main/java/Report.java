@@ -85,7 +85,7 @@ public class Report {
                     table.addCell(String.valueOf(orderItem.getQuantity()));
                     table.addCell(String.valueOf(orderItem.getPrice()));
                     totalQuantity += orderItem.getQuantity();
-                    totalProfit += orderItem.getPrice();
+                    totalProfit += orderItem.getTotalPrice();
                 }
             }
 
