@@ -98,4 +98,7 @@ public class Admin extends User implements CheckRecord{
     
     /************ Product CRUD End ***************/
     
+    public void generateReport(String date, List<Order> orders) {
+        Report.GenerateReport(date, orders);
+    }
 }

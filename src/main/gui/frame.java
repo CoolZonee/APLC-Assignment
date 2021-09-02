@@ -24,11 +24,11 @@ public class Frame extends javax.swing.JFrame {
         this.orderProduct.setFrame(this);
         this.orderConfirmation.setFrame(this);
         this.manageUserPage.setFrame(this);
+        this.reportPage.setFrame(this);
     }
 
     public void changePages(int tab) {
         this.jTabbedPane.setSelectedIndex(tab);
-
     }
 
     @SuppressWarnings("unchecked")
@@ -44,12 +44,12 @@ public class Frame extends javax.swing.JFrame {
         manageUserPage = new main.gui.ManageUserPage();
         loginHistory = new main.gui.LoginHistory();
         orderConfirmation = new main.gui.OrderConfirmation();
+        reportPage = new main.gui.ReportPage();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Giants Grocer");
-
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        
+
         jTabbedPane.addTab("tab1", userLogin);
         jTabbedPane.addTab("tab2", adminMenu);
         jTabbedPane.addTab("tab3", customerMenu);
@@ -58,6 +58,7 @@ public class Frame extends javax.swing.JFrame {
         jTabbedPane.addTab("tab6", manageUserPage);
         jTabbedPane.addTab("tab7", loginHistory);
         jTabbedPane.addTab("tab8", orderConfirmation);
+        jTabbedPane.addTab("tab9", reportPage);
 
         getContentPane().add(jTabbedPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, -29, 1310, 790));
 
@@ -74,6 +75,7 @@ public class Frame extends javax.swing.JFrame {
     public main.gui.OrderConfirmation orderConfirmation;
     public main.gui.OrderProduct orderProduct;
     public main.gui.ProductPage productPage;
+    public main.gui.ReportPage reportPage;
     public main.gui.UserLogin userLogin;
     // End of variables declaration//GEN-END:variables
 
