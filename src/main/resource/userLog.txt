@@ -15,3 +15,4 @@ WeiJiee;Chia Wei Jie;Customer;11:37:38;11:37:41;02/09/21;
 JoshuaLotion;Jamie Yong;Admin;11:37:46;11:38:04;02/09/21;
 WeiJiee;Chia Wei Jie;Customer;11:42:00;11:42:03;02/09/21;
 Keat;Lim Chee Keat;Admin;11:43:49;11:43:57;02/09/21;
+Keat;Lim Chee Keat;Admin;22:18:16;22:20:55;02/09/21;

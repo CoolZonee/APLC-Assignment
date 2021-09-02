@@ -1,5 +1,7 @@
 package main.java;
 
+import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import javax.swing.UIManager;
 import main.gui.Frame;
 
 public class Main {
@@ -20,7 +22,13 @@ public class Main {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+        try 
+        {
+            UIManager.setLookAndFeel( new FlatNordIJTheme() );
+        } catch( Exception ex ) 
+        {
+            System.err.println( "Failed to initialize LaF" );
+        }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Frame().setVisible(true);
