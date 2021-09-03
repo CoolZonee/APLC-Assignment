@@ -292,6 +292,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="ckbFragile">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ckbFragileActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

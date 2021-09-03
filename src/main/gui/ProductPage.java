@@ -165,6 +165,12 @@ public class ProductPage extends javax.swing.JPanel {
 
         lblFragile.setText("Fragile:");
 
+        ckbFragile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbFragileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlProductDetailsLayout = new javax.swing.GroupLayout(pnlProductDetails);
         pnlProductDetails.setLayout(pnlProductDetailsLayout);
         pnlProductDetailsLayout.setHorizontalGroup(
@@ -376,6 +382,10 @@ public class ProductPage extends javax.swing.JPanel {
         }
         this.checkInput();
     }//GEN-LAST:event_txtNameKeyPressed
+
+    private void ckbFragileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbFragileActionPerformed
+        this.checkInput();
+    }//GEN-LAST:event_ckbFragileActionPerformed
    
     private void changeSelectedData() {
         this.selectedRow = tblProduct.getSelectedRow();
@@ -386,6 +396,7 @@ public class ProductPage extends javax.swing.JPanel {
         txtQuantity.setText(String.valueOf(this.product.getQuantity()));
         txtPrice.setText(String.valueOf(this.product.getPrice()));
         ckbFragile.setSelected(this.product.getIsFragile());
+        btnUpdate.setEnabled(false);
         this.enableUpdateDeleteBtn(true);
     }
     

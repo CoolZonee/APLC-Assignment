@@ -45,7 +45,7 @@ public class OrderConfirmation extends javax.swing.JPanel {
         txtPaymentAmount.setText("");
         orderSummaryTableModel = (DefaultTableModel)tblOrderSummary.getModel();
         orderSummaryTableModel.setRowCount(0);
-        fillOrderSummaryTable(this.order.orderItem);
+        fillOrderSummaryTable(this.order.getOrderItems());
         txtPayableAmount.setText( "RM" + String.format("%.2f", this.order.getAndSetTotal()));
         txtChange.setText("RM0.00");
         if(order.hasFragileProduct(productSelected)){
@@ -294,7 +294,7 @@ public class OrderConfirmation extends javax.swing.JPanel {
         this.order.setDate(DateAndTime.getCurrentDate());
         this.order.setUsername(frame.user.getUsername());
         this.frame.user.addOrder(this.order);
-        for(OrderItem orderItem1 : order.orderItem){
+        for(OrderItem orderItem1 : order.getOrderItems()){
             orderItem1.addOrderItem();
         }
         this.order.updateProductQuantity(this.productSelected);

@@ -76,7 +76,7 @@ public class User implements Authentication {
     public static void printReceipt(Order order) {
         PrinterJob pj = PrinterJob.getPrinterJob();
         ReceiptPrintable print = new ReceiptPrintable(order);
-        pj.setPrintable(print, print.getPageFormat(pj, order.orderItem.size()));
+        pj.setPrintable(print, print.getPageFormat(pj, order.getOrderItems().size()));
         
         try{
             pj.print();

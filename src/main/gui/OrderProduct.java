@@ -264,7 +264,7 @@ public class OrderProduct extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(frame, cart.getQuantityInvalidMessage());            
             }else{
                 if (order.hasFragileProduct(cart.getOrderedProducts())){
-                    order.orderItem.add(new OrderItem(order.getUuid(),
+                    order.addOrderItem(new OrderItem(order.getUuid(),
                                                     "", "Packaging Fee",
                                                     1, 10.00));
                 }

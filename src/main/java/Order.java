@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class Order {
     private double paid = 0, change = 0 , total = 0;
-    public List <OrderItem> orderItem = new ArrayList<>();
+    private List <OrderItem> orderItem = new ArrayList<>();
     private String uuid;
     private String date;
     private String username;
@@ -182,5 +182,9 @@ public class Order {
 
     public double getTotal() {
         return total;
+    }
+    
+    public List<OrderItem> getOrderItems() {
+        return this.orderItem;
     }
 }
