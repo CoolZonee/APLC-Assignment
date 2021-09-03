@@ -10,7 +10,7 @@ public class Order {
     private String uuid;
     private String date;
     private String username;
-    public static String resource = "src/main/resource/Order.txt";
+    public static String resourcePath = "src/main/resource/Order.txt";
 
     public Order(String uuid, String date, String username, double paid, double change, double total) {
         this.uuid = uuid;
@@ -26,11 +26,11 @@ public class Order {
     }
     
     public void addOrder(){
-        DAO.append(this.toString(), resource);
+        DAO.append(this.toString(), resourcePath);
     }
 
     public static List <Order> loadOrder(){
-        List <String> allOrder = DAO.readAll(resource);
+        List <String> allOrder = DAO.readAll(resourcePath);
         List <Order> orders = new ArrayList<Order>();
         for (String line : allOrder){
             String[] orderDetails = line.split(";");
@@ -55,7 +55,7 @@ public class Order {
     }
     
     public void removeOrder() {
-        List<String> allOrders = DAO.readAll(resource);
+        List<String> allOrders = DAO.readAll(resourcePath);
         for(int i=0; i<allOrders.size();i++) {
             String[] orderDetails = allOrders.get(i).split(";");
             if (orderDetails[0].equals(this.getUuid())) {
@@ -63,7 +63,7 @@ public class Order {
                 break;
             }
         }
-        DAO.rewrite(allOrders, resource);
+        DAO.rewrite(allOrders, resourcePath);
     }
     
     public static List <Order> loadUserOrder(String username){

@@ -8,8 +8,8 @@ public class User implements Authentication {
     private int age;
     private boolean isNew = true;  
     private String loginData;
-    public static String resource = "src/main/resource/userDetails.txt";
-    public static String resourceLog = "src/main/resource/userLog.txt";
+    public static String resourcePath = "src/main/resource/userDetails.txt";
+    public static String resourceLogPath = "src/main/resource/userLog.txt";
 
     public User() {}
     
@@ -24,7 +24,7 @@ public class User implements Authentication {
     
     @Override
     public boolean authenticate(String username, String password){
-        List<String> authenticationData = DAO.readAll(resource);
+        List<String> authenticationData = DAO.readAll(resourcePath);
         for(String line: authenticationData){
             String[] credentials = line.split(";");
             if (credentials[0].equals(username) && credentials[1].equals(password)){
@@ -51,7 +51,7 @@ public class User implements Authentication {
         String loginDataFinal= (this.loginData +";" + 
                     DateAndTime.getCurrentTime()+ ";" +
                     DateAndTime.getCurrentDate() + ";");
-        DAO.append(loginDataFinal, resourceLog);
+        DAO.append(loginDataFinal, resourceLogPath);
     }
     
     public List<Product> loadProduct() {

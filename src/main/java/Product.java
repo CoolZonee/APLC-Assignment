@@ -9,7 +9,7 @@ public class Product implements CheckRecord {
     private double price;
     private boolean isNew = true;
     private boolean isFragile;
-    public static String resource = "src/main/resource/Product.txt";
+    public static String resourcePath = "src/main/resource/Product.txt";
 
     public Product() {}
     
@@ -22,7 +22,7 @@ public class Product implements CheckRecord {
     }
 
     public static List<Product> loadProduct() {
-        List<String> allProduct = DAO.readAll(resource);
+        List<String> allProduct = DAO.readAll(resourcePath);
         List<Product> products = new ArrayList<>();
         for (String line: allProduct) {              
             String[] details = line.split(";");
@@ -39,11 +39,11 @@ public class Product implements CheckRecord {
     }
     
     public void addProduct() {
-        DAO.append(this.toString(), resource);
+        DAO.append(this.toString(), resourcePath);
     }
     
     public void updateProduct() {
-        List<String> allProduct = DAO.readAll(resource);
+        List<String> allProduct = DAO.readAll(resourcePath);
         for(int i = 0; i < allProduct.size(); i++) {
             String[] productDetails = allProduct.get(i).split(";");
             if (productDetails[0].equals(this.getCode())) {
@@ -51,7 +51,7 @@ public class Product implements CheckRecord {
                 break;
             }
         }
-        DAO.rewrite(allProduct, resource);
+        DAO.rewrite(allProduct, resourcePath);
     }
     
     @Override
@@ -67,7 +67,7 @@ public class Product implements CheckRecord {
     }
     
     public void removeProduct() {
-        List<String> allProduct = DAO.readAll(resource);
+        List<String> allProduct = DAO.readAll(resourcePath);
         for(int i = 0; i < allProduct.size(); i++) {
             String[] productDetails = allProduct.get(i).split(";");
             if (productDetails[0].equals(this.getCode())) {
@@ -75,7 +75,7 @@ public class Product implements CheckRecord {
                 break;
             }
         }
-        DAO.rewrite(allProduct, resource);
+        DAO.rewrite(allProduct, resourcePath);
 
     }
     

@@ -11,7 +11,7 @@ public class OrderItem {
     Product currentProduct;
     String orderUuid;
     public String quantityInvalidMessage;
-    private static String resource = "src/main/resource/OrderItem.txt";
+    private static String resourcePath = "src/main/resource/OrderItem.txt";
     
     public OrderItem() {
     }
@@ -33,7 +33,7 @@ public class OrderItem {
     }
     
     public static List <OrderItem> loadOrderItem(){
-        List <String> allOrderItems = DAO.readAll(resource);
+        List <String> allOrderItems = DAO.readAll(resourcePath);
         List <OrderItem> orderItems = new ArrayList<OrderItem>();
         for (String line : allOrderItems){
             String[] orderItemDetails = line.split(";");
@@ -57,7 +57,7 @@ public class OrderItem {
         return uuidOrderItem;
     }
     public void addOrderItem(){
-        DAO.append(this.toString(),resource);
+        DAO.append(this.toString(),resourcePath);
     }
 
     @Override

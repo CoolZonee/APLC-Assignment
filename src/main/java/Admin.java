@@ -18,7 +18,7 @@ public class Admin extends User implements CheckRecord{
     
      /************ User CRUD ***************/
     public List<User> loadUser() {
-        List<String> allUser = DAO.readAll(resource);
+        List<String> allUser = DAO.readAll(resourcePath);
         List<User> users = new ArrayList<>();
         for (String line: allUser) {              
             String[] details = line.split(";");
@@ -36,11 +36,11 @@ public class Admin extends User implements CheckRecord{
     }
     
     public void addUser(User user) {
-        DAO.append(user.toString(), resource);
+        DAO.append(user.toString(), resourcePath);
     }
     
     public void updateUser(User user) {
-        List<String> allUser = DAO.readAll(resource);
+        List<String> allUser = DAO.readAll(resourcePath);
         for(int i = 0; i < allUser.size(); i++) {
             String[] userDetails = allUser.get(i).split(";");
             if (userDetails[0].equals(user.getUsername())) {
@@ -48,7 +48,7 @@ public class Admin extends User implements CheckRecord{
                 break;
             }
         }
-        DAO.rewrite(allUser, resource);
+        DAO.rewrite(allUser, resourcePath);
     }
     
     @Override
@@ -68,7 +68,7 @@ public class Admin extends User implements CheckRecord{
     }
     
     public void removeUser(User user) {
-        List<String> allUser = DAO.readAll(resource);
+        List<String> allUser = DAO.readAll(resourcePath);
         for(int i = 0; i < allUser.size(); i++) {
             String[] userDetails = allUser.get(i).split(";");
             if (userDetails[0].equals(user.getUsername())) {
@@ -76,7 +76,7 @@ public class Admin extends User implements CheckRecord{
                 break;
             }
         }
-        DAO.rewrite(allUser, resource);
+        DAO.rewrite(allUser, resourcePath);
     }
     
     
