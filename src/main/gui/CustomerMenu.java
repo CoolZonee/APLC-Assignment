@@ -28,7 +28,7 @@ public class CustomerMenu extends javax.swing.JPanel {
     public void initAdditionalComponents(){
         txtUsernameCustomerPage.setText(this.frame.customer.getUsername());
         txtNameCustomerPage.setText(this.frame.customer.getName());
-        txtAgeCustomerPage.setText(this.frame.customer.getAge());
+        txtAgeCustomerPage.setText(String.valueOf(this.frame.customer.getAge()));
         btnDeleteOrder.setEnabled(false);
         btnViewOrder.setEnabled(false);
         orderHistoryCustomerTableModel = (DefaultTableModel)tblOrderHistoryCustomer.getModel();

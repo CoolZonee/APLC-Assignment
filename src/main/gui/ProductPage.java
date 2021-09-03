@@ -397,7 +397,7 @@ public class ProductPage extends javax.swing.JPanel {
         txtPrice.setText(String.valueOf(this.product.getPrice()));
         ckbFragile.setSelected(this.product.getIsFragile());
         btnUpdate.setEnabled(false);
-        this.enableUpdateDeleteBtn(true);
+        this.enableUpdateDeleteBtn(true);   
     }
     
     private void enableUpdateDeleteBtn(boolean option) {

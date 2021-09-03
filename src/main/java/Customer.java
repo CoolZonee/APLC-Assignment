@@ -10,7 +10,7 @@ public class Customer extends User{
             String password, 
             String sex,
             String name, 
-            String age
+            int age
     ) {
         super(role, username, password, sex, name, age);
     }

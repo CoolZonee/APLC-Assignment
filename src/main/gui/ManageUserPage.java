@@ -306,7 +306,7 @@ public class ManageUserPage extends javax.swing.JPanel {
         this.user.setName(txtName.getText());
         this.user.setRole(cmbRole.getSelectedItem().toString());
         this.user.setSex(cmbSex.getSelectedItem().toString());
-        this.user.setAge(txtAge.getText());
+        this.user.setAge(Integer.parseInt(txtAge.getText()));
         if (this.user.getIsNew()) {
             if (this.frame.admin.checkIfRecordExist(this.user.getUsername())) {
                 this.frame.admin.addUser(this.user);

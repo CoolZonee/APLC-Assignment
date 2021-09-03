@@ -11,7 +11,7 @@ public class Admin extends User implements CheckRecord{
             String password, 
             String sex, 
             String name, 
-            String age
+            int age
     ) {
         super(role, username, password, sex, name, age);
     }
@@ -28,7 +28,7 @@ public class Admin extends User implements CheckRecord{
                     details[1],
                     details[5],
                     details[3],
-                    details[4]
+                    Integer.parseInt(details[4])
                 )
             );
         }

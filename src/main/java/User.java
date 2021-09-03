@@ -4,7 +4,8 @@ import java.util.List;
 import java.awt.print.PrinterJob;
 
 public class User implements Authentication {
-    private String role, username, password, sex, name, age;
+    private String role, username, password, sex, name;
+    private int age;
     private boolean isNew = true;  
     private String loginData;
     public static String resource = "src/main/resource/userDetails.txt";
@@ -12,7 +13,7 @@ public class User implements Authentication {
 
     public User() {}
     
-    public User(String role, String username, String password, String sex, String name, String age) {
+    public User(String role, String username, String password, String sex, String name, int age) {
         this.role = role;
         this.username = username;
         this.password = password;
@@ -28,7 +29,7 @@ public class User implements Authentication {
             String[] credentials = line.split(";");
             if (credentials[0].equals(username) && credentials[1].equals(password)){
                 this.role=credentials[2];
-                this.age=credentials[4];
+                this.age=Integer.parseInt(credentials[4]);
                 this.sex=credentials[5];
                 this.username=credentials[0];
                 this.name=credentials[3];
@@ -105,7 +106,7 @@ public class User implements Authentication {
         this.name = name;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -129,7 +130,7 @@ public class User implements Authentication {
         return name;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
       

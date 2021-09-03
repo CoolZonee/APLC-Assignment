@@ -27,7 +27,7 @@ public class AdminMenu extends javax.swing.JPanel {
     public void initAdditionalComponents(){
         txtUsernameAdminPage.setText(this.frame.admin.getUsername());
         txtNameAdminPage.setText(this.frame.admin.getName());
-        txtAgeAdminPage.setText(this.frame.admin.getAge());
+        txtAgeAdminPage.setText(String.valueOf(this.frame.admin.getAge()));
         btnDeleteOrder.setEnabled(false);
         btnViewOrder.setEnabled(false);
         orderHistoryAdminTableModel = (DefaultTableModel)tblOrderHistoryAdmin.getModel();
