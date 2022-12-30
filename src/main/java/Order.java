@@ -3,6 +3,9 @@ package main.java;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Order {
     private double paid = 0, change = 0 , total = 0;
@@ -31,51 +34,70 @@ public class Order {
 
     public static List <Order> loadOrder(){
         List <String> allOrder = DAO.readAll(resourcePath);
-        List <Order> orders = new ArrayList<Order>();
-        for (String line : allOrder){
-            String[] orderDetails = line.split(";");
-            orders.add(new Order(orderDetails[0], 
-                                orderDetails[4], 
-                                orderDetails[5], 
-                                Double.parseDouble(orderDetails[2]), 
-                                Double.parseDouble(orderDetails[3]), 
-                                Double.parseDouble(orderDetails[1])));       
-        }
-        return orders;
+        
+        return allOrder.stream()
+                .map(line -> 
+            line.split(";"))
+                .map(order -> 
+                new Order(
+                    order[0],
+                    order[4],
+                    order[5],
+                    Double.parseDouble(order[2]), 
+                    Double.parseDouble(order[3]), 
+                    Double.parseDouble(order[1]))
+                ).toList();
+            
+  
+        
+//        return orders;
     }
     public static Order getOrder(String uuid){
-         List <Order> allOrders = loadOrder();
-         Order matchOrder = new Order();
-         for(Order order : allOrders){
-             if (order.getUuid().equals(uuid)){
-                 matchOrder = order;
-             }
-         }
-         return matchOrder;
+        return loadOrder().stream()
+                .filter(order -> order.getUuid().equals(uuid))
+                .findFirst()
+                .get();
     }
     
     public void removeOrder() {
         List<String> allOrders = DAO.readAll(resourcePath);
-        for(int i=0; i<allOrders.size();i++) {
-            String[] orderDetails = allOrders.get(i).split(";");
-            if (orderDetails[0].equals(this.getUuid())) {
-                allOrders.remove(i);
-                break;
-            }
-        }
-        DAO.rewrite(allOrders, resourcePath);
+        
+        var removed = allOrders.stream()
+                .filter(order -> 
+                    !List.of(order.split(";"))
+                        .stream()
+                        .findFirst().get().equals(this.getUuid()))
+                .collect(Collectors.toList());
+            
+        DAO.rewrite(removed, resourcePath);
     }
     
     public static List <Order> loadUserOrder(String username){
-        List <Order> allOrders = loadOrder();
-        List <Order> userOrders = new ArrayList<Order>();
-        for (Order order: allOrders){
-            if(order.username.equals(username)){
-                userOrders.add(order);
-            }
-        }
-        return userOrders;
+        return loadOrder().stream()
+                .filter(order -> 
+                        order.username.equals(username))
+                .collect(Collectors.toList());
     }
+    
+    public static BiFunction<Order, List<Order>, Order> mostSpentOrder = 
+            (mostSpent, order) -> order.size() < 2 // if the list size is less than 2
+                    // compare 2 only as the list has only 2 elements
+                ? order.get(0).getTotal() > mostSpent.getTotal() 
+                    ? order.get(0)
+                    : mostSpent
+                : order.get(0).getTotal() > mostSpent.getTotal()
+                    ? Order.mostSpentOrder.apply(
+                            // change the most spent to the current element
+                            order.get(0), 
+                            // remove and the first element and continue
+                            // comparing with the following elemennt
+                            order.subList(1, order.size())) 
+                    : Order.mostSpentOrder.apply(
+                            // remain the most spent
+                            mostSpent, 
+                            // remove and the first element and continue
+                            // comparing with the following elemennt
+                            order.subList(1, order.size()));
     
     public void setOrderItem(List <OrderItem> orderItem){
         this.orderItem = orderItem;
@@ -105,33 +127,30 @@ public class Order {
     }
     
     public void updateProductQuantity(List <Product> productSelected){
-        for (int i = 0; i< productSelected.size(); i++){
-            productSelected.get(i).minusQuantity(this.orderItem.get(i).getQuantity());
-            productSelected.get(i).updateProduct();
-        }
+        IntStream.range(0, productSelected.size())
+                .forEach(i -> {
+                    productSelected.get(i).minusQuantity(this.orderItem.get(i).getQuantity());
+                    productSelected.get(i).updateProduct();
+                });
     }
     
     public void addOrderItem(OrderItem orderItem) {
         this.orderItem.add(orderItem);
     }
+    
     public boolean hasFragileProduct(List <Product> orderedProduct){
-        for(Product product : orderedProduct){
-            if (product.getIsFragile()){
-                return true;
-            }
-        }
-        return false;
+        return orderedProduct.stream()
+                .anyMatch(product -> product.getIsFragile());
     }
+    
     public double calculateTotalprice(List<OrderItem> orderItem){
-        double total = 0;
-        for (OrderItem orderItem1 : orderItem){
-            total = total + orderItem1.getTotalPrice();
-        }
-        return total;
+        return Utils.doubleCalculateTotal(orderItem.stream()
+                .map(item -> item.getTotalPrice())
+                .collect(Collectors.toList()));
     }
+    
     public double calculateChange(Order order){
-        double change = -1 * (order.total - order.paid);
-        return change;
+        return Utils.minus.apply(order.getPaid()).apply(order.getTotal());
     }
 
     public double getAndSetTotal() {

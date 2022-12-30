@@ -202,11 +202,11 @@ public class ReportPage extends javax.swing.JPanel {
         listModel.clear();
         File folder = new File(reportPath);
         File[] reportList = folder.listFiles();
-        for(File file: reportList) {
-            if(file.isFile()) {
-                listModel.addElement(file.getName());
-            }
-        }
+        List.of(reportList).stream()
+                .filter(file -> file.isFile())
+                .forEach(e -> {
+                    listModel.addElement(e.getName());
+                });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

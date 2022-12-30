@@ -1,14 +1,13 @@
 package main.java;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderItem {
     private String code, name;
     int quantity;
     double price;
     double totalPrice;
-    Product currentProduct;
     String orderUuid;
     public String quantityInvalidMessage;
     private static String resourcePath = "src/main/resource/OrderItem.txt";
@@ -34,32 +33,34 @@ public class OrderItem {
     
     public static List <OrderItem> loadOrderItem(){
         List <String> allOrderItems = DAO.readAll(resourcePath);
-        List <OrderItem> orderItems = new ArrayList<OrderItem>();
-        for (String line : allOrderItems){
-            String[] orderItemDetails = line.split(";");
-            orderItems.add(new OrderItem(orderItemDetails[0], 
-                                orderItemDetails[1], 
-                                orderItemDetails[2], 
-                                Integer.parseInt(orderItemDetails[3]), 
-                                Double.parseDouble(orderItemDetails[4])));       
-        }
-        return orderItems;
+        
+        return allOrderItems.stream()
+                .map(line -> 
+                    line.split(";"))
+                .map(orderItemDetails -> 
+                    new OrderItem(
+                            orderItemDetails[0], 
+                            orderItemDetails[1], 
+                            orderItemDetails[2], 
+                            Integer.parseInt(orderItemDetails[3]), 
+                            Double.parseDouble(orderItemDetails[4])
+                    )
+                )
+                .collect(Collectors.toList());
     }
     
     public static List <OrderItem> loadUuidOrderItem(String uuid){
         List <OrderItem> allOrderItems = loadOrderItem();
-        List <OrderItem> uuidOrderItem = new ArrayList<OrderItem>();
-        for (OrderItem orderItem : allOrderItems){
-            if (orderItem.getOrderUuid().equals(uuid)){
-                uuidOrderItem.add(orderItem);
-            }
-        }
-        return uuidOrderItem;
+
+        return allOrderItems.stream()
+                .filter(orderItem -> orderItem.getOrderUuid().equals(uuid))
+                .collect(Collectors.toList());
     }
+    
     public void addOrderItem(){
         DAO.append(this.toString(),resourcePath);
     }
-
+    
     @Override
     public String toString() {
         return this.orderUuid + ";" 

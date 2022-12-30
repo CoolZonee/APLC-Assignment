@@ -1,96 +1,77 @@
 package main.java;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.Scanner;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DAO {
     public static List<String> readAll(String targetFile){
-        List<String> savedData = new ArrayList<>();
-        try{  
-            Scanner file = new Scanner(new File(targetFile));
-            while (file.hasNextLine()){
-                String line=file.nextLine();
-                savedData.add(line);
-            }
-            file.close();
+        try (Stream<String> lines = Files.lines(Path.of(targetFile))){  
+            return lines.collect(Collectors.toList());
         }
         catch(IOException e){
             e.printStackTrace();
         }
-        return savedData;
+        return null;
     }
+    
     public static void append(String line, String targetFile){
-        PrintWriter writer = null;
         try {
-            File f = new File(targetFile);
-            if (f.exists()) {
-                writer = new PrintWriter(new BufferedWriter(new FileWriter(f, true)));
-                writer.println(line);
-            }
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        finally {
-            if (writer != null) {
-                writer.close();
-            }
+            Files.writeString(Paths.get(targetFile), line+"\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+        }   
+        catch (IOException ex) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public static void rewrite(String line, String targetFile){
-        PrintWriter writer = null;
+        Path path = Paths.get(targetFile);
+
         try {
-            writer = new PrintWriter(new File(targetFile));
-            writer.println(line);
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        finally {
-            if (writer != null) {
-                writer.close();
-            }
+            Files.delete(path);
+            Files.createFile(path);
+            Files.writeString(Paths.get(targetFile), line+"\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+        }   
+        catch (IOException ex) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public static void rewrite(List<String> lines, String targetFile){
-        PrintWriter writer = null;
+        Path path = Paths.get(targetFile);
+        
         try {
-            writer = new PrintWriter(new File(targetFile));
-            for (String line: lines) {
-                writer.println(line);
-            }
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        finally {
-            if (writer != null) {
-                writer.close();
-            }
+            Files.delete(path);
+            Files.createFile(path);
+            lines.forEach(line -> {
+                try {
+                    Files.writeString(Paths.get(targetFile), line +"\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+                } catch (IOException ex) {
+                    Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }   
+        catch (IOException ex) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public static void clear(String targetFile){
-        PrintWriter writer = null;
         try {
-            writer = new PrintWriter(new File(targetFile));
-            writer.print("");
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        finally {
-            if (new File(targetFile).exists()) {
-                writer.close();
-            }
+            Path path = Paths.get(targetFile);
+            Files.delete(Paths.get(targetFile));
+            Files.createFile(path);
+        } catch (IOException ex) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 }

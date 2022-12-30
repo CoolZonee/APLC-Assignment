@@ -3,6 +3,7 @@ package main.gui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.IntStream;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -24,9 +25,11 @@ public class ProductPage extends javax.swing.JPanel {
         this.dfTable = (DefaultTableModel)tblProduct.getModel();
         this.rowSorter = new TableRowSorter<>(tblProduct.getModel());
         // Disable sorting function
-        for(int i = 0; i < tblProduct.getColumnCount(); i++) {
-            this.rowSorter.setSortable(i, false);
-        }
+        
+        IntStream.range(0,tblProduct.getColumnCount())
+                .forEach(i -> {
+                    this.rowSorter.setSortable(i, false);
+                });
         this.tblProduct.setRowSorter(rowSorter);
         TableSortFilter.addFilter(rowSorter, tblProduct, txtSearchProduct);
         this.products = new ArrayList<>();
@@ -348,38 +351,22 @@ public class ProductPage extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void txtQuantityKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantityKeyPressed
-        if (Validation.isNumeric(evt.getKeyChar())) {
-            txtQuantity.setEditable(true);
-        } else {
-            txtQuantity.setEditable(false);
-        }
+        txtQuantity.setEditable(Validation.isNumeric(evt.getKeyChar()));
         this.checkInput();
     }//GEN-LAST:event_txtQuantityKeyPressed
 
     private void txtPriceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPriceKeyPressed
-        if (Validation.isNumericOrDot(evt.getKeyChar())) {
-            txtPrice.setEditable(true);
-        } else {
-            txtPrice.setEditable(false);
-        }
+        txtPrice.setEditable(Validation.isNumericOrDot(evt.getKeyChar()));
         this.checkInput();
     }//GEN-LAST:event_txtPriceKeyPressed
 
     private void txtCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodeKeyPressed
-        if (Validation.isNumeric(evt.getKeyChar())) {
-            txtCode.setEditable(true);
-        } else {
-            txtCode.setEditable(false);
-        }
+        txtCode.setEditable(Validation.isNumeric(evt.getKeyChar()));
         this.checkInput();
     }//GEN-LAST:event_txtCodeKeyPressed
 
     private void txtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyPressed
-        if (Validation.isString(evt.getKeyChar())) {
-            txtName.setEditable(true);
-        } else {
-            txtName.setEditable(false);
-        }
+        txtName.setEditable(Validation.isString(evt.getKeyChar()));
         this.checkInput();
     }//GEN-LAST:event_txtNameKeyPressed
 
@@ -412,7 +399,8 @@ public class ProductPage extends javax.swing.JPanel {
     
     private void loadData() {
         products = this.frame.admin.loadProduct();
-            for (Product product: products) {
+        
+        products.forEach(product -> {
             Vector vector = new Vector();
             vector.add(product.getCode());
             vector.add(product.getName());
@@ -420,7 +408,7 @@ public class ProductPage extends javax.swing.JPanel {
             vector.add(product.getPrice());
             vector.add(product.getIsFragile());
             this.dfTable.addRow(vector);
-        }
+        });
     }
     
     public void clearAll() {

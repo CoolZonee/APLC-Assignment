@@ -1,5 +1,7 @@
 package main.java;
 
+@FunctionalInterface
 public interface CheckRecord {
-    public boolean checkIfRecordExist(String id);
+    public abstract boolean checkIfRecordExist(String username);
 }
+

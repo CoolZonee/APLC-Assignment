@@ -2,15 +2,16 @@ package main.java;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Cart {
-    private List<Product> products;
+    private List<Product> cart;
     private List<Product> orderedProducts;
     private String quantityInvalidMessage;
     private boolean isQuantityValid;
     
     public Cart() {
-        this.products = new ArrayList<>();
+        this.cart = new ArrayList<>();
         this.orderedProducts = new ArrayList<>();
         this.isQuantityValid = true;
     }
@@ -18,35 +19,38 @@ public class Cart {
     public List<OrderItem> checkProductQuantity(String orderUUID){
         List<OrderItem> orderItem = new ArrayList<>();
         List<Product> productArr = Product.loadProduct();
-        for (Product cartItem: this.getProducts()){
-             String cartName = cartItem.getName();
-             int cartQuantity = cartItem.getQuantity();
-             for(Product product: productArr){
-                if(cartName.equals(product.getName())) {
-                    if(cartQuantity > product.getQuantity()) {
-                        this.quantityInvalidMessage = (this.quantityInvalidMessage +
-                                        "The available quantity for: " + 
-                                        product.getName() + 
-                                        " is: " + product.getQuantity()
-                                        + "\n");
+        
+        this.getCartItem().forEach(cartItem -> {
+            productArr
+                .stream()
+                .filter(product 
+                        -> product
+                                .getCode()
+                                .equals(cartItem.getCode()))
+                .forEach(e -> {
+                    if (cartItem.getQuantity() > e.getQuantity()) {
+                        this.quantityInvalidMessage = this.quantityInvalidMessage +
+                                 "The available quantity for: " + 
+                                 e.getName() + 
+                                 " is: " + e.getQuantity()
+                                 + "\n";
                         this.isQuantityValid = false;
                     }
-                    else{
-                        this.orderedProducts.add(product);
+                    else {
+                        this.orderedProducts.add(e);
                         OrderItem item = new OrderItem(
                                 orderUUID,
-                                product.getCode(), 
-                                product.getName(), 
-                                cartQuantity, 
-                                product.getPrice()
+                                e.getCode(), 
+                                e.getName(), 
+                                cartItem.getQuantity(), 
+                                e.getPrice()
                         );
                         orderItem.add(item);
                     }
-                }
-                
-            }
-        }
+            });
+        });
         return orderItem;
+
     }
     public void clearFinalCart(){
         if (!orderedProducts.isEmpty()){
@@ -58,7 +62,7 @@ public class Cart {
     }
     
     public boolean isEmpty(){
-        return this.products.isEmpty();
+        return this.cart.isEmpty();
     }
     
     public void resetQuantityCheck(){
@@ -66,23 +70,21 @@ public class Cart {
     }
     
     public void addProduct(Product product) {
-        this.products.add(product);
+        this.cart.add(product);
     }
 
     public void clearCart() {
-        this.products.clear();
+        this.cart.clear();
     }
     
     public double calculateTotalPrice() {
-        double totalPrice = 0.0;
-        for(Product product: this.products) {
-            totalPrice += product.getPrice() * product.getQuantity();
-        }
-        return totalPrice;
+        return Utils.doubleCalculateTotal(this.cart.stream()
+                .map(item -> (item.getQuantity() * item.getPrice()))
+                .collect(Collectors.toList()));
     }
     
-    public List<Product> getProducts() {
-        return this.products;
+    public List<Product> getCartItem() {
+        return this.cart;
     }
 
     public String getQuantityInvalidMessage() {
@@ -94,7 +96,7 @@ public class Cart {
     }
     
     public String toString() {
-        return "cart" + this.products.toString();
+        return "cart" + this.cart.toString();
     }
     
     public List<Product> getOrderedProducts() {

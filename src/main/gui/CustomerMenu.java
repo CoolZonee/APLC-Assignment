@@ -41,12 +41,10 @@ public class CustomerMenu extends javax.swing.JPanel {
     }
     public void fillOrderHistoryTable(){
         userOrder = Order.loadUserOrder(frame.user.getUsername());
-        for(Order order : this.userOrder){
-            String[] dataRow = order.toStringUser().split(";");
-            orderHistoryCustomerTableModel.addRow(dataRow);
-        }
         
-        
+        this.userOrder.forEach(order -> {
+            orderHistoryCustomerTableModel.addRow(order.toStringUser().split(";"));
+        });
     }
     /**
      * This method is called from within the constructor to initialize the form.

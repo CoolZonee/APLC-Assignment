@@ -40,10 +40,10 @@ public class AdminMenu extends javax.swing.JPanel {
     }
     public void fillOrderHistoryTable(){
         this.userOrder = this.frame.user.loadUserOrder();
-        for(Order order : this.userOrder){
-            String[] dataRow = order.toStringUser().split(";");
-            orderHistoryAdminTableModel.addRow(dataRow);
-        }
+        
+        this.userOrder.forEach(order -> {
+            orderHistoryAdminTableModel.addRow(order.toStringUser().split(";"));
+        });
     }
     
     /**
@@ -73,6 +73,7 @@ public class AdminMenu extends javax.swing.JPanel {
         btnViewOrder = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         btnReport = new javax.swing.JButton();
+        btnViewMostSpent = new javax.swing.JButton();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -178,6 +179,13 @@ public class AdminMenu extends javax.swing.JPanel {
             }
         });
 
+        btnViewMostSpent.setText("View Most Spent Order");
+        btnViewMostSpent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewMostSpentActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,6 +206,8 @@ public class AdminMenu extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnViewMostSpent)
+                        .addGap(18, 18, 18)
                         .addComponent(btnViewOrder)
                         .addGap(18, 18, 18)
                         .addComponent(btnDeleteOrder))
@@ -240,7 +250,8 @@ public class AdminMenu extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDeleteOrder)
-                    .addComponent(btnViewOrder))
+                    .addComponent(btnViewOrder)
+                    .addComponent(btnViewMostSpent))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -321,6 +332,13 @@ public class AdminMenu extends javax.swing.JPanel {
         this.frame.changePages(8);
     }//GEN-LAST:event_btnReportActionPerformed
 
+    private void btnViewMostSpentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewMostSpentActionPerformed
+        frame.orderConfirmation.initAdditionalComponentsView(OrderItem.loadUuidOrderItem(frame.user.getMostSpentOrder(userOrder).getUuid()), frame.user.getMostSpentOrder(userOrder));
+        frame.orderConfirmation.setBackMenu(true);
+        frame.orderConfirmation.setOrder(frame.user.getMostSpentOrder(userOrder));
+        frame.changePages(7);
+    }//GEN-LAST:event_btnViewMostSpentActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeleteOrder;
@@ -330,6 +348,7 @@ public class AdminMenu extends javax.swing.JPanel {
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnReturnLoginAdmin;
     private javax.swing.JButton btnViewLoginHistory;
+    private javax.swing.JButton btnViewMostSpent;
     private javax.swing.JButton btnViewOrder;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAdminPage1;

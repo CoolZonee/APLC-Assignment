@@ -18,7 +18,6 @@ public class OrderConfirmation extends javax.swing.JPanel {
     NumberFormat amountDisplayFormat;
     NumberFormat amountEditFormat;
     private DefaultTableModel orderSummaryTableModel;
-    boolean isSufficient=false;
     Order order;
     List <Product> productSelected;
     public OrderConfirmation() {
@@ -67,13 +66,13 @@ public class OrderConfirmation extends javax.swing.JPanel {
     }
     
     public void fillOrderSummaryTable(List <OrderItem> orderItem){
-        for (OrderItem orderItem1: orderItem){
-            orderSummaryTableModel.addRow(new Object[]{orderItem1.getCode(), 
-                                                       orderItem1.getName(),
-                                                       orderItem1.getQuantity(),
-                                                       orderItem1.getPrice(),
-                                                       orderItem1.getTotalPrice()});
-        }
+        orderItem.forEach(item -> {
+            orderSummaryTableModel.addRow(new Object[]{item.getCode(), 
+                                                       item.getName(),
+                                                       item.getQuantity(),
+                                                       item.getPrice(),
+                                                       item.getTotalPrice()});
+        });
     }
 
     public void setFrame(Frame frame){
@@ -280,7 +279,6 @@ public class OrderConfirmation extends javax.swing.JPanel {
             if (this.order.getPaid()<this.order.getAndSetTotal()){
                 JOptionPane.showMessageDialog(frame, "Insufficient Amount");
             }else{
-                isSufficient=true;
                 btnPay.setEnabled(true);
             }
         }catch(NullPointerException e){
@@ -294,9 +292,11 @@ public class OrderConfirmation extends javax.swing.JPanel {
         this.order.setDate(DateAndTime.getCurrentDate());
         this.order.setUsername(frame.user.getUsername());
         this.frame.user.addOrder(this.order);
-        for(OrderItem orderItem1 : order.getOrderItems()){
-            orderItem1.addOrderItem();
-        }
+        
+        order.getOrderItems().forEach(orderItem -> {
+            orderItem.addOrderItem();
+        });
+
         this.order.updateProductQuantity(this.productSelected);
         JOptionPane.showMessageDialog(frame,"Order Successful!","Order Status",JOptionPane.INFORMATION_MESSAGE);
         this.frame.user.printReceipt(this.order);

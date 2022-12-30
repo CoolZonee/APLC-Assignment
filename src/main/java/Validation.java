@@ -2,23 +2,14 @@ package main.java;
 
 public class Validation {
     public static boolean isString(char c) {
-        if (Character.isLetter(c) || Character.isWhitespace(c) || Character.isISOControl(c)) {
-            return true;
-        }
-        return false;
+        return Character.isLetter(c) || Character.isWhitespace(c) || Character.isISOControl(c);
     }
     
     public static boolean isNumericOrDot(char c) {
-        if (Character.isDigit(c) || Character.isISOControl(c) || Character.toString(c).equals(".")){
-            return true;
-        }
-        return false;
+        return Character.isDigit(c) || Character.isISOControl(c) || Character.toString(c).equals(".");
     }
     
     public static boolean isNumeric(char c) {
-        if (Character.isDigit(c) || Character.isISOControl(c)){
-            return true;
-        }
-        return false;
+        return Character.isDigit(c) || Character.isISOControl(c);
     }
 }

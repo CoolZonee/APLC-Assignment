@@ -25,11 +25,9 @@ public class LoginHistory extends javax.swing.JPanel {
     public void initAdditionalComponents(){
         loginHistoryTableModel = (DefaultTableModel)tblLoginHistory.getModel();
         loginHistoryTableModel.setRowCount(0);
-        List<String> loginHistoryData = DAO.readAll(resource);  
-        for(String line:loginHistoryData){
-                String[] dataRow = line.split(";"); 
-                loginHistoryTableModel.addRow(dataRow);
-        }
+        DAO.readAll(resource).forEach(line -> {
+            loginHistoryTableModel.addRow(line.split(";"));
+        });
     }
 
     /**

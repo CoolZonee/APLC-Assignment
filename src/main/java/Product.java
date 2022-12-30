@@ -2,6 +2,7 @@ package main.java;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Product implements CheckRecord {
     private String code, name;
@@ -24,18 +25,20 @@ public class Product implements CheckRecord {
     public static List<Product> loadProduct() {
         List<String> allProduct = DAO.readAll(resourcePath);
         List<Product> products = new ArrayList<>();
-        for (String line: allProduct) {              
-            String[] details = line.split(";");
-            products.add(new Product(
-                    details[0], 
-                    details[1], 
-                    Integer.parseInt(details[2]), 
-                    Double.parseDouble(details[3]),
-                    Boolean.parseBoolean(details[4])
+        
+        return allProduct.stream()
+                .map(line -> 
+                    line.split(";")
                 )
-            );
-        }
-        return products;
+                .map(details ->
+                    new Product(
+                            details[0], 
+                            details[1], 
+                            Integer.parseInt(details[2]), 
+                            Double.parseDouble(details[3]),
+                            Boolean.parseBoolean(details[4]))
+                )
+                .collect(Collectors.toList());
     }
     
     public void addProduct() {
@@ -43,40 +46,41 @@ public class Product implements CheckRecord {
     }
     
     public void updateProduct() {
-        List<String> allProduct = DAO.readAll(resourcePath);
-        for(int i = 0; i < allProduct.size(); i++) {
-            String[] productDetails = allProduct.get(i).split(";");
-            if (productDetails[0].equals(this.getCode())) {
-                allProduct.set(i, this.toString());
-                break;
-            }
-        }
+        List<String> allProduct = DAO.readAll(resourcePath)
+                .stream()
+                .map(s -> {
+                    return List.of(s.split(";")). // split the line into product details
+                            stream().findFirst() // get the line[0], which is product code
+                            .get()
+                            .equals(this.getCode())  
+                                ? this.toString() // if product code matched, update details
+                                : s;
+                })
+                .collect(Collectors.toList());
+        
         DAO.rewrite(allProduct, resourcePath);
     }
     
     @Override
     public boolean checkIfRecordExist(String code) {
-        List<Product> productList = loadProduct();
-        boolean valid = true;
-        for (Product p: productList) {
-            if (p.getCode().equals(code)) {
-                valid = false;
-            }
-        }
-        return valid;
+        return !loadProduct().stream()
+                .anyMatch(product -> 
+                    product.getCode().equals(code)
+                );
     }
     
     public void removeProduct() {
         List<String> allProduct = DAO.readAll(resourcePath);
-        for(int i = 0; i < allProduct.size(); i++) {
-            String[] productDetails = allProduct.get(i).split(";");
-            if (productDetails[0].equals(this.getCode())) {
-                allProduct.remove(i);
-                break;
-            }
-        }
-        DAO.rewrite(allProduct, resourcePath);
-
+        
+        var toRemove = allProduct.stream()
+                .filter(product -> // if product code matched, product is removed using filter
+                    !List.of(product.split(";")) // split the line into product details
+                        .stream().findFirst() // get the line[0], which is product code
+                        .get()
+                        .equals(this.getCode()))      
+                .collect(Collectors.toList());
+        
+        DAO.rewrite(toRemove, resourcePath);
     }
     
     public void addQuantity (int quantity) {

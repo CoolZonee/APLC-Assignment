@@ -77,7 +77,6 @@ public class Report {
             
             int totalQuantity = 0;
             double totalProfit = 0.0;
-            
             for (Order order: orders) {
                 List<OrderItem> orderItems = OrderItem.loadUuidOrderItem(order.getUuid());
                 for (OrderItem orderItem: orderItems) {

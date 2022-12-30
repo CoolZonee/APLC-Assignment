@@ -363,11 +363,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void txtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyPressed
-        if (Validation.isString(evt.getKeyChar())) {
-            txtName.setEditable(true);
-        } else {
-            txtName.setEditable(false);
-        }
+        txtName.setEditable(Validation.isString(evt.getKeyChar()));
         this.checkInput();
     }//GEN-LAST:event_txtNameKeyPressed
 
@@ -380,11 +376,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPasswordKeyPressed
 
     private void txtAgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAgeKeyPressed
-        if (Validation.isNumeric(evt.getKeyChar())) {
-            txtAge.setEditable(true);
-        } else {
-            txtAge.setEditable(false);
-        }
+        txtAge.setEditable(Validation.isNumeric(evt.getKeyChar()));
         this.checkInput();
     }//GEN-LAST:event_txtAgeKeyPressed
 
@@ -410,11 +402,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     }
     
     private void enableUpdateDeleteBtn(boolean option) {
-        if (!option) {
-            btnUpdate.setText("Add New User");
-        } else {
-            btnUpdate.setText("Update User Details");
-        }
+        btnUpdate.setText(option ? "Update User Details" : "Add New User");
         btnDelete.setEnabled(option);
         btnDelete.setEnabled(option);
         txtUsername.setEditable(!option);
@@ -422,7 +410,7 @@ public class ManageUserPage extends javax.swing.JPanel {
     
     private void loadData() {
         this.users = this.frame.admin.loadUser();
-        for (User user: users) {
+        users.forEach(user -> {
             Vector vector = new Vector();
             vector.add(user.getUsername());
             vector.add(user.getName());
@@ -430,7 +418,7 @@ public class ManageUserPage extends javax.swing.JPanel {
             vector.add(user.getSex());
             vector.add(user.getAge());
             this.dfTable.addRow(vector);
-        }
+        });
     }
     
     public void clearAll() {

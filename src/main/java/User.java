@@ -25,9 +25,12 @@ public class User implements Authentication {
     @Override
     public boolean authenticate(String username, String password){
         List<String> authenticationData = DAO.readAll(resourcePath);
-        for(String line: authenticationData){
-            String[] credentials = line.split(";");
-            if (credentials[0].equals(username) && credentials[1].equals(password)){
+
+        return authenticationData.stream()
+                .anyMatch(line -> {
+            String[] credentials = line.split(";"); // split the line into user details
+            if (credentials[0].equals(username) && credentials[1].equals(password)){ // check if the username and password correct
+                // set the user if credentials valid
                 this.role=credentials[2];
                 this.age=Integer.parseInt(credentials[4]);
                 this.sex=credentials[5];
@@ -36,8 +39,8 @@ public class User implements Authentication {
                 this.password=credentials[1];
                 return true;
             }
-        }
-        return false;
+            return false;
+        });
     }
     
     public void logLoginTime(){
@@ -84,6 +87,10 @@ public class User implements Authentication {
         }catch(Exception e){
             System.out.println(e);
         }
+    }
+    
+    public Order getMostSpentOrder(List<Order> orders) {
+        return Order.mostSpentOrder.apply(orders.get(0), orders);
     }
     
     public void setRole(String role) {

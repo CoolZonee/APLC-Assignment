@@ -1,7 +1,7 @@
 package main.java;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Admin extends User implements CheckRecord{
     public Admin() {}
@@ -19,20 +19,23 @@ public class Admin extends User implements CheckRecord{
      /************ User CRUD ***************/
     public List<User> loadUser() {
         List<String> allUser = DAO.readAll(resourcePath);
-        List<User> users = new ArrayList<>();
-        for (String line: allUser) {              
-            String[] details = line.split(";");
-            users.add(new User(
-                    details[2],
-                    details[0],
-                    details[1],
-                    details[5],
-                    details[3],
-                    Integer.parseInt(details[4])
+        
+        // return List<User>
+        return allUser.stream()
+                .map(line ->  // iterate every line of the txt file
+                    line.split(";") // split the line into the user details array
                 )
-            );
-        }
-        return users;
+                .map(user -> // create user
+                    new User(
+                            user[2],
+                            user[0],
+                            user[1],
+                            user[5],
+                            user[3],
+                            Integer.parseInt(user[4])
+                        )
+                )
+                .collect(Collectors.toList()); // convert the Stream to List
     }
     
     public void addUser(User user) {
@@ -41,27 +44,26 @@ public class Admin extends User implements CheckRecord{
     
     public void updateUser(User user) {
         List<String> allUser = DAO.readAll(resourcePath);
-        for(int i = 0; i < allUser.size(); i++) {
-            String[] userDetails = allUser.get(i).split(";");
-            if (userDetails[0].equals(user.getUsername())) {
-                allUser.set(i, user.toString());
-                break;
-            }
-        }
-        DAO.rewrite(allUser, resourcePath);
+        
+        var updated = allUser.stream() // change the targeted user details
+                .map(u -> 
+                    List.of(u.split(";")).stream() // split the line into user details
+                    .findFirst() // get the line[0], which is username
+                    .get()
+                    .equals(user.getUsername()) ? user.toString() : u // if the username matched, change the details to the latest one
+                )
+                .collect(Collectors.toList()); // convert the Stream to List
+ 
+        DAO.rewrite(updated, resourcePath); // write the updated List into text file
     }
     
     @Override
-    public boolean checkIfRecordExist(String username) {
-        List<User> userList = loadUser();
-        boolean valid = true;
-        for (User u: userList) {
-            if (u.getUsername().equals(username)) {
-                valid = false;
-            }
-        }
-        return valid;
+    public boolean checkIfRecordExist (String username){
+            return !loadUser().stream()
+                .anyMatch(user -> // if any result matched, return true
+                        user.getUsername().equals(username)); // check if the username existed
     }
+    
     
     public boolean checkProduct(Product product) {
         return product.checkIfRecordExist(product.getCode());
@@ -69,16 +71,19 @@ public class Admin extends User implements CheckRecord{
     
     public void removeUser(User user) {
         List<String> allUser = DAO.readAll(resourcePath);
-        for(int i = 0; i < allUser.size(); i++) {
-            String[] userDetails = allUser.get(i).split(";");
-            if (userDetails[0].equals(user.getUsername())) {
-                allUser.remove(i);
-                break;
-            }
-        }
-        DAO.rewrite(allUser, resourcePath);
+        
+        var removed = allUser.stream()
+                .filter(u -> //filter the matched username
+                     !List.of(u.split(";"))
+                    .stream()
+                    .findFirst() // get line[0], which is username
+                    .get()
+                    .equals(user.getUsername()) // check if matched, if matched, remove the user details of the List
+                )
+                .collect(Collectors.toList());
+            
+        DAO.rewrite(removed, resourcePath);
     }
-    
     
     /************ User CRUD End ***************/
     

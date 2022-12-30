@@ -40,6 +40,8 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnViewMostSpent" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnViewOrder" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnDeleteOrder" min="-2" max="-2" attributes="0"/>
@@ -91,6 +93,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnDeleteOrder" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnViewOrder" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnViewMostSpent" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -280,6 +283,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReportActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnViewMostSpent">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View Most Spent Order"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnViewMostSpentActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

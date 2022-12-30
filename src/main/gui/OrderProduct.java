@@ -3,6 +3,8 @@ package main.gui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -42,34 +44,42 @@ public class OrderProduct extends javax.swing.JPanel {
                 TableModel model = (TableModel) e.getSource();
                 int rowCount = model.getRowCount();
                 Cart tempCart = new Cart();
-                for (int i = 0; i < rowCount; i++) {
-                    Product product = new Product();
-                    product.setName(model.getValueAt(i, 0).toString());
-                    product.setPrice(Double.parseDouble(model.getValueAt(i, 1).toString()));
-                    product.setQuantity(1);
-                    boolean checked = (Boolean) model.getValueAt(i, 2);
-                    if (checked) {
-                        tempCart.addProduct(product);
-                    }
-                }
-                for (Product product: cart.getProducts()) {
-                    for (Product temp: tempCart.getProducts()) {
-                        if (product.getName().equals(temp.getName())) {
-                           temp.setQuantity(product.getQuantity());
-                        }
-                    }
-                }
+                
+                IntStream.range(0, rowCount)
+                        .forEach(i -> {
+                            Product product = new Product();
+                            product.setCode(model.getValueAt(i, 0).toString());
+                            product.setName(model.getValueAt(i, 1).toString());
+                            product.setPrice(Double.parseDouble(model.getValueAt(i, 2).toString()));
+                            product.setQuantity(1);
+                            boolean checked = (Boolean) model.getValueAt(i, 3);
+                            if (checked) {
+                                tempCart.addProduct(product);
+                            }
+                        });
+                
+                cart.getCartItem().forEach(product -> {
+                    tempCart.getCartItem().stream()
+                            .map(temp -> {
+                                if (product.getCode().equals(temp.getCode())) {
+                                    temp.setQuantity(product.getQuantity());
+                                }
+                                return temp;
+                            })
+                            .collect(Collectors.toList());
+                });
 
                 cart = tempCart;
 
                 cartTableModel.setRowCount(0);
-                for (Product product: cart.getProducts()) {
+                
+                cart.getCartItem().forEach(product -> {
                     Vector v = new Vector();
                     v.add(product.getName());
                     v.add(product.getPrice());
                     v.add(product.getQuantity());
                     cartTableModel.addRow(v);
-                }                
+                });
             }   
         });
         this.cartTableModel.addTableModelListener(new TableModelListener() {
@@ -77,9 +87,11 @@ public class OrderProduct extends javax.swing.JPanel {
             public void tableChanged(TableModelEvent e) {
                 TableModel model = (TableModel) e.getSource();
                 int rowCount = model.getRowCount();
-                for (int i = 0; i < rowCount; i++) {
-                    cart.getProducts().get(i).setQuantity(Integer.parseInt(model.getValueAt(i, 2).toString()));
-                }
+                
+                IntStream.range(0, rowCount)
+                        .forEach(i -> {
+                            cart.getCartItem().get(i).setQuantity(Integer.parseInt(model.getValueAt(i, 2).toString()));
+                        });
                 double totalPrice = cart.calculateTotalPrice();
                 txtTotalPrice.setText(String.format("%.2f", totalPrice));
             }   
@@ -116,14 +128,14 @@ public class OrderProduct extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Name", "Price (RM)", "Select"
+                "Code", "Name", "Price (RM)", "Select"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -250,11 +262,10 @@ public class OrderProduct extends javax.swing.JPanel {
         this.cart.clearFinalCart();
         
         List <OrderItem> orderItemList = this.cart.checkProductQuantity(this.order.getUuid());
-        
-        if(!orderItemList.isEmpty() && this.cart.getIsQuantityValid()) {
-            for (OrderItem orderItem: orderItemList) {
+        if(!orderItemList.isEmpty() && this.cart.getIsQuantityValid()) {   
+            orderItemList.forEach(orderItem -> {
                 this.order.addOrderItem(orderItem);
-            }
+            });
         }
         
         if (this.cart.isEmpty()){
@@ -284,9 +295,11 @@ public class OrderProduct extends javax.swing.JPanel {
         txtSearchProduct.setText("");
         this.cart.clearCart();
         this.cartTableModel.setRowCount(0);
-        for (int i = 0; i < productTableModel.getRowCount(); i++) {
-            productTableModel.setValueAt(false, i, 2);
-        }
+        
+        IntStream.range(0, productTableModel.getRowCount())
+                .forEach(i -> {
+                    productTableModel.setValueAt(false, i, 3);
+                });
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -301,13 +314,14 @@ public class OrderProduct extends javax.swing.JPanel {
 
     private void loadData() {
         this.products = this.frame.user.loadProduct();
-        for (Product product: products) {
+        this.products.forEach(product -> {
             Vector vector = new Vector();
+            vector.add(product.getCode());
             vector.add(product.getName());
             vector.add(product.getPrice());
             vector.add(false);
             this.productTableModel.addRow(vector);
-        }
+        });
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
